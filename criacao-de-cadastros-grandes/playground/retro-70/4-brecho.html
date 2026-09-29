@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baú Retrô</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Cooper Black", Georgia, serif; background: #f6e7c1; color: #6b3e26; }
+    p { font-family: Verdana, sans-serif; line-height: 1.6; }
+    .listras { height: 36px; background: linear-gradient(#e3a72f 0 33%, #e07a2f 33% 66%, #b5452b 66%); }
+    header { text-align: center; padding: 30px 20px; }
+    .logo { font-size: 3rem; color: #b5452b; text-shadow: 3px 3px 0 #e3a72f; }
+    header p { margin: 4px 0 16px; }
+    nav a { color: #6b3e26; margin: 0 14px; text-decoration: none; font-size: 1.1rem; }
+    .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 30px 20px 60px; }
+    .sol { width: 260px; height: 260px; border-radius: 50%; background: repeating-conic-gradient(#e3a72f 0 10deg, #e07a2f 10deg 20deg); display: grid; place-items: center; border: 8px solid #6b3e26; }
+    .sol span { width: 150px; height: 150px; border-radius: 50%; background: #f6e7c1; display: grid; place-items: center; font-size: 72px; border: 6px solid #6b3e26; }
+    h1 { font-size: 3rem; margin: 30px 0 10px; max-width: 700px; line-height: 1.1; }
+    .hero p { max-width: 560px; margin-bottom: 28px; }
+    .botao { background: #b5452b; color: #f6e7c1; padding: 14px 36px; border-radius: 40px; text-decoration: none; font-size: 1.2rem; border: 4px solid #6b3e26; }
+    .faixa { background: #6b3e26; color: #f6e7c1; padding: 60px 20px; }
+    h2 { text-align: center; font-size: 2.4rem; margin-bottom: 36px; }
+    .selos { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .selo { width: 230px; height: 230px; border-radius: 50%; background: #e3a72f; color: #6b3e26; border: 6px dashed #f6e7c1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 28px; }
+    .selo:nth-child(even) { background: #e07a2f; }
+    .selo h3 { font-size: 1.2rem; }
+    .selo p { font-size: .75rem; margin: 4px 0; }
+    .selo strong { font-size: 1.4rem; }
+    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+    .numeros { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 2.6rem; color: #b5452b; }
+    .cartao { background: #fff8e6; border: 4px solid #6b3e26; border-radius: 24px; padding: 30px; box-shadow: 10px 10px 0 #e07a2f; font-size: 1.3rem; }
+    .cartao p { font-size: 1.1rem; }
+    footer { background: #6b3e26; color: #f6e7c1; text-align: center; padding: 30px 20px; }
+    @media (max-width: 600px) { .logo { font-size: 2.2rem; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f6e7c1;
+      --texto: #6b3e26;
+      --texto-suave: #8a5a3c;
+      --cor: #e07a2f;
+      --cor-texto: #fff8e6;
+      --destaque: #b5452b;
+      --superficie: #fff8e6;
+      --escuro: #6b3e26;
+      --escuro-texto: #f6e7c1;
+      --borda: 4px solid #6b3e26;
+      --raio: 24px;
+      --raio-redondo: 999px;
+      --sombra: 8px 8px 0 #e07a2f;
+      --desfoque: none;
+      --fonte-titulo: "Cooper Black", Georgia, serif;
+      --largura: 900px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Perguntas frequentes */
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: var(--borda); padding: 18px 0; }
+    .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font-family: var(--fonte-titulo); font-size: 1.15rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--destaque); }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin-top: 10px; color: var(--texto-suave); }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Menu hambúrguer */
+    header nav { display: none; }
+    .menu-botao { position: fixed; top: 16px; right: 16px; z-index: 60; width: 52px; height: 52px; font-size: 1.4rem; cursor: pointer; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .menu-overlay { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; background: var(--escuro); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .menu-overlay.aberto { opacity: 1; pointer-events: auto; }
+    .menu-overlay a { color: var(--escuro-texto); font-family: var(--fonte-titulo); font-size: 2.2rem; text-decoration: none; }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; }
+  </style>
+</head>
+<body>
+  <div class="listras"></div>
+
+  <header>
+    <div class="logo">Baú Retrô</div>
+    <p>~ Brechó vintage ~</p>
+    <nav>
+      <a href="#servicos">Delícias</a>
+      <a href="#sobre">A casa</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="sol"><span>👗</span></div>
+    <h1>Moda com história para contar</h1>
+    <p>Roupas e acessórios vintage garimpados peça por peça, dos anos 60 aos 90.</p>
+    <a class="botao" href="#contato">Ver novidades</a>
+  </div>
+
+  <div class="faixa" id="servicos">
+    <h2>Os favoritos da casa</h2>
+    <div class="selos">
+      <div class="selo">
+        <h3>Vestidos</h3>
+        <p>Estampas e cortes de época.</p>
+        <strong>a partir de R$ 60</strong>
+      </div>
+      <div class="selo">
+        <h3>Jaquetas</h3>
+        <p>Couro, jeans e veludo.</p>
+        <strong>a partir de R$ 90</strong>
+      </div>
+      <div class="selo">
+        <h3>Acessórios</h3>
+        <p>Óculos, bolsas e bijuterias.</p>
+        <strong>a partir de R$ 25</strong>
+      </div>
+      <div class="selo">
+        <h3>Consignação</h3>
+        <p>Venda suas peças com a gente.</p>
+        <strong>50% para você</strong>
+      </div>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>A casa</h2>
+    <p>Cada peça é higienizada, ajustada quando precisa e fotografada com carinho. Moda circular com muito estilo.</p>
+    <div class="numeros">
+      <div><strong>3.000</strong>peças</div>
+      <div><strong>100</strong>novidades por semana</div>
+      <div><strong>8</strong>anos</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cartao">
+      “Encontrei uma jaqueta dos anos 70 igualzinha à da minha mãe.”
+      <p>— Aline, cliente</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="faq">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq">
+      <details><summary>Quanto custa vestidos?</summary><p>a partir de R$ 60. Estampas e cortes de época.</p></details>
+      <details><summary>Qual o horário de funcionamento?</summary><p>Seg a Sáb, 10h às 18h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Rua Senador Pompeu, 900 - Centro.</p></details>
+      <details><summary>Como falo com vocês?</summary><p>Pelo telefone (85) 3008-0104, também no WhatsApp.</p></details>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="newsletter">
+    <div class="newsletter">
+      <h2>Receba novidades</h2>
+      <p>Promoções e novidades da Baú Retrô direto no seu e-mail.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="seu@email.com">
+        <button class="botao" type="submit">Assinar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="listras"></div>
+  <footer id="contato">
+    <p>Rua Senador Pompeu, 900 - Centro · (85) 3008-0104 · Seg a Sáb, 10h às 18h</p>
+  </footer>
+
+  <button class="menu-botao" type="button" aria-label="Abrir menu">☰</button>
+  <div class="menu-overlay">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Menu hambúrguer: abre e fecha o menu em tela cheia
+      const botaoMenu = document.querySelector('.menu-botao');
+      const menu = document.querySelector('.menu-overlay');
+      const alternar = () => {
+        menu.classList.toggle('aberto');
+        botaoMenu.textContent = menu.classList.contains('aberto') ? '✕' : '☰';
+      };
+      botaoMenu.addEventListener('click', alternar);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', alternar));
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+  </script>
+</body>
+</html>

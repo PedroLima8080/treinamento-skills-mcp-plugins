@@ -1,0 +1,1 @@
+prompt: com base no arquivo @src\soma.js, revise se o projeto está de acordo com a qualidade moni (não leia mais nada)

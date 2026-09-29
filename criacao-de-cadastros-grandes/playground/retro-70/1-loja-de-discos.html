@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vinil Groove</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Cooper Black", Georgia, serif; background: #f6e7c1; color: #6b3e26; }
+    p { font-family: Verdana, sans-serif; line-height: 1.6; }
+    .listras { height: 36px; background: linear-gradient(#e3a72f 0 33%, #e07a2f 33% 66%, #b5452b 66%); }
+    header { text-align: center; padding: 30px 20px; }
+    .logo { font-size: 3rem; color: #b5452b; text-shadow: 3px 3px 0 #e3a72f; }
+    header p { margin: 4px 0 16px; }
+    nav a { color: #6b3e26; margin: 0 14px; text-decoration: none; font-size: 1.1rem; }
+    .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 30px 20px 60px; }
+    .sol { width: 260px; height: 260px; border-radius: 50%; background: repeating-conic-gradient(#e3a72f 0 10deg, #e07a2f 10deg 20deg); display: grid; place-items: center; border: 8px solid #6b3e26; }
+    .sol span { width: 150px; height: 150px; border-radius: 50%; background: #f6e7c1; display: grid; place-items: center; font-size: 72px; border: 6px solid #6b3e26; }
+    h1 { font-size: 3rem; margin: 30px 0 10px; max-width: 700px; line-height: 1.1; }
+    .hero p { max-width: 560px; margin-bottom: 28px; }
+    .botao { background: #b5452b; color: #f6e7c1; padding: 14px 36px; border-radius: 40px; text-decoration: none; font-size: 1.2rem; border: 4px solid #6b3e26; }
+    .faixa { background: #6b3e26; color: #f6e7c1; padding: 60px 20px; }
+    h2 { text-align: center; font-size: 2.4rem; margin-bottom: 36px; }
+    .selos { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .selo { width: 230px; height: 230px; border-radius: 50%; background: #e3a72f; color: #6b3e26; border: 6px dashed #f6e7c1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 28px; }
+    .selo:nth-child(even) { background: #e07a2f; }
+    .selo h3 { font-size: 1.2rem; }
+    .selo p { font-size: .75rem; margin: 4px 0; }
+    .selo strong { font-size: 1.4rem; }
+    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+    .numeros { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 2.6rem; color: #b5452b; }
+    .cartao { background: #fff8e6; border: 4px solid #6b3e26; border-radius: 24px; padding: 30px; box-shadow: 10px 10px 0 #e07a2f; font-size: 1.3rem; }
+    .cartao p { font-size: 1.1rem; }
+    footer { background: #6b3e26; color: #f6e7c1; text-align: center; padding: 30px 20px; }
+    @media (max-width: 600px) { .logo { font-size: 2.2rem; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f6e7c1;
+      --texto: #6b3e26;
+      --texto-suave: #8a5a3c;
+      --cor: #e07a2f;
+      --cor-texto: #fff8e6;
+      --destaque: #b5452b;
+      --superficie: #fff8e6;
+      --escuro: #6b3e26;
+      --escuro-texto: #f6e7c1;
+      --borda: 4px solid #6b3e26;
+      --raio: 24px;
+      --raio-redondo: 999px;
+      --sombra: 8px 8px 0 #e07a2f;
+      --desfoque: none;
+      --fonte-titulo: "Cooper Black", Georgia, serif;
+      --largura: 900px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Letreiro rolando */
+    .letreiro { overflow: hidden; padding: 14px 0; background: var(--cor); color: var(--cor-texto); border-top: var(--borda); border-bottom: var(--borda); }
+    .letreiro div { display: flex; width: max-content; animation: rolar 25s linear infinite; font-family: var(--fonte-titulo); font-size: 1.3rem; text-transform: uppercase; }
+    .letreiro span { padding-right: 48px; }
+    @keyframes rolar { to { transform: translateX(-50%); } }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Efeitos ao passar o mouse */
+    .selo { transition: all .25s ease; }
+    .selo:hover { transform: rotate(-6deg) scale(1.05); }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+  </style>
+</head>
+<body>
+  <div class="listras"></div>
+
+  <header>
+    <div class="logo">Vinil Groove</div>
+    <p>~ Discos novos e usados ~</p>
+    <nav>
+      <a href="#servicos">Delícias</a>
+      <a href="#sobre">A casa</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="sol"><span>💿</span></div>
+    <h1>O som que só o vinil tem</h1>
+    <p>Milhares de LPs de MPB, rock, soul e jazz, com toca-discos para ouvir antes de levar.</p>
+    <a class="botao" href="#contato">Visitar a loja</a>
+  </div>
+
+  <div class="letreiro">
+    <div><span>★ LPs usados</span><span>★ LPs novos</span><span>★ Toca-discos</span><span>★ Compramos coleções</span><span>★ Discos novos e usados</span><span>★ LPs usados</span><span>★ LPs novos</span><span>★ Toca-discos</span><span>★ Compramos coleções</span><span>★ Discos novos e usados</span></div>
+  </div>
+
+  <div class="faixa" id="servicos">
+    <h2>Os favoritos da casa</h2>
+    <div class="selos">
+      <div class="selo">
+        <h3>LPs usados</h3>
+        <p>Revisados e limpos.</p>
+        <strong>a partir de R$ 30</strong>
+      </div>
+      <div class="selo">
+        <h3>LPs novos</h3>
+        <p>Lançamentos e reedições.</p>
+        <strong>a partir de R$ 150</strong>
+      </div>
+      <div class="selo">
+        <h3>Toca-discos</h3>
+        <p>Revisados, com garantia.</p>
+        <strong>a partir de R$ 600</strong>
+      </div>
+      <div class="selo">
+        <h3>Compramos coleções</h3>
+        <p>Avaliação na hora.</p>
+        <strong>sob consulta</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="galeria">
+    <h2>Galeria</h2>
+    <div class="galeria">
+      <figure>💿<figcaption>Vinil Groove</figcaption></figure>
+      <figure>💿<figcaption>LPs usados</figcaption></figure>
+      <figure>💿<figcaption>LPs novos</figcaption></figure>
+      <figure>💿<figcaption>Toca-discos</figcaption></figure>
+      <figure>💿<figcaption>Compramos coleções</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>A casa</h2>
+    <p>Uma loja para passar a tarde garimpando, ouvindo e conversando sobre música.</p>
+    <div class="numeros">
+      <div><strong>10.000</strong>discos</div>
+      <div><strong>4</strong>toca-discos</div>
+      <div><strong>30</strong>anos</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cartao">
+      “Achei o disco que meu pai procurava há 20 anos.”
+      <p>— Fábio, colecionador</p>
+    </div>
+  </section>
+
+  <div class="listras"></div>
+  <footer id="contato">
+    <p>Rua Major Facundo, 600 - Centro · (85) 3008-0101 · Seg a Sáb, 10h às 19h</p>
+  </footer>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

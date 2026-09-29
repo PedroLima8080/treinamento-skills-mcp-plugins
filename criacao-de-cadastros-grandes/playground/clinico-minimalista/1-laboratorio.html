@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab Vida</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1f2a37; background: #fff; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .topo { background: #1e6fd9; color: #fff; font-size: .85rem; padding: 6px 0; }
+    .topo .container { display: flex; justify-content: space-between; }
+    header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-weight: 700; font-size: 1.3rem; color: #1e6fd9; }
+    nav a { color: #4b5563; text-decoration: none; margin-left: 28px; font-size: .95rem; }
+    .botao { display: inline-block; background: #1e6fd9; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 0; font: inherit; cursor: pointer; }
+    nav .botao { color: #fff; padding: 8px 18px; }
+    .hero { background: #f4f8fb; padding: 80px 0; }
+    .hero .container { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .etiqueta { display: inline-block; background: #e0ecfc; color: #1e6fd9; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    h1 { font-size: 2.8rem; line-height: 1.2; margin: 16px 0; }
+    .hero p { color: #4b5563; font-size: 1.1rem; margin-bottom: 28px; }
+    .formulario { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(30, 111, 217, .12); }
+    .formulario h3 { margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d9e2; border-radius: 8px; margin-bottom: 12px; font: inherit; }
+    .formulario .botao { width: 100%; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 48px 24px; border-bottom: 1px solid #e5e7eb; text-align: center; }
+    .numero strong { display: block; font-size: 2.2rem; color: #1e6fd9; }
+    .numero span { color: #6b7280; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; text-align: center; }
+    .subtitulo { text-align: center; color: #6b7280; margin-bottom: 40px; }
+    .servicos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .servico { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; gap: 16px; }
+    .servico h3 { font-size: 1.1rem; }
+    .servico p { color: #6b7280; }
+    .servico strong { color: #1e6fd9; white-space: nowrap; }
+    .sobre { background: #f4f8fb; }
+    .sobre p { max-width: 720px; margin: 0 auto; text-align: center; color: #4b5563; }
+    .sobre .depoimento { margin-top: 24px; font-style: italic; color: #1f2a37; }
+    details { border-bottom: 1px solid #e5e7eb; padding: 16px 0; max-width: 720px; margin: 0 auto; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { color: #4b5563; margin-top: 8px; }
+    footer { background: #1f2a37; color: #cbd5e1; padding: 48px 0; }
+    footer .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    footer h4 { color: #fff; margin-bottom: 8px; }
+    @media (max-width: 800px) { .hero .container, .servicos, footer .container { grid-template-columns: 1fr; } nav a:not(.botao) { display: none; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #1f2a37;
+      --texto-suave: #6b7280;
+      --cor: #1e6fd9;
+      --cor-texto: #fff;
+      --destaque: #1e6fd9;
+      --superficie: #f4f8fb;
+      --escuro: #1f2a37;
+      --escuro-texto: #fff;
+      --borda: 1px solid #e5e7eb;
+      --raio: 12px;
+      --raio-redondo: 999px;
+      --sombra: 0 10px 30px rgba(30, 111, 217, .12);
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Roboto, Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .passo p { color: var(--texto-suave); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+  </style>
+</head>
+<body>
+  <div class="topo">
+    <div class="container">
+      <span>Seg a Sáb, 6h às 17h</span>
+      <span>(85) 3005-0101</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <span class="logo">🧪 Lab Vida</span>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="botao" href="#agendar">Agendar coleta</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="agendar">
+    <div class="container">
+      <div>
+        <span class="etiqueta">Análises clínicas</span>
+        <h1>Exames com resultado rápido e confiável</h1>
+        <p>Coleta sem agendamento, resultados online e atendimento domiciliar.</p>
+        <a class="botao" href="#servicos">Conheça os serviços</a>
+      </div>
+      <form class="formulario">
+        <h3>Agendar coleta</h3>
+        <input placeholder="Seu nome">
+        <input placeholder="Telefone">
+        <select>
+          <option>Hemograma</option>
+          <option>Check-up completo</option>
+          <option>Coleta domiciliar</option>
+          <option>Exames de imagem</option>
+        </select>
+        <button class="botao" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container numeros">
+    <div class="numero"><strong>4h</strong><span>resultado médio</span></div>
+    <div class="numero"><strong>1.000+</strong><span>tipos de exame</span></div>
+    <div class="numero"><strong>20</strong><span>anos</span></div>
+  </div>
+
+  <div class="secao-extra" id="como-funciona">
+    <h2>Como funciona</h2>
+    <div class="passos">
+      <div class="passo"><h3>Escolha</h3><p>Veja os serviços e escolha o ideal para você.</p></div>
+      <div class="passo"><h3>Agende</h3><p>Ligue para (85) 3005-0101 ou chame no WhatsApp.</p></div>
+      <div class="passo"><h3>Aproveite</h3><p>Venha até Rua Padre Valdevino, 1000 - Joaquim Távora e deixe o resto com a gente.</p></div>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="container">
+      <h2>Serviços</h2>
+      <p class="subtitulo">Tudo o que você precisa em um só lugar</p>
+      <div class="servicos">
+        <div class="servico">
+          <div>
+            <h3>Hemograma</h3>
+            <p>Resultado em até 4 horas.</p>
+          </div>
+          <strong>R$ 25</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Check-up completo</h3>
+            <p>20 exames essenciais.</p>
+          </div>
+          <strong>R$ 290</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Coleta domiciliar</h3>
+            <p>Vamos até você.</p>
+          </div>
+          <strong>R$ 40</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Exames de imagem</h3>
+            <p>Ultrassom e raio-x.</p>
+          </div>
+          <strong>a partir de R$ 120</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>Sobre nós</h2>
+      <p class="subtitulo">Lab Vida</p>
+      <p>Laboratório certificado com equipamentos automatizados e mais de 20 anos de experiência em análises clínicas.</p>
+      <p class="depoimento">“Recebi o resultado pelo celular antes do almoço.” — Marcelo, paciente</p>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="container">
+      <h2>Dúvidas frequentes</h2>
+      <p class="subtitulo">Não encontrou? Ligue para (85) 3005-0101</p>
+      <details><summary>Qual o horário de atendimento?</summary><p>Seg a Sáb, 6h às 17h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Rua Padre Valdevino, 1000 - Joaquim Távora.</p></details>
+      <details><summary>Como faço para agendar?</summary><p>Pelo formulário no topo da página ou pelo telefone (85) 3005-0101.</p></details>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="mapa">
+    <h2>Como chegar</h2>
+    <div class="mapa">
+      <span class="pino">📍</span>
+      <div class="endereco">
+        <strong>Lab Vida</strong><br>
+        Rua Padre Valdevino, 1000 - Joaquim Távora<br>
+        Seg a Sáb, 6h às 17h
+      </div>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <div class="container">
+      <div><h4>Lab Vida</h4><p>Análises clínicas</p></div>
+      <div><h4>Endereço</h4><p>Rua Padre Valdevino, 1000 - Joaquim Távora</p></div>
+      <div><h4>Contato</h4><p>(85) 3005-0101<br>Seg a Sáb, 6h às 17h</p></div>
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/558530050101" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+  </script>
+</body>
+</html>

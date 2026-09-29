@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prana Yoga</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+
+    :root {
+      --fundo: #5a3fd6;
+      --texto: #fff;
+      --texto-suave: rgba(255, 255, 255, .8);
+      --cor: #fff;
+      --cor-texto: #6a11cb;
+      --destaque: #fff;
+      --superficie: rgba(255, 255, 255, .14);
+      --escuro: rgba(0, 0, 0, .25);
+      --escuro-texto: #fff;
+      --borda: 1px solid rgba(255, 255, 255, .35);
+      --raio: 20px;
+      --raio-redondo: 999px;
+      --sombra: 0 8px 32px rgba(0, 0, 0, .15);
+      --desfoque: blur(14px);
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .passo p { color: var(--texto-suave); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.4rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Efeitos ao passar o mouse */
+    .grade .vidro { transition: all .25s ease; }
+    .grade .vidro:hover { transform: translateY(-6px); background: rgba(255, 255, 255, .22); }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 0; }
+    button.botao { border: 0; }
+  </style>
+</head>
+<body>
+  <header class="vidro">
+    <span class="logo">🧘 Prana Yoga</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">🧘</div>
+      <span class="etiqueta">Yoga e meditação</span>
+      <h1>Respire fundo e encontre o seu centro</h1>
+      <p>Aulas de yoga para todos os níveis, meditação guiada e retiros de fim de semana.</p>
+      <a class="botao" href="#contato">Aula experimental</a>
+    </section>
+
+    <div class="secao-extra" id="como-funciona">
+      <h2>Como funciona</h2>
+      <div class="passos">
+        <div class="passo"><h3>Escolha</h3><p>Veja os serviços e escolha o ideal para você.</p></div>
+        <div class="passo"><h3>Agende</h3><p>Ligue para (85) 3007-0103 ou chame no WhatsApp.</p></div>
+        <div class="passo"><h3>Aproveite</h3><p>Venha até Rua Marcos Macedo, 700 - Aldeota e deixe o resto com a gente.</p></div>
+      </div>
+    </div>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Hatha yoga</h3>
+        <p>Posturas, respiração e relaxamento.</p>
+        <span class="preco">R$ 220/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Vinyasa</h3>
+        <p>Fluxo dinâmico e desafiador.</p>
+        <span class="preco">R$ 240/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Meditação</h3>
+        <p>Sessões guiadas de 30 minutos.</p>
+        <span class="preco">R$ 120/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Retiros</h3>
+        <p>Fim de semana na serra.</p>
+        <span class="preco">R$ 890</span>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Prana Yoga</h3>
+        <p>Um espaço silencioso, com luz natural e professoras certificadas na Índia.</p>
+        <div class="numeros">
+          <div><strong>5</strong>professoras</div>
+          <div><strong>20</strong>aulas por semana</div>
+          <div><strong>9</strong>anos</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Dormi melhor já na primeira semana.”
+        <small>Joana, aluna</small>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="depoimentos">
+      <h2>O que dizem</h2>
+      <div class="carrossel">
+        <blockquote class="slide ativo">“Dormi melhor já na primeira semana.”<cite>Joana, aluna</cite></blockquote>
+        <blockquote class="slide">“As aulas de vinyasa mudaram minha rotina.”<cite>Rodrigo, aluno</cite></blockquote>
+        <blockquote class="slide">“O retiro na serra foi transformador.”<cite>Aline, aluna</cite></blockquote>
+        <div class="pontos-carrossel">
+          <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+          <button type="button" aria-label="Depoimento 2"></button>
+          <button type="button" aria-label="Depoimento 3"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Rua Marcos Macedo, 700 - Aldeota · (85) 3007-0103 · Seg a Sáb, 6h às 21h</p>
+  </footer>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => mostrar(i)));
+      setInterval(() => mostrar((atual + 1) % slides.length), 5000);
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empório Minas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #f5ecd7; color: #3e2723; line-height: 1.7; }
+    .faixa { background: #3e2723; color: #f5ecd7; text-align: center; padding: 8px; font-size: .9rem; letter-spacing: 2px; }
+    header { text-align: center; padding: 30px 20px 14px; border-bottom: 3px double #3e2723; max-width: 1000px; margin: 0 auto; }
+    .logo { font-size: 2.4rem; font-style: italic; }
+    nav a { color: #b23a2b; margin: 0 12px; text-decoration: none; font-variant: small-caps; font-size: 1.1rem; }
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    h1 { font-size: 3rem; line-height: 1.15; font-weight: normal; }
+    .hero p { font-size: 1.15rem; margin: 20px 0 28px; }
+    .botao { display: inline-block; background: #b23a2b; color: #f5ecd7; padding: 12px 28px; text-decoration: none; border: 2px dashed #f5ecd7; outline: 2px solid #b23a2b; }
+    .selo { aspect-ratio: 1; border-radius: 50%; border: 3px dashed #b23a2b; display: grid; place-items: center; font-size: 120px; background: #efe1c1; }
+    section { max-width: 800px; margin: 0 auto; padding: 50px 20px; }
+    h2 { text-align: center; font-weight: normal; font-size: 2rem; }
+    .ornamento { text-align: center; color: #b23a2b; margin-bottom: 30px; letter-spacing: 8px; }
+    .item { margin-bottom: 22px; }
+    .item .topo { display: flex; align-items: baseline; gap: 8px; font-size: 1.2rem; font-weight: bold; }
+    .item .pontos { flex: 1; border-bottom: 2px dotted #3e2723; }
+    .item p { font-style: italic; color: #6d4c41; }
+    .sobre { text-align: center; font-size: 1.15rem; }
+    .numeros { text-align: center; margin-top: 20px; color: #b23a2b; }
+    .numeros strong { font-size: 1.4rem; color: #3e2723; }
+    blockquote { text-align: center; font-size: 1.5rem; font-style: italic; border-top: 1px solid #3e2723; border-bottom: 1px solid #3e2723; padding: 30px 0; }
+    cite { display: block; font-size: 1rem; margin-top: 10px; color: #b23a2b; }
+    table { margin: 0 auto; border-collapse: collapse; font-size: 1.1rem; }
+    td { padding: 8px 20px; border-bottom: 1px dashed #3e2723; }
+    td:first-child { font-variant: small-caps; color: #b23a2b; }
+    footer { background: #3e2723; color: #f5ecd7; text-align: center; padding: 40px 20px; font-style: italic; }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .selo { font-size: 80px; max-width: 240px; margin: 0 auto; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f5ecd7;
+      --texto: #3e2723;
+      --texto-suave: #6d4c41;
+      --cor: #b23a2b;
+      --cor-texto: #f5ecd7;
+      --destaque: #b23a2b;
+      --superficie: #efe1c1;
+      --escuro: #3e2723;
+      --escuro-texto: #f5ecd7;
+      --borda: 2px dashed #3e2723;
+      --raio: 4px;
+      --raio-redondo: 999px;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: 800px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Equipe */
+    .equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .membro { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .avatar { width: 96px; height: 96px; margin: 0 auto 14px; display: grid; place-items: center; font-size: 3rem; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .membro span { display: block; color: var(--texto-suave); font-size: .9rem; }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra > h2 { font-weight: normal; }
+  </style>
+</head>
+<body>
+  <div class="faixa">Queijos e vinhos · direto dos produtores</div>
+
+  <header>
+    <div class="logo">Empório Minas</div>
+    <nav>
+      <a href="#cardapio">cardápio</a>
+      <a href="#historia">nossa história</a>
+      <a href="#contato">visite-nos</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Queijos mineiros de pequenos produtores</h1>
+      <p>Canastra, Serro e queijos maturados escolhidos um a um nas fazendas.</p>
+      <a class="botao" href="#contato">Visitar o empório</a>
+    </div>
+    <div class="selo">🧀</div>
+  </div>
+
+  <section id="cardapio">
+    <h2>Cardápio</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <div class="item">
+      <div class="topo"><span>Queijo Canastra</span><span class="pontos"></span><span>R$ 95</span></div>
+      <p>Meia cura, peça de 1 kg.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Queijo do Serro</span><span class="pontos"></span><span>R$ 70</span></div>
+      <p>Fresco e amanteigado.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Tábua degustação</span><span class="pontos"></span><span>R$ 79</span></div>
+      <p>5 queijos, geleia e torradas.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Doce de leite</span><span class="pontos"></span><span>R$ 28</span></div>
+      <p>Pote de vidro, 500g.</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="promo">
+    <div class="promo">
+      <h2>Oferta da semana</h2>
+      <p>Queijo Canastra com 20% de desconto até domingo.</p>
+      <div class="relogio">
+        <div><strong>00</strong>dias</div>
+        <div><strong>00</strong>horas</div>
+        <div><strong>00</strong>min</div>
+        <div><strong>00</strong>seg</div>
+      </div>
+      <a class="botao" href="#contato">Quero a oferta</a>
+    </div>
+  </div>
+
+  <section id="historia">
+    <h2>Nossa história</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <p class="sobre">Viajamos por Minas todo mês para buscar queijos direto de quem faz. Cada peça tem nome, fazenda e história.</p>
+    <p class="numeros"><strong>40</strong> produtores &nbsp;✦&nbsp; <strong>60</strong> tipos de queijo &nbsp;✦&nbsp; <strong>11</strong> anos</p>
+  </section>
+
+  <section>
+    <blockquote>
+      “O Canastra que eles têm é de outro planeta.”
+      <cite>— Mariana, cliente</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato">
+    <h2>Visite-nos</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <table>
+      <tr><td>endereço</td><td>Rua Ana Bilhar, 650 - Meireles</td></tr>
+      <tr><td>telefone</td><td>(85) 3003-0105</td></tr>
+      <tr><td>horário</td><td>Seg a Sáb, 10h às 20h</td></tr>
+    </table>
+  </section>
+
+  <div class="secao-extra" id="equipe">
+    <h2>Nossa equipe</h2>
+    <div class="equipe">
+      <div class="membro">
+        <div class="avatar">🧀</div>
+        <h3>Seu Geraldo</h3>
+        <span>Fundador e queijeiro</span>
+      </div>
+      <div class="membro">
+        <div class="avatar">🍷</div>
+        <h3>Ana Clara</h3>
+        <span>Sommelière de queijos</span>
+      </div>
+      <div class="membro">
+        <div class="avatar">🚚</div>
+        <h3>Tonho</h3>
+        <span>Viaja pelas fazendas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="newsletter">
+    <div class="newsletter">
+      <h2>Receba novidades</h2>
+      <p>Promoções e novidades da Empório Minas direto no seu e-mail.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="seu@email.com">
+        <button class="botao" type="submit">Assinar</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>Empório Minas — feito à mão, com calma.</footer>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

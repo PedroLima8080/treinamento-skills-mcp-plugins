@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Level Up Arena</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #0a0a12; color: #d9d9e8; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; border-bottom: 1px solid #1f1f33; }
+    .logo { font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #00f0ff; text-shadow: 0 0 12px #00f0ff; }
+    header a { color: #d9d9e8; text-decoration: none; text-transform: uppercase; font-size: .8rem; letter-spacing: 3px; margin-left: 24px; }
+    .hero { min-height: min(80vh, 720px); display: flex; flex-direction: column; justify-content: center; padding: 0 6%; background: radial-gradient(circle at 80% 30%, #ff2bd633, transparent 40%), radial-gradient(circle at 10% 90%, #00f0ff22, transparent 40%); }
+    .hero small { color: #ff2bd6; letter-spacing: 6px; text-transform: uppercase; }
+    h1 { font-size: 4rem; text-transform: uppercase; line-height: 1; max-width: 850px; margin: 16px 0; color: #fff; text-shadow: 0 0 24px #00f0ff88; }
+    .hero p { max-width: 520px; color: #9a9ab5; font-size: 1.1rem; }
+    .botao { margin-top: 32px; align-self: flex-start; border: 2px solid #00f0ff; color: #00f0ff; padding: 14px 36px; text-transform: uppercase; letter-spacing: 3px; text-decoration: none; box-shadow: 0 0 16px #00f0ff66, inset 0 0 16px #00f0ff33; }
+    section { padding: 80px 6%; }
+    h2 { text-transform: uppercase; letter-spacing: 6px; font-size: .9rem; color: #ff2bd6; margin-bottom: 40px; }
+    .linha { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 0; border-bottom: 1px solid #1f1f33; }
+    .linha h3 { font-size: 1.6rem; text-transform: uppercase; color: #fff; }
+    .linha p { color: #9a9ab5; }
+    .linha strong { color: #00f0ff; font-size: 1.4rem; white-space: nowrap; text-shadow: 0 0 10px #00f0ff; }
+    .sobre { font-size: 1.3rem; max-width: 800px; margin-bottom: 40px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #1f1f33; }
+    .numero { background: #0a0a12; padding: 40px; text-align: center; }
+    .numero strong { display: block; font-size: 3rem; color: #ff2bd6; text-shadow: 0 0 16px #ff2bd6; }
+    .numero span { text-transform: uppercase; letter-spacing: 3px; font-size: .8rem; color: #9a9ab5; }
+    blockquote { font-size: 2rem; font-style: italic; border-left: 4px solid #ff2bd6; padding-left: 30px; max-width: 800px; color: #fff; }
+    cite { display: block; margin-top: 16px; font-size: .9rem; color: #00f0ff; letter-spacing: 3px; text-transform: uppercase; font-style: normal; }
+    footer { padding: 40px 6%; border-top: 1px solid #1f1f33; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #6b6b88; font-size: .85rem; }
+    @media (max-width: 700px) { h1 { font-size: 2.4rem; } .numeros { grid-template-columns: 1fr; } .linha { flex-direction: column; align-items: flex-start; } header nav { display: none; } }
+
+    :root {
+      --fundo: #0a0a12;
+      --texto: #fff;
+      --texto-suave: #9a9ab5;
+      --cor: #00f0ff;
+      --cor-texto: #0a0a12;
+      --destaque: #ff2bd6;
+      --superficie: #11111d;
+      --escuro: #11111d;
+      --escuro-texto: #fff;
+      --borda: 1px solid #00f0ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 18px #00f0ff44;
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Planos */
+    .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: center; }
+    .plano { padding: 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .plano.destaque { transform: scale(1.06); box-shadow: var(--sombra); border-color: var(--destaque); }
+    .plano small { display: inline-block; margin-bottom: 12px; padding: 2px 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .plano .valor { display: block; margin: 16px 0 20px; font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--destaque); }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 6%; }
+    button.botao { background: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Level Up Arena</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <small>Games e e-sports</small>
+    <h1>Entre no jogo</h1>
+    <p>PCs de alta performance, consoles de última geração e campeonatos toda semana.</p>
+    <a class="botao" href="#contato">Reservar máquina</a>
+  </section>
+
+  <section id="servicos">
+    <h2>// Serviços</h2>
+    <div class="linha">
+      <div>
+        <h3>Hora no PC</h3>
+        <p>Máquinas com placa de vídeo topo de linha e 240 Hz.</p>
+      </div>
+      <strong>R$ 12/h</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Hora no console</h3>
+        <p>PlayStation, Xbox e Switch.</p>
+      </div>
+      <strong>R$ 10/h</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Campeonatos</h3>
+        <p>Toda sexta, com premiação.</p>
+      </div>
+      <strong>R$ 30</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Aniversário gamer</h3>
+        <p>Sala exclusiva para até 20 pessoas.</p>
+      </div>
+      <strong>R$ 900</strong>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="promo">
+    <div class="promo">
+      <h2>// Oferta da semana</h2>
+      <p>Hora no PC com 20% de desconto até domingo.</p>
+      <div class="relogio">
+        <div><strong>00</strong>dias</div>
+        <div><strong>00</strong>horas</div>
+        <div><strong>00</strong>min</div>
+        <div><strong>00</strong>seg</div>
+      </div>
+      <a class="botao" href="#contato">Quero a oferta</a>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="planos">
+    <h2>// Planos</h2>
+    <div class="planos">
+      <div class="plano">
+        <h3>Hora no PC</h3>
+        <p>Máquinas com placa de vídeo topo de linha e 240 Hz.</p>
+        <span class="valor">R$ 12/h</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano destaque">
+        <small>Mais pedido</small>
+        <h3>Hora no console</h3>
+        <p>PlayStation, Xbox e Switch.</p>
+        <span class="valor">R$ 10/h</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano">
+        <h3>Campeonatos</h3>
+        <p>Toda sexta, com premiação.</p>
+        <span class="valor">R$ 30</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>// Sobre</h2>
+    <p class="sobre">Nascemos para reunir quem ama jogar. Internet de fibra dedicada, cadeiras gamer e lanches para não precisar pausar.</p>
+    <div class="numeros">
+      <div class="numero"><strong>40</strong><span>máquinas</span></div>
+      <div class="numero"><strong>1 Gbps</strong><span>de internet</span></div>
+      <div class="numero"><strong>200+</strong><span>campeonatos</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>// Quem já veio</h2>
+    <blockquote>
+      “Zero lag, zero desculpa. Melhor lugar para treinar com o time.”
+      <cite>Lucas, capitão do time</cite>
+    </blockquote>
+  </section>
+
+  <footer id="contato">
+    <span>Shopping Via Sul, piso L2</span>
+    <span>(85) 3002-0102</span>
+    <span>Todos os dias, 10h às 24h</span>
+  </footer>
+
+  <div class="progresso"></div>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HostRápido</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "hostrapido@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+
+    :root {
+      --fundo: #0c0c0c;
+      --texto: #33ff66;
+      --texto-suave: #888;
+      --cor: #33ff66;
+      --cor-texto: #0c0c0c;
+      --destaque: #fff;
+      --superficie: #0c0c0c;
+      --escuro: #0c0c0c;
+      --escuro-texto: #33ff66;
+      --borda: 1px dashed #33ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 24px #33ff6633;
+      --desfoque: none;
+      --fonte-titulo: Consolas, "Courier New", monospace;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 24px 0; }
+    .secao-extra > h2 { font-size: 1rem; font-weight: normal; color: #fff; margin: 12px 0 16px; }
+    .secao-extra > h2::before { content: "$ "; color: #33ff66; }
+    button.botao { background: none; }
+    .letreiro { margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>hostrapido@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Seu site no ar em 5 minutos</h1>
+      <p class="comentario"># hospedagem com SSD, certificado SSL grátis e backup diário</p>
+      <a class="botao" href="#contato">[ Criar conta ]</a>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>basico</td><td>1 site, 10 GB SSD.</td><td>R$ 19/mês</td></tr>
+          <tr><td>profissional</td><td>10 sites, 50 GB SSD.</td><td>R$ 39/mês</td></tr>
+          <tr><td>vps</td><td>2 vCPU, 4 GB RAM, acesso root.</td><td>R$ 89/mês</td></tr>
+          <tr><td>dominio</td><td>Registro .com.br.</td><td>R$ 40/ano</td></tr>
+        </table>
+      </section>
+
+      <div class="secao-extra" id="promo">
+        <div class="promo">
+          <h2>./oferta-da-semana</h2>
+          <p>basico com 20% de desconto até domingo.</p>
+          <div class="relogio">
+            <div><strong>00</strong>dias</div>
+            <div><strong>00</strong>horas</div>
+            <div><strong>00</strong>min</div>
+            <div><strong>00</strong>seg</div>
+          </div>
+          <a class="botao" href="#contato">Quero a oferta</a>
+        </div>
+      </div>
+
+      <div class="secao-extra" id="detalhes">
+        <h2>./conheca-cada-servico</h2>
+        <div class="abas-botoes">
+          <button type="button" class="ativa">basico</button>
+          <button type="button">profissional</button>
+          <button type="button">vps</button>
+          <button type="button">dominio</button>
+        </div>
+        <div class="aba ativa">
+          <h3>basico</h3>
+          <p>1 site, 10 GB SSD.</p>
+          <strong>R$ 19/mês</strong>
+          <a class="botao" href="#contato">Criar conta</a>
+        </div>
+        <div class="aba">
+          <h3>profissional</h3>
+          <p>10 sites, 50 GB SSD.</p>
+          <strong>R$ 39/mês</strong>
+          <a class="botao" href="#contato">Criar conta</a>
+        </div>
+        <div class="aba">
+          <h3>vps</h3>
+          <p>2 vCPU, 4 GB RAM, acesso root.</p>
+          <strong>R$ 89/mês</strong>
+          <a class="botao" href="#contato">Criar conta</a>
+        </div>
+        <div class="aba">
+          <h3>dominio</h3>
+          <p>Registro .com.br.</p>
+          <strong>R$ 40/ano</strong>
+          <a class="botao" href="#contato">Criar conta</a>
+        </div>
+      </div>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Datacenter no Brasil, baixa latência e suporte técnico que entende o que você está falando.</p>
+        <p><span class="ok">OK</span> 99,95% uptime</p>
+        <p><span class="ok">OK</span> 5 min para publicar</p>
+        <p><span class="ok">OK</span> 12.000 sites hospedados</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "Migraram meu site sem nenhum minuto fora do ar." <span class="comentario">-- Fernando, dono de e-commerce</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Rua Ildefonso Albano, 2000 - Aldeota</p>
+        <p>telefone : (85) 3009-0102</p>
+        <p>horario  : Suporte 24 horas</p>
+      </section>
+
+    </main>
+    <footer># HostRápido :: hospedagem de sites</footer>
+  </div>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

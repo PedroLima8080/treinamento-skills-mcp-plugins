@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maison Branca</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #faf7f2; color: #222; line-height: 1.7; }
+    .sans { font-family: Helvetica, Arial, sans-serif; }
+    header { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 8%; }
+    .logo { font-size: 1.2rem; letter-spacing: .3em; text-transform: uppercase; }
+    nav a { font-family: Helvetica, Arial, sans-serif; font-size: .8rem; color: #222; text-decoration: none; margin-left: 28px; letter-spacing: .1em; }
+    .hero { padding: 80px 8% 100px; border-bottom: 1px solid #222; }
+    .hero small { font-family: Helvetica, Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; color: #7a8b69; }
+    h1 { font-size: clamp(2.8rem, 7vw, 6rem); font-weight: normal; line-height: 1.05; font-style: italic; max-width: 14ch; margin: 24px 0 48px; }
+    .hero .linha { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+    .hero p { max-width: 420px; font-size: 1.1rem; }
+    .botao { font-family: Helvetica, Arial, sans-serif; color: #222; text-decoration: none; border-bottom: 1px solid #222; padding-bottom: 4px; letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; }
+    section { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .rotulo { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #7a8b69; }
+    .rotulo b { display: block; font-family: Georgia, serif; font-size: 2.5rem; font-weight: normal; color: #222; letter-spacing: 0; }
+    .lista article { display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 24px 0; border-top: 1px solid #d8d2c8; }
+    .lista article:first-child { border-top: 0; padding-top: 0; }
+    .lista h3 { font-weight: normal; font-size: 1.6rem; }
+    .lista p { color: #555; }
+    .lista span { grid-row: 1; grid-column: 2; font-style: italic; color: #7a8b69; }
+    .texto { font-size: 1.4rem; max-width: 32em; }
+    .numeros { display: flex; gap: 60px; margin-top: 40px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 3rem; font-weight: normal; font-style: italic; }
+    .numeros span { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+    blockquote { font-size: 2rem; font-style: italic; line-height: 1.4; }
+    cite { display: block; margin-top: 20px; font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: #7a8b69; }
+    .contato p { font-size: 1.3rem; }
+    footer { padding: 60px 8% 30px; }
+    .marca { font-size: clamp(3rem, 12vw, 10rem); line-height: 1; letter-spacing: -.02em; }
+    .rodape { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: Helvetica, Arial, sans-serif; font-size: .8rem; border-top: 1px solid #222; padding-top: 20px; margin-top: 20px; }
+    @media (max-width: 700px) { section { grid-template-columns: 1fr; } nav { display: none; } }
+
+    :root {
+      --fundo: #faf7f2;
+      --texto: #222;
+      --texto-suave: #555;
+      --cor: #7a8b69;
+      --cor-texto: #fff;
+      --destaque: #7a8b69;
+      --superficie: #f1ece3;
+      --escuro: #222;
+      --escuro-texto: #faf7f2;
+      --borda: 1px solid #d8d2c8;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.4rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Menu hambúrguer */
+    header nav { display: none; }
+    .menu-botao { position: fixed; top: 16px; right: 16px; z-index: 60; width: 52px; height: 52px; font-size: 1.4rem; cursor: pointer; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .menu-overlay { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; background: var(--escuro); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .menu-overlay.aberto { opacity: 1; pointer-events: auto; }
+    .menu-overlay a { color: var(--escuro-texto); font-family: var(--fonte-titulo); font-size: 2.2rem; text-decoration: none; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .secao-extra > h2 { font-weight: normal; font-style: italic; font-size: 2.4rem; }
+    button.botao { background: none; border: 0; border-bottom: 1px solid #222; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Maison Branca</span>
+    <nav>
+      <a href="#servicos">serviços</a>
+      <a href="#sobre">sobre</a>
+      <a href="#contato">contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <small>Ateliê de noivas</small>
+    <h1>O vestido que só poderia ser seu</h1>
+    <div class="linha">
+      <p>Vestidos exclusivos desenhados e costurados sob medida para o grande dia.</p>
+      <a class="botao" href="#contato">Agendar prova</a>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="rotulo"><b>01</b>Serviços</div>
+    <div class="lista">
+      <article>
+        <h3>Vestido sob medida</h3>
+        <span>a partir de R$ 8.000</span>
+        <p>Do croqui à última prova.</p>
+      </article>
+      <article>
+        <h3>Aluguel</h3>
+        <span>a partir de R$ 2.500</span>
+        <p>Coleção própria com ajustes inclusos.</p>
+      </article>
+      <article>
+        <h3>Véus e acessórios</h3>
+        <span>a partir de R$ 600</span>
+        <p>Bordados à mão.</p>
+      </article>
+      <article>
+        <h3>Ajustes</h3>
+        <span>sob consulta</span>
+        <p>Para vestidos de outras marcas.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="galeria">
+    <h2>Galeria</h2>
+    <div class="galeria">
+      <figure>👰<figcaption>Maison Branca</figcaption></figure>
+      <figure>👰<figcaption>Vestido sob medida</figcaption></figure>
+      <figure>👰<figcaption>Aluguel</figcaption></figure>
+      <figure>👰<figcaption>Véus e acessórios</figcaption></figure>
+      <figure>👰<figcaption>Ajustes</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="rotulo"><b>02</b>Sobre</div>
+    <div>
+      <p class="texto">Há vinte anos vestimos noivas que não querem parecer com nenhuma outra. Tudo começa com uma conversa e um café.</p>
+      <div class="numeros">
+        <div><strong>1.200</strong><span>noivas</span></div>
+        <div><strong>6</strong><span>provas em média</span></div>
+        <div><strong>20</strong><span>anos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rotulo"><b>03</b>Depoimento</div>
+    <blockquote>
+      “Me senti a mulher mais bonita do mundo naquele vestido.”
+      <cite>Isabela, noiva de 2025</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato" class="contato">
+    <div class="rotulo"><b>04</b>Contato</div>
+    <div>
+      <p>Rua Vicente Leite, 1100 - Aldeota</p>
+      <p>(85) 3006-0101</p>
+      <p><em>Ter a Sáb, 10h às 19h, com hora marcada</em></p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="depoimentos">
+    <h2>O que dizem</h2>
+    <div class="carrossel">
+      <blockquote class="slide ativo">“Me senti a mulher mais bonita do mundo naquele vestido.”<cite>Isabela, noiva de 2025</cite></blockquote>
+      <blockquote class="slide">“Cada prova foi um momento especial.”<cite>Luísa, noiva de 2024</cite></blockquote>
+      <blockquote class="slide">“Entenderam meu estilo desde o primeiro café.”<cite>Marina, noiva de 2025</cite></blockquote>
+      <div class="pontos-carrossel">
+        <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+        <button type="button" aria-label="Depoimento 2"></button>
+        <button type="button" aria-label="Depoimento 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="marca">Maison Branca</div>
+    <div class="rodape">
+      <span>Ateliê de noivas</span>
+      <span>© Maison Branca</span>
+    </div>
+  </footer>
+
+  <button class="menu-botao" type="button" aria-label="Abrir menu">☰</button>
+  <div class="menu-overlay">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <script>
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => mostrar(i)));
+      setInterval(() => mostrar((atual + 1) % slides.length), 5000);
+    }
+
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Menu hambúrguer: abre e fecha o menu em tela cheia
+      const botaoMenu = document.querySelector('.menu-botao');
+      const menu = document.querySelector('.menu-overlay');
+      const alternar = () => {
+        menu.classList.toggle('aberto');
+        botaoMenu.textContent = menu.classList.contains('aberto') ? '✕' : '☰';
+      };
+      botaoMenu.addEventListener('click', alternar);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', alternar));
+    }
+  </script>
+</body>
+</html>

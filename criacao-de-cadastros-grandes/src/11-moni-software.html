@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moni Software | Software para Monitoramento e Portaria</title>
+  <meta name="description" content="Uma única plataforma para central de alarmes, portaria remota, discador, mensagens e frota. Usada por mais de 2.200 empresas no Brasil e na América Latina.">
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Trebuchet MS", Verdana, sans-serif; background: #f2f8ff; color: #1f2d4d; line-height: 1.6; overflow-x: hidden; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    nav { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 3px solid #1f2d4d; border-radius: 999px; padding: 10px 14px 10px 24px; margin: 20px auto; max-width: 1000px; }
+    .logo { font-weight: bold; font-size: 1.3rem; display: inline-flex; align-items: center; gap: 8px; }
+    nav a { color: #1f2d4d; text-decoration: none; margin-left: 16px; font-weight: bold; }
+    .hero { text-align: center; padding: 50px 20px; }
+    .bolha { width: 160px; height: 160px; border-radius: 50%; background: #cfeaff; border: 3px solid #1f2d4d; display: grid; place-items: center; font-size: 80px; margin: 0 auto 24px; }
+    h1 { font-size: 2.8rem; line-height: 1.1; }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 16px auto 28px; }
+    .botao { display: inline-block; background: #6ec1ff; color: #1f2d4d; border: 3px solid #1f2d4d; border-radius: 999px; padding: 14px 32px; font-weight: bold; text-decoration: none; box-shadow: 0 6px 0 #1f2d4d; }
+    section.container { padding: 50px 20px; }
+    h2 { text-align: center; font-size: 2rem; margin-bottom: 30px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; }
+    .card { border: 3px solid #1f2d4d; border-radius: 32px; padding: 28px; text-align: center; }
+    .card:nth-child(6n + 1) { background: #cfeaff; }
+    .card:nth-child(6n + 2) { background: #ffd6e0; }
+    .card:nth-child(6n + 3) { background: #c8f2e0; }
+    .card:nth-child(6n + 4) { background: #fff1b8; }
+    .card:nth-child(6n + 5) { background: #e2d6ff; }
+    .card:nth-child(6n + 6) { background: #ffe0c7; }
+    .preco { display: inline-block; background: #fff; border: 2px solid #1f2d4d; border-radius: 999px; padding: 4px 14px; margin-top: 12px; font-weight: bold; }
+    .sobre { text-align: center; max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem; }
+    .numeros { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .numero { background: #fff; border: 3px solid #1f2d4d; border-radius: 24px; padding: 20px 30px; text-align: center; }
+    .numero strong { display: block; font-size: 2rem; }
+    .balao { background: #fff; border: 3px solid #1f2d4d; border-radius: 32px; padding: 30px; max-width: 640px; margin: 0 auto; position: relative; font-size: 1.15rem; text-align: center; }
+    .balao::after { content: ""; position: absolute; bottom: -18px; left: 60px; width: 30px; height: 30px; background: #fff; border-right: 3px solid #1f2d4d; border-bottom: 3px solid #1f2d4d; transform: rotate(45deg); }
+    .autor { text-align: center; margin-top: 30px; font-weight: bold; }
+    footer { background: #1f2d4d; color: #f2f8ff; padding: 56px 20px 32px; border-radius: 40px 40px 0 0; margin-top: 40px; }
+    footer strong { font-size: 1.4rem; }
+    @media (max-width: 600px) { h1 { font-size: 2rem; } }
+
+    :root {
+      --fundo: #f2f8ff;
+      --texto: #1f2d4d;
+      --texto-suave: #55668a;
+      --cor: #6ec1ff;
+      --cor-texto: #1f2d4d;
+      --destaque: #d6336c;
+      --superficie: #fff;
+      --escuro: #1f2d4d;
+      --escuro-texto: #f2f8ff;
+      --borda: 3px solid #1f2d4d;
+      --raio: 28px;
+      --raio-redondo: 999px;
+      --sombra: 0 6px 0 #1f2d4d;
+      --desfoque: none;
+      --fonte-titulo: "Trebuchet MS", Verdana, sans-serif;
+      --largura: 1000px;
+      --rosa: #ffd6e0;
+      --menta: #c8f2e0;
+      --lavanda: #e2d6ff;
+      --amarelo: #fff1b8;
+      --ceu: #cfeaff;
+      --pessego: #ffe0c7;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; font-size: 1rem; }
+    :focus-visible { outline: 3px dashed var(--destaque); outline-offset: 3px; }
+    body { background-image: radial-gradient(color-mix(in srgb, var(--texto) 14%, transparent) 2px, transparent 2px); background-size: 32px 32px; }
+    .selo { display: inline-block; margin-bottom: 14px; padding: 4px 16px; font-size: .85rem; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; background: var(--amarelo); border: 2px solid var(--texto); border-radius: var(--raio-redondo); }
+    .subtitulo { text-align: center; max-width: 620px; margin: -14px auto 34px; color: var(--texto-suave); font-size: 1.1rem; }
+    .botao.secundario { background: var(--superficie); }
+    .botao:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--texto); }
+
+    /* Barra de progresso */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; height: 6px; width: 0; background: var(--destaque); border-bottom: 2px solid var(--texto); border-radius: 0 var(--raio-redondo) var(--raio-redondo) 0; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); border-bottom: var(--borda); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Menu no topo + hambúrguer */
+    nav { position: sticky; top: 14px; z-index: 40; margin: 20px auto; width: calc(100% - 40px); }
+    nav > div { display: flex; align-items: center; }
+    nav .botao { padding: 8px 20px; box-shadow: 0 4px 0 var(--texto); margin-left: 16px; }
+    .logo svg { width: 34px; height: 34px; }
+    .menu-botao { position: fixed; top: 22px; right: 26px; z-index: 60; width: 44px; height: 44px; font-size: 1.3rem; cursor: pointer; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: 0 4px 0 var(--texto); display: none; }
+    .menu-overlay { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 24px; background: var(--escuro); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .menu-overlay.aberto { opacity: 1; pointer-events: auto; }
+    .menu-overlay a { color: var(--escuro-texto); font-family: var(--fonte-titulo); font-size: 2.2rem; text-decoration: none; }
+    .menu-overlay a:hover { color: var(--cor); }
+    @media (max-width: 860px) {
+      nav > div { display: none; }
+      .menu-botao { display: block; }
+    }
+
+    /* Hero */
+    .hero { max-width: var(--largura); margin: 0 auto; display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: center; text-align: left; padding: 40px 24px 70px; }
+    .hero p { margin-left: 0; }
+    .hero h1 em { font-style: normal; padding: 0 .2em; background: var(--amarelo); border: 3px solid var(--texto); border-radius: 16px; display: inline-block; transform: rotate(-2deg); }
+    .hero-botoes { display: flex; flex-wrap: wrap; gap: 16px; }
+    .hero-confianca { margin-top: 30px; font-size: .95rem; color: var(--texto-suave); }
+    .hero-confianca strong { color: var(--texto); }
+    .palco { position: relative; aspect-ratio: 1; max-width: 400px; width: 100%; margin: 0 auto; }
+    .palco .fundo { position: absolute; inset: 6%; background: var(--ceu); border: var(--borda); border-radius: 50% 46% 54% 50% / 52% 48% 52% 48%; }
+    .palco .mascote { position: absolute; inset: 4%; width: 92%; animation: flutuar 4s ease-in-out infinite; filter: drop-shadow(0 8px 0 rgba(31, 45, 77, .14)); }
+    .piscar { transform-box: fill-box; transform-origin: center; animation: piscar 5s infinite; }
+    .ficha { position: absolute; z-index: 2; padding: 8px 14px; font-size: .85rem; font-weight: bold; white-space: nowrap; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: 0 4px 0 var(--texto); animation: quicar-ficha 3.4s ease-in-out infinite; }
+    .ficha:nth-of-type(1) { top: 2%; left: -6%; background: var(--rosa); }
+    .ficha:nth-of-type(2) { top: 30%; right: -8%; background: var(--menta); animation-delay: -1.1s; }
+    .ficha:nth-of-type(3) { bottom: 8%; left: -4%; background: var(--amarelo); animation-delay: -2.2s; }
+    .ficha i { font-style: normal; }
+    @keyframes flutuar { 50% { transform: translateY(-12px); } }
+    @keyframes piscar { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+    @keyframes quicar-ficha { 50% { transform: translateY(-9px) rotate(1.5deg); } }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero p { margin-left: auto; }
+      .hero-botoes { justify-content: center; }
+      .palco { max-width: 320px; }
+      .ficha:nth-of-type(1) { left: 0; } .ficha:nth-of-type(2) { right: 0; } .ficha:nth-of-type(3) { left: 0; }
+    }
+
+    /* Letreiro rolando */
+    .letreiro { overflow: hidden; padding: 14px 0; background: var(--cor); color: var(--cor-texto); border-top: var(--borda); border-bottom: var(--borda); transform: rotate(-1deg); margin: 0 -10px; }
+    .letreiro div { display: flex; width: max-content; animation: rolar 30s linear infinite; font-family: var(--fonte-titulo); font-size: 1.3rem; text-transform: uppercase; }
+    .letreiro:hover div { animation-play-state: paused; }
+    .letreiro span { padding-right: 48px; white-space: nowrap; }
+    @keyframes rolar { to { transform: translateX(-50%); } }
+
+    /* Números */
+    .faixa-numeros { padding-top: 70px; }
+
+    /* Efeitos ao passar o mouse */
+    .card, .numero, .passo, .diferencial { transition: all .25s ease; }
+    .card:hover, .numero:hover, .passo:hover, .diferencial:hover { transform: translateY(-6px) rotate(-1deg); }
+    .botao { transition: transform .2s ease, filter .2s ease, box-shadow .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.06); }
+
+    /* Cards das soluções */
+    .card .emoji { display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 14px; font-size: 2.3rem; background: var(--superficie); border: var(--borda); border-radius: 50%; transition: transform .4s; }
+    .card:hover .emoji { transform: rotate(-12deg) scale(1.12); }
+    .card h3 { margin-bottom: 6px; }
+    .card p { font-size: .98rem; }
+    .card .preco { font-size: .85rem; }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      h1, .palco .mascote, .piscar, .ficha, .letreiro div, .whatsapp, .mapa .pino { animation: none; }
+      .revelar { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* Abas de soluções */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); transition: transform .2s; }
+    .abas-botoes button:hover { transform: translateY(-3px); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); box-shadow: 0 4px 0 var(--texto); }
+    .aba { display: none; padding: 40px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: center; animation: aparecer .4s ease; }
+    .aba .aba-icone { display: grid; place-items: center; aspect-ratio: 1; max-width: 220px; margin: 0 auto; font-size: 6rem; background: var(--ceu); border: var(--borda); border-radius: 44% 56% 50% 50% / 50% 44% 56% 50%; }
+    .aba:nth-of-type(2) .aba-icone { background: var(--menta); }
+    .aba:nth-of-type(3) .aba-icone { background: var(--rosa); }
+    .aba:nth-of-type(4) .aba-icone { background: var(--amarelo); }
+    .aba:nth-of-type(5) .aba-icone { background: var(--lavanda); }
+    .aba:nth-of-type(6) .aba-icone { background: var(--pessego); }
+    .aba h3 { font-size: 1.6rem; margin-bottom: 6px; }
+    .aba ul { list-style: none; padding: 0; margin: 16px 0 24px; display: grid; gap: 8px; }
+    .aba li { padding-left: 34px; position: relative; }
+    .aba li::before { content: "✓"; position: absolute; left: 0; top: 1px; display: grid; place-items: center; width: 24px; height: 24px; font-size: .8rem; font-weight: bold; background: var(--menta); border: 2px solid var(--texto); border-radius: 50%; }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+    @media (max-width: 700px) { .aba.ativa { grid-template-columns: 1fr; padding: 28px; text-align: center; } .aba li { text-align: left; } .aba .aba-icone { max-width: 150px; font-size: 4rem; } }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); position: relative; }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border: 3px solid var(--texto); border-radius: var(--raio-redondo); }
+    .passo:nth-child(2)::before { background: var(--rosa); }
+    .passo:nth-child(3)::before { background: var(--amarelo); }
+    .passo p { color: var(--texto-suave); }
+    .passo:not(:last-child)::after { content: "➜"; position: absolute; right: -22px; top: 50%; z-index: 2; width: 20px; font-size: 1.4rem; color: var(--destaque); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } .passo:not(:last-child)::after { content: "⬇"; right: 50%; top: auto; bottom: -26px; transform: translateX(50%); } }
+
+    /* Diferenciais */
+    .diferenciais { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .diferencial { display: flex; gap: 14px; align-items: flex-start; padding: 20px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); }
+    .diferencial .ico { flex: none; display: grid; place-items: center; width: 52px; height: 52px; font-size: 1.5rem; border: 3px solid var(--texto); border-radius: 18px; background: var(--ceu); }
+    .diferencial:nth-child(4n + 2) .ico { background: var(--rosa); }
+    .diferencial:nth-child(4n + 3) .ico { background: var(--menta); }
+    .diferencial:nth-child(4n + 4) .ico { background: var(--amarelo); }
+    .diferencial h3 { font-size: 1.05rem; line-height: 1.25; margin-bottom: 4px; }
+    .diferencial p { font-size: .92rem; color: var(--texto-suave); line-height: 1.45; }
+
+    /* Painel de ocorrências (demo visual) */
+    .painel { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; padding: 40px; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .painel h2 { text-align: left; color: inherit; margin-bottom: 14px; }
+    .painel p { opacity: .9; margin-bottom: 22px; }
+    .painel .botao { box-shadow: 0 6px 0 rgba(255, 255, 255, .35); }
+    .fila { display: grid; gap: 12px; }
+    .ocorrencia { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--texto); background: var(--superficie); border: var(--borda); border-radius: 22px; animation: entra-lado .6s ease both; }
+    .ocorrencia:nth-child(2) { animation-delay: .25s; margin-left: 24px; }
+    .ocorrencia:nth-child(3) { animation-delay: .5s; margin-left: 48px; }
+    .ocorrencia b { display: block; font-size: .95rem; }
+    .ocorrencia small { color: var(--texto-suave); }
+    .ocorrencia .status { margin-left: auto; padding: 2px 12px; font-size: .75rem; font-weight: bold; white-space: nowrap; background: var(--menta); border: 2px solid var(--texto); border-radius: var(--raio-redondo); }
+    .ocorrencia.alerta .status { background: var(--rosa); animation: pulsar-status 1.4s infinite; }
+    .ocorrencia .ponto { flex: none; width: 40px; height: 40px; display: grid; place-items: center; font-size: 1.2rem; background: var(--amarelo); border: 3px solid var(--texto); border-radius: 50%; }
+    @keyframes entra-lado { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+    @keyframes pulsar-status { 50% { transform: scale(1.1); } }
+    @media (max-width: 800px) { .painel { grid-template-columns: 1fr; padding: 28px; } .painel h2 { text-align: center; } .painel p { text-align: center; } .painel .botao-centro { text-align: center; } .ocorrencia:nth-child(n) { margin-left: 0; } }
+
+    /* Segmentos */
+    .segmentos { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .segmentos span { padding: 12px 22px; font-family: var(--fonte-titulo); font-size: 1.05rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); transition: transform .2s; }
+    .segmentos span:nth-child(5n + 1) { background: var(--ceu); }
+    .segmentos span:nth-child(5n + 2) { background: var(--rosa); }
+    .segmentos span:nth-child(5n + 3) { background: var(--menta); }
+    .segmentos span:nth-child(5n + 4) { background: var(--amarelo); }
+    .segmentos span:nth-child(5n + 5) { background: var(--lavanda); }
+    .segmentos span:hover { transform: rotate(-3deg) scale(1.08); }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.3rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); position: relative; }
+    .slide::before { content: "❝"; position: absolute; top: -26px; left: 28px; display: grid; place-items: center; width: 52px; height: 52px; font-style: normal; font-size: 1.6rem; background: var(--rosa); border: var(--borda); border-radius: 50%; }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Perguntas frequentes */
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: var(--borda); padding: 18px 0; }
+    .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font-family: var(--fonte-titulo); font-size: 1.15rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; flex: none; color: var(--destaque); font-size: 1.5rem; line-height: 1; transition: transform .25s; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin-top: 10px; color: var(--texto-suave); }
+
+    /* Mapa */
+    .mapa { position: relative; height: 340px; overflow: hidden; background-color: var(--ceu); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa::before { content: ""; position: absolute; left: -5%; top: 55%; width: 110%; height: 34px; background: var(--superficie); border-top: var(--borda); border-bottom: var(--borda); transform: rotate(-8deg); }
+    .mapa::after { content: ""; position: absolute; left: 62%; top: -5%; width: 30px; height: 110%; background: var(--superficie); border-left: var(--borda); border-right: var(--borda); transform: rotate(12deg); }
+    .mapa .pino { position: absolute; z-index: 2; left: 62%; top: 48%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; z-index: 3; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    @media (max-width: 600px) { .mapa .endereco { left: 12px; right: 12px; bottom: 12px; max-width: none; } .mapa .pino { left: 70%; top: 34%; } }
+
+    /* Contato / formulário */
+    .contato { display: grid; grid-template-columns: .9fr 1.1fr; gap: 32px; align-items: start; }
+    .canais { display: grid; gap: 14px; }
+    .canal { display: flex; align-items: center; gap: 14px; padding: 14px 18px; color: var(--texto); text-decoration: none; background: var(--superficie); border: var(--borda); border-radius: 22px; transition: transform .2s; }
+    .canal:hover { transform: translateX(6px); }
+    .canal .ico { flex: none; display: grid; place-items: center; width: 44px; height: 44px; font-size: 1.3rem; background: var(--menta); border: 3px solid var(--texto); border-radius: 50%; }
+    .canal:nth-child(2) .ico { background: var(--rosa); }
+    .canal:nth-child(3) .ico { background: var(--amarelo); }
+    .canal:nth-child(4) .ico { background: var(--lavanda); }
+    .canal small { display: block; color: var(--texto-suave); line-height: 1.2; }
+    .form-contato { padding: 32px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .form-contato h3 { font-size: 1.5rem; margin-bottom: 4px; }
+    .form-contato > p { color: var(--texto-suave); margin-bottom: 14px; }
+    .form-contato label { display: block; margin-top: 12px; font-weight: bold; font-size: .9rem; }
+    .form-contato input, .form-contato select, .modal input { display: block; width: 100%; margin-top: 4px; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .form-contato input:focus, .form-contato select:focus, .modal input:focus { outline: none; background: var(--amarelo); }
+    .form-contato .linha { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-contato .botao { width: 100%; margin-top: 22px; }
+    .sucesso { display: none; margin-top: 16px; padding: 14px 18px; text-align: center; font-weight: bold; background: var(--menta); border: var(--borda); border-radius: 22px; }
+    .sucesso.visivel { display: block; animation: surgir .5s ease; }
+    @media (max-width: 800px) { .contato { grid-template-columns: 1fr; } .form-contato .linha { grid-template-columns: 1fr; } }
+
+    /* Rodapé em colunas */
+    .rodape-grade { max-width: var(--largura); margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+    .rodape-grade h4 { margin-bottom: 10px; color: var(--cor); font-family: var(--fonte-titulo); }
+    .rodape-grade a, .rodape-grade p { display: block; margin-bottom: 6px; color: var(--escuro-texto); font-size: .95rem; opacity: .9; text-decoration: none; }
+    .rodape-grade a:hover { color: var(--cor); opacity: 1; }
+    .rodape-fim { max-width: var(--largura); margin: 32px auto 0; padding-top: 20px; text-align: center; font-size: .85rem; opacity: .75; border-top: 2px dashed rgba(242, 248, 255, .3); }
+    @media (max-width: 800px) { .rodape-grade { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .rodape-grade { grid-template-columns: 1fr; } }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: #7be495; border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span, .whatsapp:focus-visible span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 #7be495; } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 28px; bottom: 92px; z-index: 50; width: 44px; height: 44px; display: grid; place-items: center; font-size: 1.2rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Modal de demonstração */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); margin: auto; }
+    .modal::backdrop { background: rgba(31, 45, 77, .65); }
+    .modal[open] { animation: surgir .35s ease; }
+    .modal h3 { font-size: 1.5rem; }
+    .modal p { color: var(--texto-suave); margin-bottom: 8px; }
+    .modal input { margin: 10px 0; }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; width: 100%; }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 100px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; padding: 8px 20px; box-shadow: 0 4px 0 var(--texto); }
+    @media (max-width: 500px) { .cookies { flex-direction: column; align-items: stretch; text-align: center; right: 20px; bottom: 96px; } }
+  </style>
+</head>
+<body>
+  <div class="progresso" aria-hidden="true"></div>
+
+  <div class="aviso-topo">
+    🚨 Suporte 24 horas: <a href="tel:+551432353801">(14) 3235-3801</a> · Comercial: <a href="tel:+551432353800">(14) 3235-3800</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <nav>
+    <span class="logo">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="6" y="10" width="52" height="38" rx="12" fill="#6ec1ff" stroke="#1f2d4d" stroke-width="4"/>
+        <circle cx="23" cy="28" r="4.5" fill="#1f2d4d"/><circle cx="41" cy="28" r="4.5" fill="#1f2d4d"/>
+        <path d="M25 38q7 6 14 0" fill="none" stroke="#1f2d4d" stroke-width="4" stroke-linecap="round"/>
+        <path d="M22 48v8h20v-8" fill="#ffd6e0" stroke="#1f2d4d" stroke-width="4" stroke-linejoin="round"/>
+      </svg>
+      Moni Software
+    </span>
+    <div>
+      <a href="#solucoes">Soluções</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="#contato">Contato</a>
+      <button class="botao" type="button" data-abrir-modal>Ver demonstração</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <span class="selo">Software para Monitoramento e Portaria</span>
+      <h1>Sua central de monitoramento numa <em>única</em> plataforma!</h1>
+      <p>Alarmes, portaria remota, discador, mensagens e frota conversando entre si, para sua operação atender mais, com menos custo e menos correria.</p>
+      <div class="hero-botoes">
+        <button class="botao" type="button" data-abrir-modal>Solicitar demonstração</button>
+        <a class="botao secundario" href="#solucoes">Conhecer as soluções</a>
+      </div>
+      <p class="hero-confianca">🏆 Usada por <strong>mais de 2.200 empresas</strong> no Brasil e na América Latina.</p>
+    </div>
+
+    <div class="palco" aria-hidden="true">
+      <div class="fundo"></div>
+      <svg class="mascote" viewBox="0 0 300 300">
+        <g stroke="#1f2d4d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- antena -->
+          <path d="M150 74V40" fill="none"/>
+          <circle cx="150" cy="32" r="12" fill="#ff8fab"/>
+          <!-- base -->
+          <path d="M116 226h68v22h-68z" fill="#ffd6e0"/>
+          <rect x="84" y="244" width="132" height="24" rx="12" fill="#fff1b8"/>
+          <!-- fones -->
+          <path d="M52 132q-6-74 98-74t98 74" fill="none"/>
+          <rect x="30" y="120" width="34" height="58" rx="16" fill="#fff1b8"/>
+          <rect x="236" y="120" width="34" height="58" rx="16" fill="#fff1b8"/>
+          <path d="M253 178q0 36-52 46" fill="none"/>
+          <circle cx="196" cy="226" r="9" fill="#ff8fab"/>
+          <!-- corpo (monitor) -->
+          <rect x="60" y="76" width="180" height="150" rx="42" fill="#fff"/>
+          <rect x="80" y="96" width="140" height="110" rx="30" fill="#bfe6ff"/>
+          <!-- olhos -->
+          <g class="piscar"><ellipse cx="121" cy="140" rx="17" ry="20" fill="#fff"/><circle cx="125" cy="143" r="9" fill="#1f2d4d" stroke="none"/><circle cx="128" cy="139" r="3" fill="#fff" stroke="none"/></g>
+          <g class="piscar"><ellipse cx="179" cy="140" rx="17" ry="20" fill="#fff"/><circle cx="183" cy="143" r="9" fill="#1f2d4d" stroke="none"/><circle cx="186" cy="139" r="3" fill="#fff" stroke="none"/></g>
+          <!-- bochechas e boca -->
+          <ellipse cx="98" cy="173" rx="12" ry="7" fill="#ff8fab" stroke="none" opacity=".75"/>
+          <ellipse cx="202" cy="173" rx="12" ry="7" fill="#ff8fab" stroke="none" opacity=".75"/>
+          <path d="M135 172q15 16 30 0" fill="#fff"/>
+          <!-- brilho da tela -->
+          <path d="M92 112q10-6 22-6" fill="none" stroke="#fff" stroke-width="6"/>
+        </g>
+      </svg>
+      <span class="ficha"><i>🚨</i> Alarme disparado</span>
+      <span class="ficha"><i>📞</i> Discando…</span>
+      <span class="ficha"><i>✅</i> Ocorrência resolvida</span>
+    </div>
+  </header>
+
+  <div class="letreiro" aria-hidden="true">
+    <div>
+      <span>★ Moni Alarme</span><span>★ Moni Portaria</span><span>★ Moni Mobile</span><span>★ Moni Discador</span><span>★ Moni Mensagens</span><span>★ Moni Veículos</span>
+      <span>★ Moni Alarme</span><span>★ Moni Portaria</span><span>★ Moni Mobile</span><span>★ Moni Discador</span><span>★ Moni Mensagens</span><span>★ Moni Veículos</span>
+    </div>
+  </div>
+
+  <section class="container faixa-numeros" aria-label="A Moni em números">
+    <div class="numeros">
+      <div class="numero"><strong>2.200+</strong>empresas atendidas</div>
+      <div class="numero"><strong>6</strong>soluções integradas</div>
+      <div class="numero"><strong>24h</strong>suporte de emergência</div>
+      <div class="numero"><strong>1</strong>plataforma única</div>
+    </div>
+  </section>
+
+  <section id="solucoes" class="container">
+    <h2>O que fazemos</h2>
+    <p class="subtitulo">Seis módulos que trabalham juntos: use só o que precisa hoje e cresça quando quiser.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="emoji">🚨</div>
+        <h3>Moni Alarme</h3>
+        <p>Gestão completa da sua central de monitoramento de alarmes.</p>
+        <span class="preco">Central</span>
+      </div>
+      <div class="card">
+        <div class="emoji">🏢</div>
+        <h3>Moni Portaria</h3>
+        <p>Portaria remota para condomínios, com câmeras e atendimento centralizado.</p>
+        <span class="preco">Condomínios</span>
+      </div>
+      <div class="card">
+        <div class="emoji">📱</div>
+        <h3>Moni Mobile</h3>
+        <p>Aplicativo para clientes monitorados, técnicos e fiscais.</p>
+        <span class="preco">App</span>
+      </div>
+      <div class="card">
+        <div class="emoji">☎️</div>
+        <h3>Moni Discador</h3>
+        <p>Telefonia embarcada com discagem automática e gravação das ligações.</p>
+        <span class="preco">Telefonia</span>
+      </div>
+      <div class="card">
+        <div class="emoji">💬</div>
+        <h3>Moni Mensagens</h3>
+        <p>Comunicação automática por SMS, e-mail e URA.</p>
+        <span class="preco">Automação</span>
+      </div>
+      <div class="card">
+        <div class="emoji">🚚</div>
+        <h3>Moni Veículos</h3>
+        <p>Rastreamento e gestão de frota em um só lugar.</p>
+        <span class="preco">Frota</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="detalhes">
+    <h2>Conheça cada solução</h2>
+    <div class="abas-botoes" role="tablist">
+      <button type="button" role="tab" class="ativa" aria-selected="true">🚨 Alarme</button>
+      <button type="button" role="tab" aria-selected="false">🏢 Portaria</button>
+      <button type="button" role="tab" aria-selected="false">📱 Mobile</button>
+      <button type="button" role="tab" aria-selected="false">☎️ Discador</button>
+      <button type="button" role="tab" aria-selected="false">💬 Mensagens</button>
+      <button type="button" role="tab" aria-selected="false">🚚 Veículos</button>
+    </div>
+    <div class="aba ativa" role="tabpanel">
+      <div class="aba-icone">🚨</div>
+      <div>
+        <h3>Moni Alarme</h3>
+        <p>O coração da central: recebe, distribui e acompanha cada ocorrência.</p>
+        <ul>
+          <li>Painel de atendimentos ou pop-up das ocorrências: você escolhe (único software híbrido)</li>
+          <li>Distribuição automática de eventos entre os operadores</li>
+          <li>Atendimento de várias ligações ao mesmo tempo</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+    <div class="aba" role="tabpanel">
+      <div class="aba-icone">🏢</div>
+      <div>
+        <h3>Moni Portaria</h3>
+        <p>Portaria remota para condomínios, com toda a operação em uma tela.</p>
+        <ul>
+          <li>Monitoramento por câmeras e integração com VMS</li>
+          <li>Rondas virtuais registradas no sistema</li>
+          <li>Painel web com indicadores da operação</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+    <div class="aba" role="tabpanel">
+      <div class="aba-icone">📱</div>
+      <div>
+        <h3>Moni Mobile</h3>
+        <p>Quem está na rua também fica conectado à central.</p>
+        <ul>
+          <li>Aplicativo para clientes monitorados</li>
+          <li>Ferramentas para técnicos e fiscais em campo</li>
+          <li>Informação em tempo real entre a rua e a central</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+    <div class="aba" role="tabpanel">
+      <div class="aba-icone">☎️</div>
+      <div>
+        <h3>Moni Discador</h3>
+        <p>Telefonia embarcada no próprio sistema, sem troca de tela.</p>
+        <ul>
+          <li>Discagem automática ao abrir a ocorrência</li>
+          <li>Gravação das ligações para consulta e auditoria</li>
+          <li>Várias chamadas simultâneas por operador</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+    <div class="aba" role="tabpanel">
+      <div class="aba-icone">💬</div>
+      <div>
+        <h3>Moni Mensagens</h3>
+        <p>Avise quem precisa saber, sem ocupar o seu operador.</p>
+        <ul>
+          <li>Envio automático por SMS</li>
+          <li>Comunicados por e-mail</li>
+          <li>Ligações automatizadas por URA</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+    <div class="aba" role="tabpanel">
+      <div class="aba-icone">🚚</div>
+      <div>
+        <h3>Moni Veículos</h3>
+        <p>Frota sob controle, integrada à mesma plataforma da central.</p>
+        <ul>
+          <li>Rastreamento de veículos</li>
+          <li>Gestão da frota em um só lugar</li>
+          <li>Dados no mesmo painel das demais operações</li>
+        </ul>
+        <button class="botao" type="button" data-abrir-modal>Contratar agora</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="como-funciona">
+    <h2>Como funciona</h2>
+    <div class="passos">
+      <div class="passo"><h3>Converse</h3><p>Conte como é a sua operação pelo telefone, WhatsApp, Telegram ou chat.</p></div>
+      <div class="passo"><h3>Conheça</h3><p>Veja a plataforma funcionando e escolha os módulos que fazem sentido para você.</p></div>
+      <div class="passo"><h3>Opere</h3><p>Coloque a central para rodar e conte com o nosso suporte 24 horas.</p></div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="diferenciais">
+    <h2>Por que a Moni?</h2>
+    <p class="subtitulo">Uma empresa focada 100% em melhorar, todos os dias, uma única plataforma.</p>
+    <div class="diferenciais">
+      <div class="diferencial"><span class="ico">🧩</span><div><h3>Software híbrido</h3><p>Painel de atendimentos ou pop-up das ocorrências.</p></div></div>
+      <div class="diferencial"><span class="ico">📹</span><div><h3>Câmeras e VMS</h3><p>Monitoramento de imagens integrado à operação.</p></div></div>
+      <div class="diferencial"><span class="ico">🎯</span><div><h3>Distribuição automática</h3><p>Eventos vão sozinhos para o operador certo.</p></div></div>
+      <div class="diferencial"><span class="ico">📞</span><div><h3>Multi-atendimento</h3><p>Várias ligações simultâneas, sem perder o fio.</p></div></div>
+      <div class="diferencial"><span class="ico">📊</span><div><h3>Dashboard web</h3><p>Indicadores da operação a um clique.</p></div></div>
+      <div class="diferencial"><span class="ico">🛡️</span><div><h3>Rondas virtuais</h3><p>Acompanhe e comprove cada ronda feita.</p></div></div>
+      <div class="diferencial"><span class="ico">📝</span><div><h3>Cadastro pela web</h3><p>Cadastre clientes e dados direto pelo navegador.</p></div></div>
+      <div class="diferencial"><span class="ico">🌎</span><div><h3>Brasil e América Latina</h3><p>Presente em operações de vários países.</p></div></div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="painel">
+    <div class="painel">
+      <div>
+        <h2>Cada ocorrência no lugar certo, na hora certa</h2>
+        <p>Do disparo ao encerramento, o operador vê tudo na mesma tela e a plataforma cuida do resto: distribuir, discar, avisar e registrar.</p>
+        <div class="botao-centro"><button class="botao" type="button" data-abrir-modal>Quero ver funcionando</button></div>
+      </div>
+      <div class="fila" aria-hidden="true">
+        <div class="ocorrencia alerta"><span class="ponto">🚨</span><div><b>Alarme de intrusão</b><small>Loja Centro · agora</small></div><span class="status">Novo</span></div>
+        <div class="ocorrencia"><span class="ponto">📞</span><div><b>Contato com responsável</b><small>Discagem automática</small></div><span class="status">Em atendimento</span></div>
+        <div class="ocorrencia"><span class="ponto">✅</span><div><b>Ronda virtual concluída</b><small>Residencial Jardim</small></div><span class="status">Resolvido</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="container" id="segmentos">
+    <h2>Para quem é</h2>
+    <div class="segmentos">
+      <span>🚨 Centrais de monitoramento</span>
+      <span>🏢 Condomínios</span>
+      <span>🛡️ Empresas de segurança</span>
+      <span>🔧 Equipes técnicas</span>
+      <span>🚚 Gestores de frota</span>
+      <span>🏘️ Portarias remotas</span>
+    </div>
+  </section>
+
+  <section id="sobre" class="container">
+    <h2>Sobre a Moni</h2>
+    <p class="sobre">Somos uma empresa de software de Bauru, no interior de São Paulo, que escolheu fazer uma coisa só e fazer bem: evoluir, sem parar, uma única plataforma de monitoramento para que sua central atenda melhor e gaste menos.</p>
+    <div class="numeros">
+      <div class="numero"><strong>2.200+</strong>empresas usuárias</div>
+      <div class="numero"><strong>6</strong>módulos</div>
+      <div class="numero"><strong>24h</strong>de suporte</div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="depoimentos">
+    <h2>Quem conhece, ama</h2>
+    <!-- Depoimentos ilustrativos: trocar por relatos reais de clientes antes de publicar -->
+    <div class="carrossel">
+      <blockquote class="slide ativo">Ter alarme, telefone e mensagens na mesma tela mudou o ritmo da nossa central.<cite>Gestor de central de monitoramento</cite></blockquote>
+      <blockquote class="slide">Quando o evento cai direto para o operador certo, ninguém perde tempo procurando o que fazer.<cite>Coordenador de operações</cite></blockquote>
+      <blockquote class="slide">O suporte responde de madrugada, e isso na segurança faz toda a diferença.<cite>Empresa de segurança eletrônica</cite></blockquote>
+      <div class="pontos-carrossel">
+        <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+        <button type="button" aria-label="Depoimento 2"></button>
+        <button type="button" aria-label="Depoimento 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="faq">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq">
+      <details><summary>O que é a Moni Software?</summary><p>É uma empresa de desenvolvimento de software focada em uma única plataforma para monitoramento e portaria, usada por mais de 2.200 empresas no Brasil e na América Latina.</p></details>
+      <details><summary>Preciso contratar todos os módulos?</summary><p>Não. Alarme, Portaria, Mobile, Discador, Mensagens e Veículos funcionam juntos, mas você contrata o que faz sentido para a sua operação. Fale com o time comercial para montar a sua combinação.</p></details>
+      <details><summary>Consigo integrar minhas câmeras?</summary><p>Sim. A plataforma tem monitoramento de câmeras e integração com VMS.</p></details>
+      <details><summary>Tem suporte fora do horário comercial?</summary><p>Tem. O comercial atende no (14) 3235-3800, das 8h às 18h, e o suporte de emergência funciona 24 horas no (14) 3235-3801 ou (14) 99676-4424.</p></details>
+      <details><summary>Como falo com vocês?</summary><p>Por telefone, WhatsApp, chat online, Telegram (@monisoftware_bot) ou pelo formulário desta página.</p></details>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="mapa">
+    <h2>Como chegar</h2>
+    <div class="mapa">
+      <span class="pino">📍</span>
+      <div class="endereco">
+        <strong>Moni Software</strong><br>
+        R. Rubens Arruda, 15-37 · Jardim Estoril<br>
+        Bauru - SP
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="contato-form">
+    <div class="contato">
+      <div>
+        <h2 style="text-align:left">Vamos conversar?</h2>
+        <p style="margin-bottom:22px">Conte um pouco sobre a sua operação e a gente retorna com a solução ideal.</p>
+        <div class="canais">
+          <a class="canal" href="tel:+551432353800"><span class="ico">📞</span><span><b>(14) 3235-3800</b><small>Comercial · 8h às 18h</small></span></a>
+          <a class="canal" href="tel:+551432353801"><span class="ico">🆘</span><span><b>(14) 3235-3801</b><small>Suporte 24 horas · ou (14) 99676-4424</small></span></a>
+          <a class="canal" href="https://wa.me/5514996764424" target="_blank" rel="noopener"><span class="ico">💬</span><span><b>WhatsApp</b><small>Fale com a gente</small></span></a>
+          <a class="canal" href="https://t.me/monisoftware_bot" target="_blank" rel="noopener"><span class="ico">✈️</span><span><b>Telegram</b><small>@monisoftware_bot</small></span></a>
+        </div>
+      </div>
+      <form class="form-contato" id="form-contato">
+        <h3>Fale com a Moni</h3>
+        <p>Respondemos rapidinho.</p>
+        <label>Nome<input name="nome" required autocomplete="name" placeholder="Seu nome"></label>
+        <div class="linha">
+          <label>E-mail<input type="email" name="email" required autocomplete="email" placeholder="voce@empresa.com.br"></label>
+          <label>Telefone<input type="tel" name="telefone" required autocomplete="tel" placeholder="(14) 90000-0000"></label>
+        </div>
+        <label>Empresa<input name="empresa" autocomplete="organization" placeholder="Nome da sua empresa"></label>
+        <label>Qual recurso te interessa?
+          <select name="recurso">
+            <option>Moni Alarme</option>
+            <option>Moni Portaria</option>
+            <option>Moni Mobile</option>
+            <option>Moni Discador</option>
+            <option>Moni Mensagens</option>
+            <option>Moni Veículos</option>
+            <option>Ainda não sei, quero conversar</option>
+          </select>
+        </label>
+        <button class="botao" type="submit">Enviar mensagem</button>
+        <div class="sucesso" role="status">🎉 Recebemos! Em breve alguém da Moni entra em contato.</div>
+      </form>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <div class="rodape-grade">
+      <div>
+        <strong>🤖 Moni Software</strong>
+        <p style="margin-top:10px">Software para Monitoramento e Portaria.</p>
+        <p>R. Rubens Arruda, 15-37 · Jardim Estoril<br>Bauru - SP</p>
+      </div>
+      <div>
+        <h4>Soluções</h4>
+        <a href="#detalhes">Moni Alarme</a>
+        <a href="#detalhes">Moni Portaria</a>
+        <a href="#detalhes">Moni Mobile</a>
+        <a href="#detalhes">Moni Discador</a>
+        <a href="#detalhes">Moni Mensagens</a>
+        <a href="#detalhes">Moni Veículos</a>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <a href="tel:+551432353800">(14) 3235-3800</a>
+        <p>Comercial · 8h às 18h</p>
+        <a href="tel:+551432353801">(14) 3235-3801</a>
+        <p>Suporte 24 horas</p>
+      </div>
+      <div>
+        <h4>Redes</h4>
+        <a href="https://monisoftware.com.br/" target="_blank" rel="noopener">monisoftware.com.br</a>
+        <a href="https://t.me/monisoftware_bot" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://wa.me/5514996764424" target="_blank" rel="noopener">WhatsApp</a>
+        <p>Facebook · Instagram · YouTube · LinkedIn</p>
+      </div>
+    </div>
+    <div class="rodape-fim">© <span id="ano">2026</span> Moni Software. Todos os direitos reservados.</div>
+  </footer>
+
+  <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+  <div class="menu-overlay">
+    <a href="#">Início</a>
+    <a href="#solucoes">Soluções</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="#contato-form">Contato</a>
+  </div>
+
+  <a class="whatsapp" href="https://wa.me/5514996764424" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <dialog class="modal">
+    <form method="dialog" id="form-modal">
+      <button class="fechar" type="button" aria-label="Fechar">✕</button>
+      <h3>Solicitar demonstração</h3>
+      <p>Deixe seu contato e a gente retorna.</p>
+      <input name="nome" required placeholder="Seu nome" aria-label="Seu nome">
+      <input name="telefone" required placeholder="Telefone ou WhatsApp" aria-label="Telefone ou WhatsApp">
+      <input name="empresa" placeholder="Empresa" aria-label="Empresa">
+      <button class="botao" type="submit">Enviar</button>
+      <div class="sucesso" role="status">🎉 Recebemos! Já já a gente liga.</div>
+    </form>
+  </dialog>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+
+    {
+      // Abas: mostra a solução do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => { b.classList.remove('ativa'); b.setAttribute('aria-selected', 'false'); });
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        botao.setAttribute('aria-selected', 'true');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      let timer;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      const iniciar = () => { clearInterval(timer); timer = setInterval(() => mostrar((atual + 1) % slides.length), 5000); };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => { mostrar(i); iniciar(); }));
+      iniciar();
+    }
+
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + (t < 1 ? valor : numero) + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Menu hambúrguer: abre e fecha o menu em tela cheia
+      const botaoMenu = document.querySelector('.menu-botao');
+      const menu = document.querySelector('.menu-overlay');
+      const alternar = () => {
+        menu.classList.toggle('aberto');
+        const aberto = menu.classList.contains('aberto');
+        botaoMenu.textContent = aberto ? '✕' : '☰';
+        botaoMenu.setAttribute('aria-expanded', aberto);
+        botaoMenu.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+      };
+      botaoMenu.addEventListener('click', alternar);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', alternar));
+      addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('aberto')) alternar(); });
+    }
+
+    {
+      // Modal: abre o formulário de demonstração por cima da página
+      const modal = document.querySelector('.modal');
+      const formModal = document.getElementById('form-modal');
+      document.querySelectorAll('[data-abrir-modal]').forEach((b) => b.addEventListener('click', () => {
+        formModal.reset();
+        formModal.querySelector('.sucesso').classList.remove('visivel');
+        modal.showModal();
+      }));
+      modal.querySelector('.fechar').addEventListener('click', () => modal.close());
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+      formModal.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formModal.querySelector('.sucesso').classList.add('visivel');
+        setTimeout(() => modal.close(), 2200);
+      });
+    }
+
+    {
+      // Formulário de contato: mostra a confirmação (demonstração, sem envio real)
+      const form = document.getElementById('form-contato');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        form.querySelector('.sucesso').classList.add('visivel');
+        form.reset();
+      });
+    }
+
+    {
+      // Voltar ao topo + barra de progresso da leitura
+      const voltar = document.querySelector('.voltar-topo');
+      const barra = document.querySelector('.progresso');
+      const atualizar = () => {
+        voltar.classList.toggle('visivel', scrollY > 400);
+        const total = document.documentElement.scrollHeight - innerHeight;
+        barra.style.width = (total > 0 ? (scrollY / total) * 100 : 0) + '%';
+      };
+      addEventListener('scroll', atualizar, { passive: true });
+      atualizar();
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

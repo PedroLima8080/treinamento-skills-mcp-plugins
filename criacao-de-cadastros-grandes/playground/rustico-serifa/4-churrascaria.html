@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Churrascaria Laço Gaúcho</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #f5ecd7; color: #3e2723; line-height: 1.7; }
+    .faixa { background: #3e2723; color: #f5ecd7; text-align: center; padding: 8px; font-size: .9rem; letter-spacing: 2px; }
+    header { text-align: center; padding: 30px 20px 14px; border-bottom: 3px double #3e2723; max-width: 1000px; margin: 0 auto; }
+    .logo { font-size: 2.4rem; font-style: italic; }
+    nav a { color: #b23a2b; margin: 0 12px; text-decoration: none; font-variant: small-caps; font-size: 1.1rem; }
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    h1 { font-size: 3rem; line-height: 1.15; font-weight: normal; }
+    .hero p { font-size: 1.15rem; margin: 20px 0 28px; }
+    .botao { display: inline-block; background: #b23a2b; color: #f5ecd7; padding: 12px 28px; text-decoration: none; border: 2px dashed #f5ecd7; outline: 2px solid #b23a2b; }
+    .selo { aspect-ratio: 1; border-radius: 50%; border: 3px dashed #b23a2b; display: grid; place-items: center; font-size: 120px; background: #efe1c1; }
+    section { max-width: 800px; margin: 0 auto; padding: 50px 20px; }
+    h2 { text-align: center; font-weight: normal; font-size: 2rem; }
+    .ornamento { text-align: center; color: #b23a2b; margin-bottom: 30px; letter-spacing: 8px; }
+    .item { margin-bottom: 22px; }
+    .item .topo { display: flex; align-items: baseline; gap: 8px; font-size: 1.2rem; font-weight: bold; }
+    .item .pontos { flex: 1; border-bottom: 2px dotted #3e2723; }
+    .item p { font-style: italic; color: #6d4c41; }
+    .sobre { text-align: center; font-size: 1.15rem; }
+    .numeros { text-align: center; margin-top: 20px; color: #b23a2b; }
+    .numeros strong { font-size: 1.4rem; color: #3e2723; }
+    blockquote { text-align: center; font-size: 1.5rem; font-style: italic; border-top: 1px solid #3e2723; border-bottom: 1px solid #3e2723; padding: 30px 0; }
+    cite { display: block; font-size: 1rem; margin-top: 10px; color: #b23a2b; }
+    table { margin: 0 auto; border-collapse: collapse; font-size: 1.1rem; }
+    td { padding: 8px 20px; border-bottom: 1px dashed #3e2723; }
+    td:first-child { font-variant: small-caps; color: #b23a2b; }
+    footer { background: #3e2723; color: #f5ecd7; text-align: center; padding: 40px 20px; font-style: italic; }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .selo { font-size: 80px; max-width: 240px; margin: 0 auto; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f5ecd7;
+      --texto: #3e2723;
+      --texto-suave: #6d4c41;
+      --cor: #b23a2b;
+      --cor-texto: #f5ecd7;
+      --destaque: #b23a2b;
+      --superficie: #efe1c1;
+      --escuro: #3e2723;
+      --escuro-texto: #f5ecd7;
+      --borda: 2px dashed #3e2723;
+      --raio: 4px;
+      --raio-redondo: 999px;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: 800px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Planos */
+    .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: center; }
+    .plano { padding: 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .plano.destaque { transform: scale(1.06); box-shadow: var(--sombra); border-color: var(--destaque); }
+    .plano small { display: inline-block; margin-bottom: 12px; padding: 2px 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .plano .valor { display: block; margin: 16px 0 20px; font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--destaque); }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Ajustes do padrão */
+    .secao-extra > h2 { font-weight: normal; }
+  </style>
+</head>
+<body>
+  <div class="faixa">Churrasco gaúcho · fogo de chão</div>
+
+  <header>
+    <div class="logo">Churrascaria Laço Gaúcho</div>
+    <nav>
+      <a href="#cardapio">cardápio</a>
+      <a href="#historia">nossa história</a>
+      <a href="#contato">visite-nos</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>O churrasco que atravessou o Brasil</h1>
+      <p>Carnes nobres assadas lentamente no fogo de chão, servidas à mesa pelos nossos garçons.</p>
+      <a class="botao" href="#contato">Reservar mesa</a>
+    </div>
+    <div class="selo">🥩</div>
+  </div>
+
+  <section id="cardapio">
+    <h2>Cardápio</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <div class="item">
+      <div class="topo"><span>Rodízio completo</span><span class="pontos"></span><span>R$ 119</span></div>
+      <p>Mais de 15 cortes e buffet de saladas.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Picanha na tábua</span><span class="pontos"></span><span>R$ 149</span></div>
+      <p>Para duas pessoas, com farofa e vinagrete.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Costela fogo de chão</span><span class="pontos"></span><span>R$ 89</span></div>
+      <p>12 horas assando devagar.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Pudim da casa</span><span class="pontos"></span><span>R$ 16</span></div>
+      <p>Receita da família Bertolini.</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="planos">
+    <h2>Planos</h2>
+    <div class="planos">
+      <div class="plano">
+        <h3>Rodízio completo</h3>
+        <p>Mais de 15 cortes e buffet de saladas.</p>
+        <span class="valor">R$ 119</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano destaque">
+        <small>Mais pedido</small>
+        <h3>Picanha na tábua</h3>
+        <p>Para duas pessoas, com farofa e vinagrete.</p>
+        <span class="valor">R$ 149</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano">
+        <h3>Costela fogo de chão</h3>
+        <p>12 horas assando devagar.</p>
+        <span class="valor">R$ 89</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="historia">
+    <h2>Nossa história</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <p class="sobre">Os Bertolini trouxeram do Rio Grande do Sul o jeito de assar e a cuia de chimarrão. A costela ainda leva 12 horas no fogo.</p>
+    <p class="numeros"><strong>15</strong> cortes &nbsp;✦&nbsp; <strong>12h</strong> de costela &nbsp;✦&nbsp; <strong>30</strong> anos de brasa</p>
+  </section>
+
+  <section>
+    <blockquote>
+      “A costela desmancha. Vale cada minuto de espera.”
+      <cite>— Eduardo, cliente</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato">
+    <h2>Visite-nos</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <table>
+      <tr><td>endereço</td><td>Av. Engenheiro Santana Jr, 1800 - Cocó</td></tr>
+      <tr><td>telefone</td><td>(85) 3003-0104</td></tr>
+      <tr><td>horário</td><td>Todos os dias, 11h30 às 23h</td></tr>
+    </table>
+  </section>
+
+  <div class="secao-extra" id="agendar">
+    <h2>Agende agora</h2>
+    <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+    <button class="botao" type="button" data-abrir-modal>Reservar mesa</button>
+  </div>
+
+  <footer>Churrascaria Laço Gaúcho — feito à mão, com calma.</footer>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Reservar mesa</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <div class="progresso"></div>
+
+  <script>
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

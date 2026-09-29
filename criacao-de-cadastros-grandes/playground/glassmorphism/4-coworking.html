@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hub Conecta</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+
+    :root {
+      --fundo: #5a3fd6;
+      --texto: #fff;
+      --texto-suave: rgba(255, 255, 255, .8);
+      --cor: #fff;
+      --cor-texto: #6a11cb;
+      --destaque: #fff;
+      --superficie: rgba(255, 255, 255, .14);
+      --escuro: rgba(0, 0, 0, .25);
+      --escuro-texto: #fff;
+      --borda: 1px solid rgba(255, 255, 255, .35);
+      --raio: 20px;
+      --raio-redondo: 999px;
+      --sombra: 0 8px 32px rgba(0, 0, 0, .15);
+      --desfoque: blur(14px);
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 0; }
+    button.botao { border: 0; }
+  </style>
+</head>
+<body>
+  <header class="vidro">
+    <span class="logo">🏢 Hub Conecta</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">🏢</div>
+      <span class="etiqueta">Coworking</span>
+      <h1>Trabalhe onde as ideias acontecem</h1>
+      <p>Estações de trabalho, salas privativas e uma comunidade de empreendedores.</p>
+      <a class="botao" href="#contato">Agendar visita</a>
+    </section>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Estação flexível</h3>
+        <p>Qualquer mesa, qualquer dia.</p>
+        <span class="preco">R$ 450/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Mesa fixa</h3>
+        <p>Seu lugar garantido todos os dias.</p>
+        <span class="preco">R$ 690/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Sala privativa</h3>
+        <p>Para equipes de 2 a 8 pessoas.</p>
+        <span class="preco">a partir de R$ 1.900/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Sala de reunião</h3>
+        <p>Com TV e videoconferência.</p>
+        <span class="preco">R$ 60/h</span>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="detalhes">
+      <h2>Conheça cada serviço</h2>
+      <div class="abas-botoes">
+        <button type="button" class="ativa">Estação flexível</button>
+        <button type="button">Mesa fixa</button>
+        <button type="button">Sala privativa</button>
+        <button type="button">Sala de reunião</button>
+      </div>
+      <div class="aba ativa">
+        <h3>Estação flexível</h3>
+        <p>Qualquer mesa, qualquer dia.</p>
+        <strong>R$ 450/mês</strong>
+        <a class="botao" href="#contato">Agendar visita</a>
+      </div>
+      <div class="aba">
+        <h3>Mesa fixa</h3>
+        <p>Seu lugar garantido todos os dias.</p>
+        <strong>R$ 690/mês</strong>
+        <a class="botao" href="#contato">Agendar visita</a>
+      </div>
+      <div class="aba">
+        <h3>Sala privativa</h3>
+        <p>Para equipes de 2 a 8 pessoas.</p>
+        <strong>a partir de R$ 1.900/mês</strong>
+        <a class="botao" href="#contato">Agendar visita</a>
+      </div>
+      <div class="aba">
+        <h3>Sala de reunião</h3>
+        <p>Com TV e videoconferência.</p>
+        <strong>R$ 60/h</strong>
+        <a class="botao" href="#contato">Agendar visita</a>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Hub Conecta</h3>
+        <p>Internet de fibra, café à vontade, eventos semanais e gente interessante em cada mesa.</p>
+        <div class="numeros">
+          <div><strong>120</strong>estações</div>
+          <div><strong>300</strong>membros</div>
+          <div><strong>24h</strong>acesso</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Fechei dois clientes conversando no café do coworking.”
+        <small>Renan, designer freelancer</small>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="mapa">
+      <h2>Como chegar</h2>
+      <div class="mapa">
+        <span class="pino">📍</span>
+        <div class="endereco">
+          <strong>Hub Conecta</strong><br>
+          Av. Santos Dumont, 5000 - Papicu<br>
+          Todos os dias, 24 horas
+        </div>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="agendar">
+      <h2>Agende agora</h2>
+      <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+      <button class="botao" type="button" data-abrir-modal>Agendar visita</button>
+    </div>
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Av. Santos Dumont, 5000 - Papicu · (85) 3007-0104 · Todos os dias, 24 horas</p>
+  </footer>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Agendar visita</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <a class="whatsapp" href="https://wa.me/558530070104" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+  </script>
+</body>
+</html>

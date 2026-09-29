@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "loja": {
+      "command": "node",
+      "args": ["--no-warnings", "server.js"]
+    }
+  }
+}

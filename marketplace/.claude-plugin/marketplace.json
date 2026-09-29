@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "moni-palestra",
+  "description": "Plugins comuns a todos da Moni (QA, dev, suporte)",
+  "owner": { "name": "Moni Software" },
+  "plugins": [
+    {
+      "name": "moni-procedimentos",
+      "source": "./plugins/moni-procedimentos",
+      "description": "Procedimentos de segurança da Moni para abrir e fechar a empresa.",
+      "version": "1.0.0",
+      "author": { "name": "Moni Software" }
+    },
+    {
+      "name": "moni-wiki",
+      "source": "./plugins/moni-wiki",
+      "description": "Servidor MCP que busca páginas na Wiki Moni (procedimentos, módulos, versões...).",
+      "version": "1.0.0",
+      "author": { "name": "Moni Software" }
+    }
+  ]
+}

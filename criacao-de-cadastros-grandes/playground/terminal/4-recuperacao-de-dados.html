@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DataBack</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "databack@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+
+    :root {
+      --fundo: #0c0c0c;
+      --texto: #33ff66;
+      --texto-suave: #888;
+      --cor: #33ff66;
+      --cor-texto: #0c0c0c;
+      --destaque: #fff;
+      --superficie: #0c0c0c;
+      --escuro: #0c0c0c;
+      --escuro-texto: #33ff66;
+      --borda: 1px dashed #33ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 24px #33ff6633;
+      --desfoque: none;
+      --fonte-titulo: Consolas, "Courier New", monospace;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .passo p { color: var(--texto-suave); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Efeitos ao passar o mouse */
+    tr { transition: all .25s ease; }
+    tr:hover { background: #33ff66; color: #0c0c0c; }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 24px 0; }
+    .secao-extra > h2 { font-size: 1rem; font-weight: normal; color: #fff; margin: 12px 0 16px; }
+    .secao-extra > h2::before { content: "$ "; color: #33ff66; }
+    button.botao { background: none; }
+    .letreiro { margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>databack@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Recuperamos o que parecia perdido</h1>
+      <p class="comentario"># HDs, SSDs, pendrives e cartões de memória com diagnóstico gratuito</p>
+      <a class="botao" href="#contato">[ Diagnóstico grátis ]</a>
+
+      <div class="secao-extra" id="como-funciona">
+        <h2>./como-funciona</h2>
+        <div class="passos">
+          <div class="passo"><h3>Escolha</h3><p>Veja os serviços e escolha o ideal para você.</p></div>
+          <div class="passo"><h3>Agende</h3><p>Ligue para (85) 3009-0104 ou chame no WhatsApp.</p></div>
+          <div class="passo"><h3>Aproveite</h3><p>Venha até Rua Pereira Filgueiras, 1000 - Centro e deixe o resto com a gente.</p></div>
+        </div>
+      </div>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>hd</td><td>HD com barulho, queimado ou não reconhecido.</td><td>a partir de R$ 400</td></tr>
+          <tr><td>ssd</td><td>SSD que parou de funcionar.</td><td>a partir de R$ 600</td></tr>
+          <tr><td>cartao_sd</td><td>Fotos de câmera e celular.</td><td>a partir de R$ 200</td></tr>
+          <tr><td>raid</td><td>Servidores e storages.</td><td>sob consulta</td></tr>
+        </table>
+      </section>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Laboratório com sala limpa e sigilo absoluto. Só cobramos se recuperarmos seus arquivos.</p>
+        <p><span class="ok">OK</span> 92% de sucesso</p>
+        <p><span class="ok">OK</span> 0 custo sem recuperação</p>
+        <p><span class="ok">OK</span> 15 anos</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "Recuperaram 10 anos de fotos da família. Não tenho palavras." <span class="comentario">-- Silvia, cliente</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Rua Pereira Filgueiras, 1000 - Centro</p>
+        <p>telefone : (85) 3009-0104</p>
+        <p>horario  : Seg a Sex, 8h às 18h</p>
+      </section>
+
+      <div class="secao-extra" id="agendar">
+        <h2>./agende-agora</h2>
+        <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+        <button class="botao" type="button" data-abrir-modal>Diagnóstico grátis</button>
+      </div>
+    </main>
+    <footer># DataBack :: recuperação de dados</footer>
+  </div>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Diagnóstico grátis</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+  </script>
+</body>
+</html>

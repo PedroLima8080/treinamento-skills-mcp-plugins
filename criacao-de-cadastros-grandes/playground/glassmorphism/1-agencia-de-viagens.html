@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rota Azul</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+
+    :root {
+      --fundo: #5a3fd6;
+      --texto: #fff;
+      --texto-suave: rgba(255, 255, 255, .8);
+      --cor: #fff;
+      --cor-texto: #6a11cb;
+      --destaque: #fff;
+      --superficie: rgba(255, 255, 255, .14);
+      --escuro: rgba(0, 0, 0, .25);
+      --escuro-texto: #fff;
+      --borda: 1px solid rgba(255, 255, 255, .35);
+      --raio: 20px;
+      --raio-redondo: 999px;
+      --sombra: 0 8px 32px rgba(0, 0, 0, .15);
+      --desfoque: blur(14px);
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 0; }
+    button.botao { border: 0; }
+  </style>
+</head>
+<body>
+  <header class="vidro">
+    <span class="logo">✈️ Rota Azul</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">✈️</div>
+      <span class="etiqueta">Agência de viagens</span>
+      <h1>Sua próxima viagem começa aqui</h1>
+      <p>Pacotes nacionais e internacionais planejados do seu jeito, com suporte 24 horas.</p>
+      <a class="botao" href="#contato">Montar meu roteiro</a>
+    </section>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Pacotes nacionais</h3>
+        <p>Aéreo, hotel e passeios.</p>
+        <span class="preco">a partir de R$ 1.800</span>
+      </div>
+      <div class="vidro">
+        <h3>Internacional</h3>
+        <p>Europa, América do Sul e Caribe.</p>
+        <span class="preco">a partir de R$ 6.500</span>
+      </div>
+      <div class="vidro">
+        <h3>Lua de mel</h3>
+        <p>Roteiros românticos e exclusivos.</p>
+        <span class="preco">sob consulta</span>
+      </div>
+      <div class="vidro">
+        <h3>Seguro viagem</h3>
+        <p>Cobertura completa.</p>
+        <span class="preco">a partir de R$ 90</span>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="promo">
+      <div class="promo">
+        <h2>Oferta da semana</h2>
+        <p>Pacotes nacionais com 20% de desconto até domingo.</p>
+        <div class="relogio">
+          <div><strong>00</strong>dias</div>
+          <div><strong>00</strong>horas</div>
+          <div><strong>00</strong>min</div>
+          <div><strong>00</strong>seg</div>
+        </div>
+        <a class="botao" href="#contato">Quero a oferta</a>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="galeria">
+      <h2>Galeria</h2>
+      <div class="galeria">
+        <figure>✈️<figcaption>Rota Azul</figcaption></figure>
+        <figure>✈️<figcaption>Pacotes nacionais</figcaption></figure>
+        <figure>✈️<figcaption>Internacional</figcaption></figure>
+        <figure>✈️<figcaption>Lua de mel</figcaption></figure>
+        <figure>✈️<figcaption>Seguro viagem</figcaption></figure>
+        <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Rota Azul</h3>
+        <p>Consultores que já estiveram nos destinos que vendem e acompanham você do embarque até a volta.</p>
+        <div class="numeros">
+          <div><strong>60</strong>países</div>
+          <div><strong>24h</strong>suporte</div>
+          <div><strong>18.000</strong>viajantes</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Tudo funcionou perfeitamente, até o translado de madrugada.”
+        <small>Otávio, viajante</small>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Av. Dom Luís, 1200 - Meireles · (85) 3007-0101 · Seg a Sex, 9h às 18h</p>
+  </footer>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Montar meu roteiro</a>
+  </div>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+  </script>
+</body>
+</html>

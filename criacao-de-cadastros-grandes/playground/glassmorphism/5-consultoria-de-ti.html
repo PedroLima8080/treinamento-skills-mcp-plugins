@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nuvem Tech</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+
+    :root {
+      --fundo: #5a3fd6;
+      --texto: #fff;
+      --texto-suave: rgba(255, 255, 255, .8);
+      --cor: #fff;
+      --cor-texto: #6a11cb;
+      --destaque: #fff;
+      --superficie: rgba(255, 255, 255, .14);
+      --escuro: rgba(0, 0, 0, .25);
+      --escuro-texto: #fff;
+      --borda: 1px solid rgba(255, 255, 255, .35);
+      --raio: 20px;
+      --raio-redondo: 999px;
+      --sombra: 0 8px 32px rgba(0, 0, 0, .15);
+      --desfoque: blur(14px);
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Equipe */
+    .equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .membro { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .avatar { width: 96px; height: 96px; margin: 0 auto 14px; display: grid; place-items: center; font-size: 3rem; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .membro span { display: block; color: var(--texto-suave); font-size: .9rem; }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 0; }
+    button.botao { border: 0; }
+  </style>
+</head>
+<body>
+  <div class="aviso-topo">
+    🎉 Novidade: Suporte por a partir de R$ 1.200/mês! <a href="#contato">Saiba mais</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <header class="vidro">
+    <span class="logo">☁️ Nuvem Tech</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">☁️</div>
+      <span class="etiqueta">Consultoria em nuvem</span>
+      <h1>Leve sua empresa para a nuvem sem susto</h1>
+      <p>Migração, segurança e redução de custos em cloud para pequenas e médias empresas.</p>
+      <a class="botao" href="#contato">Diagnóstico gratuito</a>
+    </section>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Migração</h3>
+        <p>Servidores locais para a nuvem.</p>
+        <span class="preco">sob consulta</span>
+      </div>
+      <div class="vidro">
+        <h3>Segurança</h3>
+        <p>Backup, firewall e monitoramento.</p>
+        <span class="preco">a partir de R$ 900/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Redução de custos</h3>
+        <p>Análise e otimização da conta de cloud.</p>
+        <span class="preco">R$ 2.500</span>
+      </div>
+      <div class="vidro">
+        <h3>Suporte</h3>
+        <p>Time de plantão para emergências.</p>
+        <span class="preco">a partir de R$ 1.200/mês</span>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="historia">
+      <h2>Nossa história</h2>
+      <div class="linha-do-tempo">
+        <div class="marco"><strong>2015</strong><p>Fundação com foco em migração.</p></div>
+        <div class="marco"><strong>2018</strong><p>Primeiras certificações em nuvem.</p></div>
+        <div class="marco"><strong>2021</strong><p>Centro de monitoramento 24h.</p></div>
+        <div class="marco"><strong>2025</strong><p>150 empresas na nuvem.</p></div>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Nuvem Tech</h3>
+        <p>Engenheiros certificados nas principais nuvens do mercado, falando a língua de quem não é de TI.</p>
+        <div class="numeros">
+          <div><strong>150</strong>empresas</div>
+          <div><strong>40%</strong>de economia média</div>
+          <div><strong>99,9%</strong>disponibilidade</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Reduzimos a conta da nuvem pela metade em dois meses.”
+        <small>Cláudia, diretora financeira</small>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="equipe">
+      <h2>Nossa equipe</h2>
+      <div class="equipe">
+        <div class="membro">
+          <div class="avatar">☁️</div>
+          <h3>Marcos Viana</h3>
+          <span>Arquiteto de nuvem</span>
+        </div>
+        <div class="membro">
+          <div class="avatar">🔐</div>
+          <h3>Júlia Tavares</h3>
+          <span>Especialista em segurança</span>
+        </div>
+        <div class="membro">
+          <div class="avatar">⚙️</div>
+          <h3>Pedro Alves</h3>
+          <span>Engenheiro DevOps</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="newsletter">
+      <div class="newsletter">
+        <h2>Receba novidades</h2>
+        <p>Promoções e novidades da Nuvem Tech direto no seu e-mail.</p>
+        <form onsubmit="return false">
+          <input type="email" placeholder="seu@email.com">
+          <button class="botao" type="submit">Assinar</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Av. Washington Soares, 3500 - Edson Queiroz · (85) 3007-0105 · Seg a Sex, 8h às 18h</p>
+  </footer>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

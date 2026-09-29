@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TI Sem Drama</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "tisemdrama@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+
+    :root {
+      --fundo: #0c0c0c;
+      --texto: #33ff66;
+      --texto-suave: #888;
+      --cor: #33ff66;
+      --cor-texto: #0c0c0c;
+      --destaque: #fff;
+      --superficie: #0c0c0c;
+      --escuro: #0c0c0c;
+      --escuro-texto: #33ff66;
+      --borda: 1px dashed #33ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 24px #33ff6633;
+      --desfoque: none;
+      --fonte-titulo: Consolas, "Courier New", monospace;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Equipe */
+    .equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .membro { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .avatar { width: 96px; height: 96px; margin: 0 auto 14px; display: grid; place-items: center; font-size: 3rem; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .membro span { display: block; color: var(--texto-suave); font-size: .9rem; }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 24px 0; }
+    .secao-extra > h2 { font-size: 1rem; font-weight: normal; color: #fff; margin: 12px 0 16px; }
+    .secao-extra > h2::before { content: "$ "; color: #33ff66; }
+    button.botao { background: none; }
+    .letreiro { margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="aviso-topo">
+    🎉 Novidade: antivirus por R$ 20/máquina! <a href="#contato">Saiba mais</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>tisemdrama@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Sua TI funcionando, sem drama</h1>
+      <p class="comentario"># suporte remoto e presencial, redes, backup e segurança para pequenas empresas</p>
+      <a class="botao" href="#contato">[ Falar com um técnico ]</a>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>suporte_mensal</td><td>Atendimento ilimitado para até 10 máquinas.</td><td>R$ 890/mês</td></tr>
+          <tr><td>rede</td><td>Cabeamento e Wi-Fi corporativo.</td><td>sob consulta</td></tr>
+          <tr><td>backup</td><td>Cópias automáticas na nuvem.</td><td>R$ 150/mês</td></tr>
+          <tr><td>antivirus</td><td>Proteção gerenciada.</td><td>R$ 20/máquina</td></tr>
+        </table>
+      </section>
+
+      <div class="secao-extra" id="historia">
+        <h2>./nossa-historia</h2>
+        <div class="linha-do-tempo">
+          <div class="marco"><strong>2015</strong><p>Primeiro contrato de suporte.</p></div>
+          <div class="marco"><strong>2018</strong><p>Suporte remoto para todo o estado.</p></div>
+          <div class="marco"><strong>2021</strong><p>Monitoramento 24h de servidores.</p></div>
+          <div class="marco"><strong>2025</strong><p>200 empresas atendidas.</p></div>
+        </div>
+      </div>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Uma equipe de técnicos que resolve o problema e explica o que aconteceu, sem termos complicados.</p>
+        <p><span class="ok">OK</span> 15 min tempo de resposta</p>
+        <p><span class="ok">OK</span> 200 empresas</p>
+        <p><span class="ok">OK</span> 10 anos</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "Parei de me preocupar com computador e voltei a cuidar do negócio." <span class="comentario">-- Leonardo, dono de clínica</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Av. Júlio Abreu, 400 - Varjota</p>
+        <p>telefone : (85) 3009-0105</p>
+        <p>horario  : Seg a Sex, 8h às 18h</p>
+      </section>
+
+      <div class="secao-extra" id="equipe">
+        <h2>./nossa-equipe</h2>
+        <div class="equipe">
+          <div class="membro">
+            <div class="avatar">🧑‍💻</div>
+            <h3>Rodrigo</h3>
+            <span>Líder técnico</span>
+          </div>
+          <div class="membro">
+            <div class="avatar">🌐</div>
+            <h3>Carla</h3>
+            <span>Redes e servidores</span>
+          </div>
+          <div class="membro">
+            <div class="avatar">🎧</div>
+            <h3>Beto</h3>
+            <span>Suporte ao usuário</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="secao-extra" id="mapa">
+        <h2>./como-chegar</h2>
+        <div class="mapa">
+          <span class="pino">📍</span>
+          <div class="endereco">
+            <strong>TI Sem Drama</strong><br>
+            Av. Júlio Abreu, 400 - Varjota<br>
+            Seg a Sex, 8h às 18h
+          </div>
+        </div>
+      </div>
+
+      <div class="secao-extra" id="newsletter">
+        <div class="newsletter">
+          <h2>./receba-novidades</h2>
+          <p>Promoções e novidades da TI Sem Drama direto no seu e-mail.</p>
+          <form onsubmit="return false">
+            <input type="email" placeholder="seu@email.com">
+            <button class="botao" type="submit">Assinar</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer># TI Sem Drama :: suporte de TI para empresas</footer>
+  </div>
+
+  <script>
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+  </script>
+</body>
+</html>

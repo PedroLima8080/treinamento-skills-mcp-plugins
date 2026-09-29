@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FibraNet</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "fibranet@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+
+    :root {
+      --fundo: #0c0c0c;
+      --texto: #33ff66;
+      --texto-suave: #888;
+      --cor: #33ff66;
+      --cor-texto: #0c0c0c;
+      --destaque: #fff;
+      --superficie: #0c0c0c;
+      --escuro: #0c0c0c;
+      --escuro-texto: #33ff66;
+      --borda: 1px dashed #33ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 24px #33ff6633;
+      --desfoque: none;
+      --fonte-titulo: Consolas, "Courier New", monospace;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Planos */
+    .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: center; }
+    .plano { padding: 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .plano.destaque { transform: scale(1.06); box-shadow: var(--sombra); border-color: var(--destaque); }
+    .plano small { display: inline-block; margin-bottom: 12px; padding: 2px 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .plano .valor { display: block; margin: 16px 0 20px; font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--destaque); }
+
+    /* Perguntas frequentes */
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: var(--borda); padding: 18px 0; }
+    .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font-family: var(--fonte-titulo); font-size: 1.15rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--destaque); }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin-top: 10px; color: var(--texto-suave); }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 24px 0; }
+    .secao-extra > h2 { font-size: 1rem; font-weight: normal; color: #fff; margin: 12px 0 16px; }
+    .secao-extra > h2::before { content: "$ "; color: #33ff66; }
+    button.botao { background: none; }
+    .letreiro { margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>fibranet@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Internet que não cai no meio da partida</h1>
+      <p class="comentario"># fibra óptica até a sua casa, Wi-Fi 6 incluso e suporte que atende de verdade</p>
+      <a class="botao" href="#contato">[ Consultar cobertura ]</a>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>plano_300mb</td><td>Para navegar e assistir séries.</td><td>R$ 89/mês</td></tr>
+          <tr><td>plano_600mb</td><td>Home office e jogos online.</td><td>R$ 109/mês</td></tr>
+          <tr><td>plano_1gb</td><td>Para a casa inteira conectada.</td><td>R$ 149/mês</td></tr>
+          <tr><td>ip_fixo</td><td>Para servidores e câmeras.</td><td>R$ 30/mês</td></tr>
+        </table>
+      </section>
+
+      <div class="secao-extra" id="planos">
+        <h2>./planos</h2>
+        <div class="planos">
+          <div class="plano">
+            <h3>plano_300mb</h3>
+            <p>Para navegar e assistir séries.</p>
+            <span class="valor">R$ 89/mês</span>
+            <a class="botao" href="#contato">Escolher</a>
+          </div>
+          <div class="plano destaque">
+            <small>Mais pedido</small>
+            <h3>plano_600mb</h3>
+            <p>Home office e jogos online.</p>
+            <span class="valor">R$ 109/mês</span>
+            <a class="botao" href="#contato">Escolher</a>
+          </div>
+          <div class="plano">
+            <h3>plano_1gb</h3>
+            <p>Para a casa inteira conectada.</p>
+            <span class="valor">R$ 149/mês</span>
+            <a class="botao" href="#contato">Escolher</a>
+          </div>
+        </div>
+      </div>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Provedor local com rede própria, técnicos do bairro e atendimento sem robô.</p>
+        <p><span class="ok">OK</span> 1 Gbps velocidade máxima</p>
+        <p><span class="ok">OK</span> 99,8% de disponibilidade</p>
+        <p><span class="ok">OK</span> 25.000 clientes</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "Desde que troquei, nunca mais tive queda na reunião." <span class="comentario">-- Bruna, analista em home office</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Av. Oliveira Paiva, 1500 - Cidade dos Funcionários</p>
+        <p>telefone : (85) 3009-0101</p>
+        <p>horario  : Suporte 24 horas</p>
+      </section>
+
+      <div class="secao-extra" id="faq">
+        <h2>./perguntas-frequentes</h2>
+        <div class="faq">
+          <details><summary>Quanto custa plano_300mb?</summary><p>R$ 89/mês. Para navegar e assistir séries.</p></details>
+          <details><summary>Qual o horário de funcionamento?</summary><p>Suporte 24 horas.</p></details>
+          <details><summary>Onde vocês ficam?</summary><p>Av. Oliveira Paiva, 1500 - Cidade dos Funcionários.</p></details>
+          <details><summary>Como falo com vocês?</summary><p>Pelo telefone (85) 3009-0101, também no WhatsApp.</p></details>
+        </div>
+      </div>
+    </main>
+    <footer># FibraNet :: internet de fibra óptica</footer>
+  </div>
+
+  <div class="progresso"></div>
+
+  <a class="whatsapp" href="https://wa.me/558530090101" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

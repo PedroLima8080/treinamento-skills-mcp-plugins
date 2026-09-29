@@ -1,0 +1,25 @@
+SKILLS  (skill qualidade-moni: sem console.log em src/soma.js)
+1. O que é skill      -> prompt repetido vira SKILL.md (frontmatter + corpo)
+2. Skill robusta      -> reference.md + scripts/: detalhes fora do SKILL.md
+3. Invocação          -> disable-model-invocation: só roda quando eu chamo
+4. allowed-tools      -> libera ferramentas (Write) sem pedir permissão
+5. Contexto dinâmico  -> !`comando` roda antes e entrega o resultado pronto
+6. Argumentos         -> $ARGUMENTS: a mesma skill em alvos diferentes
+7. Dia a dia          -> skills reais de dev/QA juntando tudo
+
+MCP
+- Dá ao Claude acesso ao que ele não alcança (banco da loja)
+- Skill ensina a fazer; MCP dá acesso
+
+MARKETPLACE
+- Compartilhar skills/MCPs com a empresa sem copiar pastas
+- Plugin = pacote (skill, MCP...); marketplace = catálogo
+- moni-procedimentos (skill) | moni-wiki (MCP)
+
+CRIAÇÃO DE CADASTROS GRANDES
+- Objetivo: manter o padrão sem engessar
+- playground/ = padrões isolados e fixos; cada pasta tem um objetivo claro
+- 5 exemplos por padrão: mesma identidade, situações diferentes (opções)
+- Aponto a pasta: a IA lê só ela
+  -> não sai caçando referência, não lê o que não precisa, não foge do padrão
+- Como o playground não muda, o padrão não se desgasta com o tempo

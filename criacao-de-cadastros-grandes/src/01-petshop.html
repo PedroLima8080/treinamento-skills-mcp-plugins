@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patinhas Felizes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Trebuchet MS", Verdana, sans-serif; background: #fff7ec; color: #3b2f4a; line-height: 1.6; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    nav { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 3px solid #3b2f4a; border-radius: 999px; padding: 10px 24px; margin: 20px auto; max-width: 1000px; }
+    .logo { font-weight: bold; font-size: 1.3rem; }
+    nav a { color: #3b2f4a; text-decoration: none; margin-left: 16px; font-weight: bold; }
+    .hero { text-align: center; padding: 50px 20px; }
+    .bolha { width: 160px; height: 160px; border-radius: 50%; background: #ffd6e0; border: 3px solid #3b2f4a; display: grid; place-items: center; font-size: 80px; margin: 0 auto 24px; }
+    h1 { font-size: 2.8rem; line-height: 1.1; }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 16px auto 28px; }
+    .botao { display: inline-block; background: #ff8fab; color: #3b2f4a; border: 3px solid #3b2f4a; border-radius: 999px; padding: 14px 32px; font-weight: bold; text-decoration: none; box-shadow: 0 6px 0 #3b2f4a; }
+    section.container { padding: 50px 20px; }
+    h2 { text-align: center; font-size: 2rem; margin-bottom: 30px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; }
+    .card { border: 3px solid #3b2f4a; border-radius: 32px; padding: 28px; text-align: center; }
+    .card:nth-child(1) { background: #ffd6e0; }
+    .card:nth-child(2) { background: #c8f2e0; }
+    .card:nth-child(3) { background: #e2d6ff; }
+    .card:nth-child(4) { background: #fff1b8; }
+    .preco { display: inline-block; background: #fff; border: 2px solid #3b2f4a; border-radius: 999px; padding: 4px 14px; margin-top: 12px; font-weight: bold; }
+    .sobre { text-align: center; max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem; }
+    .numeros { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .numero { background: #fff; border: 3px solid #3b2f4a; border-radius: 24px; padding: 20px 30px; text-align: center; }
+    .numero strong { display: block; font-size: 2rem; }
+    .balao { background: #fff; border: 3px solid #3b2f4a; border-radius: 32px; padding: 30px; max-width: 640px; margin: 0 auto; position: relative; font-size: 1.15rem; text-align: center; }
+    .balao::after { content: ""; position: absolute; bottom: -18px; left: 60px; width: 30px; height: 30px; background: #fff; border-right: 3px solid #3b2f4a; border-bottom: 3px solid #3b2f4a; transform: rotate(45deg); }
+    .autor { text-align: center; margin-top: 30px; font-weight: bold; }
+    footer { background: #3b2f4a; color: #fff7ec; text-align: center; padding: 40px 20px; border-radius: 40px 40px 0 0; margin-top: 40px; }
+    footer strong { font-size: 1.4rem; }
+    @media (max-width: 600px) { nav a { display: none; } h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="logo">🐶 Patinhas Felizes</span>
+    <div>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="bolha">🐶</div>
+    <h1>Seu pet limpinho e feliz!</h1>
+    <p>Banho, tosa e cuidados com amor para cães e gatos de todos os tamanhos.</p>
+    <a class="botao" href="#contato">Agendar banho</a>
+  </header>
+
+  <section id="servicos" class="container">
+    <h2>O que fazemos</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Banho</h3>
+        <p>Shampoo neutro e secagem sem estresse.</p>
+        <span class="preco">R$ 45</span>
+      </div>
+      <div class="card">
+        <h3>Tosa</h3>
+        <p>Higiênica ou na tesoura, do jeitinho que você pedir.</p>
+        <span class="preco">R$ 60</span>
+      </div>
+      <div class="card">
+        <h3>Hidratação</h3>
+        <p>Pelos macios e brilhantes por semanas.</p>
+        <span class="preco">R$ 35</span>
+      </div>
+      <div class="card">
+        <h3>Táxi Dog</h3>
+        <p>Buscamos e levamos seu pet em casa.</p>
+        <span class="preco">R$ 20</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="container">
+    <h2>Sobre a Patinhas Felizes</h2>
+    <p class="sobre">Desde 2015 cuidando dos pets do bairro como se fossem nossos. Equipe treinada, produtos hipoalergênicos e um cantinho cheio de brinquedos para a espera.</p>
+    <div class="numeros">
+      <div class="numero"><strong>5.000+</strong>pets atendidos</div>
+      <div class="numero"><strong>10</strong>anos de carinho</div>
+      <div class="numero"><strong>4,9</strong>nota no Google</div>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Quem conhece, ama</h2>
+    <div class="balao">“A Mel volta do banho cheirosa e abanando o rabo. Nunca vi ela tão feliz!”</div>
+    <p class="autor">Juliana, tutora da Mel</p>
+  </section>
+
+  <footer id="contato">
+    <strong>🐶 Patinhas Felizes</strong>
+    <p>Banho, tosa e muito carinho</p>
+    <p>Rua dos Girassóis, 45 - Centro · (85) 3001-0001 · Seg a Sáb, 8h às 18h</p>
+  </footer>
+</body>
+</html>

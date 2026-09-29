@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brilho Total</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #0a0a12; color: #d9d9e8; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; border-bottom: 1px solid #1f1f33; }
+    .logo { font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #00f0ff; text-shadow: 0 0 12px #00f0ff; }
+    header a { color: #d9d9e8; text-decoration: none; text-transform: uppercase; font-size: .8rem; letter-spacing: 3px; margin-left: 24px; }
+    .hero { min-height: min(80vh, 720px); display: flex; flex-direction: column; justify-content: center; padding: 0 6%; background: radial-gradient(circle at 80% 30%, #ff2bd633, transparent 40%), radial-gradient(circle at 10% 90%, #00f0ff22, transparent 40%); }
+    .hero small { color: #ff2bd6; letter-spacing: 6px; text-transform: uppercase; }
+    h1 { font-size: 4rem; text-transform: uppercase; line-height: 1; max-width: 850px; margin: 16px 0; color: #fff; text-shadow: 0 0 24px #00f0ff88; }
+    .hero p { max-width: 520px; color: #9a9ab5; font-size: 1.1rem; }
+    .botao { margin-top: 32px; align-self: flex-start; border: 2px solid #00f0ff; color: #00f0ff; padding: 14px 36px; text-transform: uppercase; letter-spacing: 3px; text-decoration: none; box-shadow: 0 0 16px #00f0ff66, inset 0 0 16px #00f0ff33; }
+    section { padding: 80px 6%; }
+    h2 { text-transform: uppercase; letter-spacing: 6px; font-size: .9rem; color: #ff2bd6; margin-bottom: 40px; }
+    .linha { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 0; border-bottom: 1px solid #1f1f33; }
+    .linha h3 { font-size: 1.6rem; text-transform: uppercase; color: #fff; }
+    .linha p { color: #9a9ab5; }
+    .linha strong { color: #00f0ff; font-size: 1.4rem; white-space: nowrap; text-shadow: 0 0 10px #00f0ff; }
+    .sobre { font-size: 1.3rem; max-width: 800px; margin-bottom: 40px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #1f1f33; }
+    .numero { background: #0a0a12; padding: 40px; text-align: center; }
+    .numero strong { display: block; font-size: 3rem; color: #ff2bd6; text-shadow: 0 0 16px #ff2bd6; }
+    .numero span { text-transform: uppercase; letter-spacing: 3px; font-size: .8rem; color: #9a9ab5; }
+    blockquote { font-size: 2rem; font-style: italic; border-left: 4px solid #ff2bd6; padding-left: 30px; max-width: 800px; color: #fff; }
+    cite { display: block; margin-top: 16px; font-size: .9rem; color: #00f0ff; letter-spacing: 3px; text-transform: uppercase; font-style: normal; }
+    footer { padding: 40px 6%; border-top: 1px solid #1f1f33; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #6b6b88; font-size: .85rem; }
+    @media (max-width: 700px) { h1 { font-size: 2.4rem; } .numeros { grid-template-columns: 1fr; } .linha { flex-direction: column; align-items: flex-start; } header nav { display: none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Brilho Total</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <small>Estética automotiva</small>
+    <h1>Seu carro brilhando como novo</h1>
+    <p>Lavagem, polimento e higienização com produtos profissionais. Você toma um café, a gente cuida do resto.</p>
+    <a class="botao" href="#contato">Agendar lavagem</a>
+  </section>
+
+  <section id="servicos">
+    <h2>// Serviços</h2>
+    <div class="linha">
+      <div>
+        <h3>Lavagem simples</h3>
+        <p>Externa com secagem e pretinho nos pneus.</p>
+      </div>
+      <strong>R$ 40</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Lavagem completa</h3>
+        <p>Externa, interna e aspiração.</p>
+      </div>
+      <strong>R$ 80</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Polimento</h3>
+        <p>Remove riscos leves e devolve o brilho.</p>
+      </div>
+      <strong>R$ 250</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Higienização interna</h3>
+        <p>Bancos, teto e carpetes sem manchas e sem cheiro.</p>
+      </div>
+      <strong>R$ 180</strong>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <h2>// Sobre</h2>
+    <p class="sobre">Um lava-car com cara de estúdio: iluminação de LED para ver cada detalhe, produtos biodegradáveis e sala de espera com Wi-Fi.</p>
+    <div class="numeros">
+      <div class="numero"><strong>15.000</strong><span>carros lavados</span></div>
+      <div class="numero"><strong>40 min</strong><span>lavagem completa</span></div>
+      <div class="numero"><strong>7</strong><span>anos</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>// Quem já veio</h2>
+    <blockquote>
+      “Parecia que eu tinha acabado de tirar o carro da concessionária.”
+      <cite>Diego, cliente mensal</cite>
+    </blockquote>
+  </section>
+
+  <footer id="contato">
+    <span>Av. Washington Soares, 2000 - Edson Queiroz</span>
+    <span>(85) 3002-0001</span>
+    <span>Seg a Sáb, 8h às 20h</span>
+  </footer>
+</body>
+</html>

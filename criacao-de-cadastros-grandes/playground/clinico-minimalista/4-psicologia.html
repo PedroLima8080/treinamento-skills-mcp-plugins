@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Espaço Mente</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1f2a37; background: #fff; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .topo { background: #1e6fd9; color: #fff; font-size: .85rem; padding: 6px 0; }
+    .topo .container { display: flex; justify-content: space-between; }
+    header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-weight: 700; font-size: 1.3rem; color: #1e6fd9; }
+    nav a { color: #4b5563; text-decoration: none; margin-left: 28px; font-size: .95rem; }
+    .botao { display: inline-block; background: #1e6fd9; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 0; font: inherit; cursor: pointer; }
+    nav .botao { color: #fff; padding: 8px 18px; }
+    .hero { background: #f4f8fb; padding: 80px 0; }
+    .hero .container { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .etiqueta { display: inline-block; background: #e0ecfc; color: #1e6fd9; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    h1 { font-size: 2.8rem; line-height: 1.2; margin: 16px 0; }
+    .hero p { color: #4b5563; font-size: 1.1rem; margin-bottom: 28px; }
+    .formulario { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(30, 111, 217, .12); }
+    .formulario h3 { margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d9e2; border-radius: 8px; margin-bottom: 12px; font: inherit; }
+    .formulario .botao { width: 100%; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 48px 24px; border-bottom: 1px solid #e5e7eb; text-align: center; }
+    .numero strong { display: block; font-size: 2.2rem; color: #1e6fd9; }
+    .numero span { color: #6b7280; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; text-align: center; }
+    .subtitulo { text-align: center; color: #6b7280; margin-bottom: 40px; }
+    .servicos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .servico { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; gap: 16px; }
+    .servico h3 { font-size: 1.1rem; }
+    .servico p { color: #6b7280; }
+    .servico strong { color: #1e6fd9; white-space: nowrap; }
+    .sobre { background: #f4f8fb; }
+    .sobre p { max-width: 720px; margin: 0 auto; text-align: center; color: #4b5563; }
+    .sobre .depoimento { margin-top: 24px; font-style: italic; color: #1f2a37; }
+    details { border-bottom: 1px solid #e5e7eb; padding: 16px 0; max-width: 720px; margin: 0 auto; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { color: #4b5563; margin-top: 8px; }
+    footer { background: #1f2a37; color: #cbd5e1; padding: 48px 0; }
+    footer .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    footer h4 { color: #fff; margin-bottom: 8px; }
+    @media (max-width: 800px) { .hero .container, .servicos, footer .container { grid-template-columns: 1fr; } nav a:not(.botao) { display: none; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #1f2a37;
+      --texto-suave: #6b7280;
+      --cor: #1e6fd9;
+      --cor-texto: #fff;
+      --destaque: #1e6fd9;
+      --superficie: #f4f8fb;
+      --escuro: #1f2a37;
+      --escuro-texto: #fff;
+      --borda: 1px solid #e5e7eb;
+      --raio: 12px;
+      --raio-redondo: 999px;
+      --sombra: 0 10px 30px rgba(30, 111, 217, .12);
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Roboto, Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Efeitos ao passar o mouse */
+    .servico { transition: all .25s ease; }
+    .servico:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(30, 111, 217, .15); }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; }
+  </style>
+</head>
+<body>
+  <div class="topo">
+    <div class="container">
+      <span>Seg a Sex, 8h às 21h</span>
+      <span>(85) 3005-0104</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <span class="logo">🧠 Espaço Mente</span>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="botao" href="#agendar">Agendar primeira sessão</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="agendar">
+    <div class="container">
+      <div>
+        <span class="etiqueta">Psicologia e terapia</span>
+        <h1>Um espaço seguro para cuidar de você</h1>
+        <p>Terapia individual, de casal e infantil, presencial ou online.</p>
+        <a class="botao" href="#servicos">Conheça os serviços</a>
+      </div>
+      <form class="formulario">
+        <h3>Agendar primeira sessão</h3>
+        <input placeholder="Seu nome">
+        <input placeholder="Telefone">
+        <select>
+          <option>Terapia individual</option>
+          <option>Terapia de casal</option>
+          <option>Terapia infantil</option>
+          <option>Online</option>
+        </select>
+        <button class="botao" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container numeros">
+    <div class="numero"><strong>7</strong><span>psicólogas</span></div>
+    <div class="numero"><strong>100%</strong><span>sigilo</span></div>
+    <div class="numero"><strong>12</strong><span>anos</span></div>
+  </div>
+
+  <section id="servicos">
+    <div class="container">
+      <h2>Serviços</h2>
+      <p class="subtitulo">Tudo o que você precisa em um só lugar</p>
+      <div class="servicos">
+        <div class="servico">
+          <div>
+            <h3>Terapia individual</h3>
+            <p>Sessões semanais de 50 minutos.</p>
+          </div>
+          <strong>R$ 180</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Terapia de casal</h3>
+            <p>Comunicação e reconstrução de vínculos.</p>
+          </div>
+          <strong>R$ 250</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Terapia infantil</h3>
+            <p>Abordagem lúdica com orientação aos pais.</p>
+          </div>
+          <strong>R$ 180</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Online</h3>
+            <p>Mesmo cuidado, de onde você estiver.</p>
+          </div>
+          <strong>R$ 160</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>Sobre nós</h2>
+      <p class="subtitulo">Espaço Mente</p>
+      <p>Equipe de psicólogas com abordagens diferentes para que cada pessoa encontre o acompanhamento ideal.</p>
+      <p class="depoimento">“Encontrei acolhimento e ferramentas para lidar com a ansiedade.” — Paciente anônimo</p>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="container">
+      <h2>Dúvidas frequentes</h2>
+      <p class="subtitulo">Não encontrou? Ligue para (85) 3005-0104</p>
+      <details><summary>Qual o horário de atendimento?</summary><p>Seg a Sex, 8h às 21h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Rua Monsenhor Bruno, 1500 - Aldeota.</p></details>
+      <details><summary>Como faço para agendar?</summary><p>Pelo formulário no topo da página ou pelo telefone (85) 3005-0104.</p></details>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="agendar">
+    <h2>Agende agora</h2>
+    <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+    <button class="botao" type="button" data-abrir-modal>Agendar primeira sessão</button>
+  </div>
+
+  <div class="secao-extra" id="newsletter">
+    <div class="newsletter">
+      <h2>Receba novidades</h2>
+      <p>Promoções e novidades da Espaço Mente direto no seu e-mail.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="seu@email.com">
+        <button class="botao" type="submit">Assinar</button>
+      </form>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <div class="container">
+      <div><h4>Espaço Mente</h4><p>Psicologia e terapia</p></div>
+      <div><h4>Endereço</h4><p>Rua Monsenhor Bruno, 1500 - Aldeota</p></div>
+      <div><h4>Contato</h4><p>(85) 3005-0104<br>Seg a Sex, 8h às 21h</p></div>
+    </div>
+  </footer>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Agendar primeira sessão</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Essenza</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #faf7f2; color: #222; line-height: 1.7; }
+    .sans { font-family: Helvetica, Arial, sans-serif; }
+    header { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 8%; }
+    .logo { font-size: 1.2rem; letter-spacing: .3em; text-transform: uppercase; }
+    nav a { font-family: Helvetica, Arial, sans-serif; font-size: .8rem; color: #222; text-decoration: none; margin-left: 28px; letter-spacing: .1em; }
+    .hero { padding: 80px 8% 100px; border-bottom: 1px solid #222; }
+    .hero small { font-family: Helvetica, Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; color: #7a8b69; }
+    h1 { font-size: clamp(2.8rem, 7vw, 6rem); font-weight: normal; line-height: 1.05; font-style: italic; max-width: 14ch; margin: 24px 0 48px; }
+    .hero .linha { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+    .hero p { max-width: 420px; font-size: 1.1rem; }
+    .botao { font-family: Helvetica, Arial, sans-serif; color: #222; text-decoration: none; border-bottom: 1px solid #222; padding-bottom: 4px; letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; }
+    section { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .rotulo { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #7a8b69; }
+    .rotulo b { display: block; font-family: Georgia, serif; font-size: 2.5rem; font-weight: normal; color: #222; letter-spacing: 0; }
+    .lista article { display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 24px 0; border-top: 1px solid #d8d2c8; }
+    .lista article:first-child { border-top: 0; padding-top: 0; }
+    .lista h3 { font-weight: normal; font-size: 1.6rem; }
+    .lista p { color: #555; }
+    .lista span { grid-row: 1; grid-column: 2; font-style: italic; color: #7a8b69; }
+    .texto { font-size: 1.4rem; max-width: 32em; }
+    .numeros { display: flex; gap: 60px; margin-top: 40px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 3rem; font-weight: normal; font-style: italic; }
+    .numeros span { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+    blockquote { font-size: 2rem; font-style: italic; line-height: 1.4; }
+    cite { display: block; margin-top: 20px; font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: #7a8b69; }
+    .contato p { font-size: 1.3rem; }
+    footer { padding: 60px 8% 30px; }
+    .marca { font-size: clamp(3rem, 12vw, 10rem); line-height: 1; letter-spacing: -.02em; }
+    .rodape { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: Helvetica, Arial, sans-serif; font-size: .8rem; border-top: 1px solid #222; padding-top: 20px; margin-top: 20px; }
+    @media (max-width: 700px) { section { grid-template-columns: 1fr; } nav { display: none; } }
+
+    :root {
+      --fundo: #faf7f2;
+      --texto: #222;
+      --texto-suave: #555;
+      --cor: #7a8b69;
+      --cor-texto: #fff;
+      --destaque: #7a8b69;
+      --superficie: #f1ece3;
+      --escuro: #222;
+      --escuro-texto: #faf7f2;
+      --borda: 1px solid #d8d2c8;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Planos */
+    .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: center; }
+    .plano { padding: 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .plano.destaque { transform: scale(1.06); box-shadow: var(--sombra); border-color: var(--destaque); }
+    .plano small { display: inline-block; margin-bottom: 12px; padding: 2px 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .plano .valor { display: block; margin: 16px 0 20px; font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--destaque); }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .secao-extra > h2 { font-weight: normal; font-style: italic; font-size: 2.4rem; }
+    button.botao { background: none; border: 0; border-bottom: 1px solid #222; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Essenza</span>
+    <nav>
+      <a href="#servicos">serviços</a>
+      <a href="#sobre">sobre</a>
+      <a href="#contato">contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <small>Perfumaria autoral</small>
+    <h1>Um perfume é uma memória que você veste</h1>
+    <div class="linha">
+      <p>Fragrâncias criadas em pequenos lotes, com matérias-primas naturais.</p>
+      <a class="botao" href="#contato">Descobrir fragrâncias</a>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="rotulo"><b>01</b>Serviços</div>
+    <div class="lista">
+      <article>
+        <h3>Eau de parfum</h3>
+        <span>R$ 320</span>
+        <p>50 ml, fixação prolongada.</p>
+      </article>
+      <article>
+        <h3>Perfume sob medida</h3>
+        <span>R$ 900</span>
+        <p>Uma sessão para criar o seu.</p>
+      </article>
+      <article>
+        <h3>Velas aromáticas</h3>
+        <span>R$ 120</span>
+        <p>Cera vegetal e pavio de algodão.</p>
+      </article>
+      <article>
+        <h3>Kit amostras</h3>
+        <span>R$ 80</span>
+        <p>5 fragrâncias para experimentar.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="promo">
+    <div class="promo">
+      <h2>Oferta da semana</h2>
+      <p>Eau de parfum com 20% de desconto até domingo.</p>
+      <div class="relogio">
+        <div><strong>00</strong>dias</div>
+        <div><strong>00</strong>horas</div>
+        <div><strong>00</strong>min</div>
+        <div><strong>00</strong>seg</div>
+      </div>
+      <a class="botao" href="#contato">Quero a oferta</a>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="planos">
+    <h2>Planos</h2>
+    <div class="planos">
+      <div class="plano">
+        <h3>Eau de parfum</h3>
+        <p>50 ml, fixação prolongada.</p>
+        <span class="valor">R$ 320</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano destaque">
+        <small>Mais pedido</small>
+        <h3>Perfume sob medida</h3>
+        <p>Uma sessão para criar o seu.</p>
+        <span class="valor">R$ 900</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+      <div class="plano">
+        <h3>Velas aromáticas</h3>
+        <p>Cera vegetal e pavio de algodão.</p>
+        <span class="valor">R$ 120</span>
+        <a class="botao" href="#contato">Escolher</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="rotulo"><b>02</b>Sobre</div>
+    <div>
+      <p class="texto">Nossa perfumista estudou em Grasse e voltou para criar fragrâncias com a flora brasileira.</p>
+      <div class="numeros">
+        <div><strong>12</strong><span>fragrâncias</span></div>
+        <div><strong>300</strong><span>frascos por lote</span></div>
+        <div><strong>100%</strong><span>vegano</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rotulo"><b>03</b>Depoimento</div>
+    <blockquote>
+      “Todo mundo pergunta qual perfume eu estou usando.”
+      <cite>Camila, cliente</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato" class="contato">
+    <div class="rotulo"><b>04</b>Contato</div>
+    <div>
+      <p>Rua Coronel Jucá, 1200 - Aldeota</p>
+      <p>(85) 3006-0104</p>
+      <p><em>Seg a Sáb, 10h às 20h</em></p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="newsletter">
+    <div class="newsletter">
+      <h2>Receba novidades</h2>
+      <p>Promoções e novidades da Essenza direto no seu e-mail.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="seu@email.com">
+        <button class="botao" type="submit">Assinar</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="marca">Essenza</div>
+    <div class="rodape">
+      <span>Perfumaria autoral</span>
+      <span>© Essenza</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/558530060104" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+  </script>
+</body>
+</html>

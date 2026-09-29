@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel Cru</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Arial Black", Impact, sans-serif; background: #fff; color: #000; }
+    p { font-family: "Courier New", monospace; font-weight: bold; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #000; padding: 16px 24px; background: #ffe600; }
+    .logo { font-size: 1.6rem; text-transform: uppercase; }
+    nav a { color: #000; text-transform: uppercase; border: 3px solid #000; padding: 6px 12px; margin-left: 8px; text-decoration: none; background: #fff; box-shadow: 4px 4px 0 #000; }
+    .hero { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h1 { font-size: clamp(3rem, 9vw, 7rem); text-transform: uppercase; line-height: .9; letter-spacing: -2px; }
+    .hero p { font-size: 1.2rem; max-width: 640px; margin: 24px 0 32px; background: #000; color: #ffe600; padding: 8px 12px; }
+    .botao { display: inline-block; background: #ff3b00; color: #fff; border: 4px solid #000; padding: 16px 32px; font-size: 1.3rem; text-transform: uppercase; text-decoration: none; box-shadow: 8px 8px 0 #000; }
+    .faixa { background: #000; color: #ffe600; white-space: nowrap; overflow: hidden; padding: 12px 0; font-size: 1.4rem; text-transform: uppercase; }
+    section { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 30px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .bloco { border: 4px solid #000; padding: 24px; box-shadow: 8px 8px 0 #000; background: #fff; }
+    .bloco:nth-child(even) { background: #ffe600; }
+    .bloco small { font-size: 1rem; }
+    .bloco h3 { text-transform: uppercase; font-size: 1.4rem; margin: 8px 0; }
+    .bloco .preco { font-size: 2rem; margin-top: 16px; }
+    .sobre { font-size: 1.2rem; max-width: 800px; margin-bottom: 30px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid #000; }
+    .numero { padding: 30px; border-right: 4px solid #000; text-transform: uppercase; }
+    .numero:last-child { border-right: 0; }
+    .numero strong { font-size: 3.5rem; display: block; }
+    .depoimento { background: #ff3b00; color: #fff; }
+    .depoimento p { font-size: 1.6rem; }
+    footer { padding: 30px 24px; background: #000; color: #fff; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-transform: uppercase; }
+    @media (max-width: 700px) { nav { display: none; } .numeros, footer { grid-template-columns: 1fr; } .numero { border-right: 0; border-bottom: 4px solid #000; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #000;
+      --texto-suave: #000;
+      --cor: #ffe600;
+      --cor-texto: #000;
+      --destaque: #ff3b00;
+      --superficie: #fff;
+      --escuro: #000;
+      --escuro-texto: #ffe600;
+      --borda: 4px solid #000;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 8px 8px 0 #000;
+      --desfoque: none;
+      --fonte-titulo: "Arial Black", Impact, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .passo p { color: var(--texto-suave); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.4rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Ajustes do padrão */
+    .secao-extra { border-bottom: 4px solid #000; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Pixel Cru</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Design que funciona. O resto é enfeite.</h1>
+    <p>Identidade visual, sites e embalagens para marcas com personalidade.</p>
+    <a class="botao" href="#contato">Pedir proposta →</a>
+  </section>
+
+  <div class="faixa">★ Design sem enfeite ★ Design sem enfeite ★ Design sem enfeite ★ Design sem enfeite ★ Design sem enfeite ★ Design sem enfeite</div>
+
+  <div class="secao-extra" id="como-funciona">
+    <h2>Como funciona</h2>
+    <div class="passos">
+      <div class="passo"><h3>Escolha</h3><p>Veja os serviços e escolha o ideal para você.</p></div>
+      <div class="passo"><h3>Agende</h3><p>Ligue para (85) 3004-0102 ou chame no WhatsApp.</p></div>
+      <div class="passo"><h3>Aproveite</h3><p>Venha até Rua José Vilar, 2100 - Aldeota e deixe o resto com a gente.</p></div>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <h2>Serviços</h2>
+    <div class="grade">
+      <div class="bloco">
+        <small>01</small>
+        <h3>Identidade visual</h3>
+        <p>Logo, cores, tipografia e manual.</p>
+        <div class="preco">R$ 4.500</div>
+      </div>
+      <div class="bloco">
+        <small>02</small>
+        <h3>Site</h3>
+        <p>Design e desenvolvimento, até 5 páginas.</p>
+        <div class="preco">R$ 6.000</div>
+      </div>
+      <div class="bloco">
+        <small>03</small>
+        <h3>Embalagem</h3>
+        <p>Da ideia à gráfica.</p>
+        <div class="preco">R$ 3.000</div>
+      </div>
+      <div class="bloco">
+        <small>04</small>
+        <h3>Consultoria</h3>
+        <p>Uma tarde para destravar sua marca.</p>
+        <div class="preco">R$ 800</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <h2>Sobre</h2>
+    <p class="sobre">Três designers que cansaram de fazer mais do mesmo. Menos slides bonitos, mais soluções que vendem.</p>
+    <div class="numeros">
+      <div class="numero"><strong>120</strong>marcas</div>
+      <div class="numero"><strong>3</strong>designers</div>
+      <div class="numero"><strong>8</strong>prêmios</div>
+    </div>
+  </section>
+
+  <section class="depoimento">
+    <h2>Papo reto</h2>
+    <p>“Entregaram uma marca que finalmente parece com a gente.” — Clara, fundadora de startup</p>
+  </section>
+
+  <div class="secao-extra" id="depoimentos">
+    <h2>O que dizem</h2>
+    <div class="carrossel">
+      <blockquote class="slide ativo">“Entregaram uma marca que finalmente parece com a gente.”<cite>Clara, fundadora de startup</cite></blockquote>
+      <blockquote class="slide">“Nada de enrolação: prazo cumprido e marca forte.”<cite>Tiago, dono de cafeteria</cite></blockquote>
+      <blockquote class="slide">“Nosso site novo dobrou os contatos.”<cite>Paula, arquiteta</cite></blockquote>
+      <div class="pontos-carrossel">
+        <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+        <button type="button" aria-label="Depoimento 2"></button>
+        <button type="button" aria-label="Depoimento 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="agendar">
+    <h2>Agende agora</h2>
+    <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+    <button class="botao" type="button" data-abrir-modal>Pedir proposta</button>
+  </div>
+
+  <footer id="contato">
+    <span>Rua José Vilar, 2100 - Aldeota</span>
+    <span>(85) 3004-0102</span>
+    <span>Seg a Sex, 9h às 18h</span>
+  </footer>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Pedir proposta</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <div class="progresso"></div>
+
+  <script>
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => mostrar(i)));
+      setInterval(() => mostrar((atual + 1) % slides.length), 5000);
+    }
+
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

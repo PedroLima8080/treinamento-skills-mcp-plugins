@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galeria Norte</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #faf7f2; color: #222; line-height: 1.7; }
+    .sans { font-family: Helvetica, Arial, sans-serif; }
+    header { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 8%; }
+    .logo { font-size: 1.2rem; letter-spacing: .3em; text-transform: uppercase; }
+    nav a { font-family: Helvetica, Arial, sans-serif; font-size: .8rem; color: #222; text-decoration: none; margin-left: 28px; letter-spacing: .1em; }
+    .hero { padding: 80px 8% 100px; border-bottom: 1px solid #222; }
+    .hero small { font-family: Helvetica, Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; color: #7a8b69; }
+    h1 { font-size: clamp(2.8rem, 7vw, 6rem); font-weight: normal; line-height: 1.05; font-style: italic; max-width: 14ch; margin: 24px 0 48px; }
+    .hero .linha { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+    .hero p { max-width: 420px; font-size: 1.1rem; }
+    .botao { font-family: Helvetica, Arial, sans-serif; color: #222; text-decoration: none; border-bottom: 1px solid #222; padding-bottom: 4px; letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; }
+    section { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .rotulo { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #7a8b69; }
+    .rotulo b { display: block; font-family: Georgia, serif; font-size: 2.5rem; font-weight: normal; color: #222; letter-spacing: 0; }
+    .lista article { display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 24px 0; border-top: 1px solid #d8d2c8; }
+    .lista article:first-child { border-top: 0; padding-top: 0; }
+    .lista h3 { font-weight: normal; font-size: 1.6rem; }
+    .lista p { color: #555; }
+    .lista span { grid-row: 1; grid-column: 2; font-style: italic; color: #7a8b69; }
+    .texto { font-size: 1.4rem; max-width: 32em; }
+    .numeros { display: flex; gap: 60px; margin-top: 40px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 3rem; font-weight: normal; font-style: italic; }
+    .numeros span { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+    blockquote { font-size: 2rem; font-style: italic; line-height: 1.4; }
+    cite { display: block; margin-top: 20px; font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: #7a8b69; }
+    .contato p { font-size: 1.3rem; }
+    footer { padding: 60px 8% 30px; }
+    .marca { font-size: clamp(3rem, 12vw, 10rem); line-height: 1; letter-spacing: -.02em; }
+    .rodape { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: Helvetica, Arial, sans-serif; font-size: .8rem; border-top: 1px solid #222; padding-top: 20px; margin-top: 20px; }
+    @media (max-width: 700px) { section { grid-template-columns: 1fr; } nav { display: none; } }
+
+    :root {
+      --fundo: #faf7f2;
+      --texto: #222;
+      --texto-suave: #555;
+      --cor: #7a8b69;
+      --cor-texto: #fff;
+      --destaque: #7a8b69;
+      --superficie: #f1ece3;
+      --escuro: #222;
+      --escuro-texto: #faf7f2;
+      --borda: 1px solid #d8d2c8;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Letreiro rolando */
+    .letreiro { overflow: hidden; padding: 14px 0; background: var(--cor); color: var(--cor-texto); border-top: var(--borda); border-bottom: var(--borda); }
+    .letreiro div { display: flex; width: max-content; animation: rolar 25s linear infinite; font-family: var(--fonte-titulo); font-size: 1.3rem; text-transform: uppercase; }
+    .letreiro span { padding-right: 48px; }
+    @keyframes rolar { to { transform: translateX(-50%); } }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .secao-extra > h2 { font-weight: normal; font-style: italic; font-size: 2.4rem; }
+    button.botao { background: none; border: 0; border-bottom: 1px solid #222; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Galeria Norte</span>
+    <nav>
+      <a href="#servicos">serviços</a>
+      <a href="#sobre">sobre</a>
+      <a href="#contato">contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <small>Arte contemporânea</small>
+    <h1>Arte que muda a forma de ver a cidade</h1>
+    <div class="linha">
+      <p>Exposições de artistas do Nordeste e acervo disponível para colecionadores.</p>
+      <a class="botao" href="#contato">Ver exposição atual</a>
+    </div>
+  </div>
+
+  <div class="letreiro">
+    <div><span>★ Exposições</span><span>★ Acervo</span><span>★ Curadoria</span><span>★ Visitas guiadas</span><span>★ Arte contemporânea</span><span>★ Exposições</span><span>★ Acervo</span><span>★ Curadoria</span><span>★ Visitas guiadas</span><span>★ Arte contemporânea</span></div>
+  </div>
+
+  <section id="servicos">
+    <div class="rotulo"><b>01</b>Serviços</div>
+    <div class="lista">
+      <article>
+        <h3>Exposições</h3>
+        <span>entrada gratuita</span>
+        <p>Nova mostra a cada dois meses.</p>
+      </article>
+      <article>
+        <h3>Acervo</h3>
+        <span>sob consulta</span>
+        <p>Pinturas, gravuras e esculturas à venda.</p>
+      </article>
+      <article>
+        <h3>Curadoria</h3>
+        <span>sob consulta</span>
+        <p>Para empresas e residências.</p>
+      </article>
+      <article>
+        <h3>Visitas guiadas</h3>
+        <span>R$ 20 por pessoa</span>
+        <p>Para escolas e grupos.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="detalhes">
+    <h2>Conheça cada serviço</h2>
+    <div class="abas-botoes">
+      <button type="button" class="ativa">Exposições</button>
+      <button type="button">Acervo</button>
+      <button type="button">Curadoria</button>
+      <button type="button">Visitas guiadas</button>
+    </div>
+    <div class="aba ativa">
+      <h3>Exposições</h3>
+      <p>Nova mostra a cada dois meses.</p>
+      <strong>entrada gratuita</strong>
+      <a class="botao" href="#contato">Ver exposição atual</a>
+    </div>
+    <div class="aba">
+      <h3>Acervo</h3>
+      <p>Pinturas, gravuras e esculturas à venda.</p>
+      <strong>sob consulta</strong>
+      <a class="botao" href="#contato">Ver exposição atual</a>
+    </div>
+    <div class="aba">
+      <h3>Curadoria</h3>
+      <p>Para empresas e residências.</p>
+      <strong>sob consulta</strong>
+      <a class="botao" href="#contato">Ver exposição atual</a>
+    </div>
+    <div class="aba">
+      <h3>Visitas guiadas</h3>
+      <p>Para escolas e grupos.</p>
+      <strong>R$ 20 por pessoa</strong>
+      <a class="botao" href="#contato">Ver exposição atual</a>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="rotulo"><b>02</b>Sobre</div>
+    <div>
+      <p class="texto">Uma galeria dedicada a revelar artistas da região e aproximar a arte de quem nunca entrou em uma galeria.</p>
+      <div class="numeros">
+        <div><strong>80</strong><span>artistas</span></div>
+        <div><strong>45</strong><span>exposições</span></div>
+        <div><strong>2009</strong><span>desde</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rotulo"><b>03</b>Depoimento</div>
+    <blockquote>
+      “Saí de lá com um quadro e uma nova forma de olhar a minha cidade.”
+      <cite>Beatriz, colecionadora</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato" class="contato">
+    <div class="rotulo"><b>04</b>Contato</div>
+    <div>
+      <p>Rua dos Pacajus, 120 - Praia de Iracema</p>
+      <p>(85) 3006-0103</p>
+      <p><em>Ter a Dom, 14h às 20h</em></p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="mapa">
+    <h2>Como chegar</h2>
+    <div class="mapa">
+      <span class="pino">📍</span>
+      <div class="endereco">
+        <strong>Galeria Norte</strong><br>
+        Rua dos Pacajus, 120 - Praia de Iracema<br>
+        Ter a Dom, 14h às 20h
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="marca">Galeria Norte</div>
+    <div class="rodape">
+      <span>Arte contemporânea</span>
+      <span>© Galeria Norte</span>
+    </div>
+  </footer>
+
+  <div class="progresso"></div>
+
+  <script>
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

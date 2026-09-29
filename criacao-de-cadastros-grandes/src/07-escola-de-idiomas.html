@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Idioma Livre</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+  </style>
+</head>
+<body>
+  <header class="vidro">
+    <span class="logo">🌍 Idioma Livre</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">🌍</div>
+      <span class="etiqueta">Escola de idiomas</span>
+      <h1>Fale com o mundo em poucos meses</h1>
+      <p>Inglês, espanhol e francês com aulas ao vivo, turmas pequenas e foco em conversação.</p>
+      <a class="botao" href="#contato">Fazer teste de nível</a>
+    </section>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Inglês</h3>
+        <p>Do básico à fluência, com certificação.</p>
+        <span class="preco">R$ 290/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Espanhol</h3>
+        <p>Conversação desde a primeira aula.</p>
+        <span class="preco">R$ 260/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Francês</h3>
+        <p>Turmas presenciais e online.</p>
+        <span class="preco">R$ 280/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Aulas particulares</h3>
+        <p>Horários flexíveis e plano sob medida.</p>
+        <span class="preco">R$ 120/aula</span>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Idioma Livre</h3>
+        <p>Professores nativos e brasileiros com experiência no exterior. Turmas de no máximo 6 alunos para você falar de verdade.</p>
+        <div class="numeros">
+          <div><strong>6</strong>alunos por turma</div>
+          <div><strong>3</strong>idiomas</div>
+          <div><strong>92%</strong>aprovação</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Em 8 meses fiz minha entrevista de emprego em inglês.”
+        <small>Natália, aluna</small>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Av. Rui Barbosa, 1500 - Aldeota · (85) 3007-0001 · Seg a Sex, 7h às 22h · Sáb, 8h às 13h</p>
+  </footer>
+</body>
+</html>

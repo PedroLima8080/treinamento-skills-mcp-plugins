@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Golpe Certo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Arial Black", Impact, sans-serif; background: #fff; color: #000; }
+    p { font-family: "Courier New", monospace; font-weight: bold; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #000; padding: 16px 24px; background: #ffe600; }
+    .logo { font-size: 1.6rem; text-transform: uppercase; }
+    nav a { color: #000; text-transform: uppercase; border: 3px solid #000; padding: 6px 12px; margin-left: 8px; text-decoration: none; background: #fff; box-shadow: 4px 4px 0 #000; }
+    .hero { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h1 { font-size: clamp(3rem, 9vw, 7rem); text-transform: uppercase; line-height: .9; letter-spacing: -2px; }
+    .hero p { font-size: 1.2rem; max-width: 640px; margin: 24px 0 32px; background: #000; color: #ffe600; padding: 8px 12px; }
+    .botao { display: inline-block; background: #ff3b00; color: #fff; border: 4px solid #000; padding: 16px 32px; font-size: 1.3rem; text-transform: uppercase; text-decoration: none; box-shadow: 8px 8px 0 #000; }
+    .faixa { background: #000; color: #ffe600; white-space: nowrap; overflow: hidden; padding: 12px 0; font-size: 1.4rem; text-transform: uppercase; }
+    section { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 30px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .bloco { border: 4px solid #000; padding: 24px; box-shadow: 8px 8px 0 #000; background: #fff; }
+    .bloco:nth-child(even) { background: #ffe600; }
+    .bloco small { font-size: 1rem; }
+    .bloco h3 { text-transform: uppercase; font-size: 1.4rem; margin: 8px 0; }
+    .bloco .preco { font-size: 2rem; margin-top: 16px; }
+    .sobre { font-size: 1.2rem; max-width: 800px; margin-bottom: 30px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid #000; }
+    .numero { padding: 30px; border-right: 4px solid #000; text-transform: uppercase; }
+    .numero:last-child { border-right: 0; }
+    .numero strong { font-size: 3.5rem; display: block; }
+    .depoimento { background: #ff3b00; color: #fff; }
+    .depoimento p { font-size: 1.6rem; }
+    footer { padding: 30px 24px; background: #000; color: #fff; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-transform: uppercase; }
+    @media (max-width: 700px) { nav { display: none; } .numeros, footer { grid-template-columns: 1fr; } .numero { border-right: 0; border-bottom: 4px solid #000; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #000;
+      --texto-suave: #000;
+      --cor: #ffe600;
+      --cor-texto: #000;
+      --destaque: #ff3b00;
+      --superficie: #fff;
+      --escuro: #000;
+      --escuro-texto: #ffe600;
+      --borda: 4px solid #000;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 8px 8px 0 #000;
+      --desfoque: none;
+      --fonte-titulo: "Arial Black", Impact, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Perguntas frequentes */
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: var(--borda); padding: 18px 0; }
+    .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font-family: var(--fonte-titulo); font-size: 1.15rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--destaque); }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin-top: 10px; color: var(--texto-suave); }
+
+    /* Menu hambúrguer */
+    header nav { display: none; }
+    .menu-botao { position: fixed; top: 16px; right: 16px; z-index: 60; width: 52px; height: 52px; font-size: 1.4rem; cursor: pointer; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .menu-overlay { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; background: var(--escuro); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .menu-overlay.aberto { opacity: 1; pointer-events: auto; }
+    .menu-overlay a { color: var(--escuro-texto); font-family: var(--fonte-titulo); font-size: 2.2rem; text-decoration: none; }
+
+    /* Ajustes do padrão */
+    .secao-extra { border-bottom: 4px solid #000; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Golpe Certo</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Disciplina no treino. Confiança na vida.</h1>
+    <p>Muay thai, boxe e jiu-jitsu para iniciantes e atletas.</p>
+    <a class="botao" href="#contato">Treino grátis →</a>
+  </section>
+
+  <div class="faixa">★ Disciplina e respeito ★ Disciplina e respeito ★ Disciplina e respeito ★ Disciplina e respeito ★ Disciplina e respeito ★ Disciplina e respeito</div>
+
+  <section id="servicos">
+    <h2>Serviços</h2>
+    <div class="grade">
+      <div class="bloco">
+        <small>01</small>
+        <h3>Muay thai</h3>
+        <p>Turmas iniciante e avançada.</p>
+        <div class="preco">R$ 150/mês</div>
+      </div>
+      <div class="bloco">
+        <small>02</small>
+        <h3>Boxe</h3>
+        <p>Técnica, saco e sparring.</p>
+        <div class="preco">R$ 140/mês</div>
+      </div>
+      <div class="bloco">
+        <small>03</small>
+        <h3>Jiu-jitsu</h3>
+        <p>Kimono e no-gi.</p>
+        <div class="preco">R$ 160/mês</div>
+      </div>
+      <div class="bloco">
+        <small>04</small>
+        <h3>Kids</h3>
+        <p>Artes marciais para crianças de 6 a 12 anos.</p>
+        <div class="preco">R$ 120/mês</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="promo">
+    <div class="promo">
+      <h2>Oferta da semana</h2>
+      <p>Muay thai com 20% de desconto até domingo.</p>
+      <div class="relogio">
+        <div><strong>00</strong>dias</div>
+        <div><strong>00</strong>horas</div>
+        <div><strong>00</strong>min</div>
+        <div><strong>00</strong>seg</div>
+      </div>
+      <a class="botao" href="#contato">Quero a oferta</a>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>Sobre</h2>
+    <p class="sobre">Tatame de 200 m², ringue oficial e mestres faixa preta com anos de competição.</p>
+    <div class="numeros">
+      <div class="numero"><strong>200m²</strong>de tatame</div>
+      <div class="numero"><strong>35</strong>campeões</div>
+      <div class="numero"><strong>18</strong>anos</div>
+    </div>
+  </section>
+
+  <section class="depoimento">
+    <h2>Papo reto</h2>
+    <p>“Entrei para emagrecer e saí com uma nova disciplina.” — Sabrina, aluna</p>
+  </section>
+
+  <div class="secao-extra" id="faq">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq">
+      <details><summary>Quanto custa muay thai?</summary><p>R$ 150/mês. Turmas iniciante e avançada.</p></details>
+      <details><summary>Qual o horário de funcionamento?</summary><p>Seg a Sáb, 6h às 22h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Av. Treze de Maio, 1500 - Benfica.</p></details>
+      <details><summary>Como falo com vocês?</summary><p>Pelo telefone (85) 3004-0104, também no WhatsApp.</p></details>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <span>Av. Treze de Maio, 1500 - Benfica</span>
+    <span>(85) 3004-0104</span>
+    <span>Seg a Sáb, 6h às 22h</span>
+  </footer>
+
+  <button class="menu-botao" type="button" aria-label="Abrir menu">☰</button>
+  <div class="menu-overlay">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <script>
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Menu hambúrguer: abre e fecha o menu em tela cheia
+      const botaoMenu = document.querySelector('.menu-botao');
+      const menu = document.querySelector('.menu-overlay');
+      const alternar = () => {
+        menu.classList.toggle('aberto');
+        botaoMenu.textContent = menu.classList.contains('aberto') ? '✕' : '☰';
+      };
+      botaoMenu.addEventListener('click', alternar);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', alternar));
+    }
+  </script>
+</body>
+</html>

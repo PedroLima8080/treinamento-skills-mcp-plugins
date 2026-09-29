@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sorriso Pleno</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1f2a37; background: #fff; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .topo { background: #1e6fd9; color: #fff; font-size: .85rem; padding: 6px 0; }
+    .topo .container { display: flex; justify-content: space-between; }
+    header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-weight: 700; font-size: 1.3rem; color: #1e6fd9; }
+    nav a { color: #4b5563; text-decoration: none; margin-left: 28px; font-size: .95rem; }
+    .botao { display: inline-block; background: #1e6fd9; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 0; font: inherit; cursor: pointer; }
+    nav .botao { color: #fff; padding: 8px 18px; }
+    .hero { background: #f4f8fb; padding: 80px 0; }
+    .hero .container { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .etiqueta { display: inline-block; background: #e0ecfc; color: #1e6fd9; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    h1 { font-size: 2.8rem; line-height: 1.2; margin: 16px 0; }
+    .hero p { color: #4b5563; font-size: 1.1rem; margin-bottom: 28px; }
+    .formulario { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(30, 111, 217, .12); }
+    .formulario h3 { margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d9e2; border-radius: 8px; margin-bottom: 12px; font: inherit; }
+    .formulario .botao { width: 100%; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 48px 24px; border-bottom: 1px solid #e5e7eb; text-align: center; }
+    .numero strong { display: block; font-size: 2.2rem; color: #1e6fd9; }
+    .numero span { color: #6b7280; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; text-align: center; }
+    .subtitulo { text-align: center; color: #6b7280; margin-bottom: 40px; }
+    .servicos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .servico { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; gap: 16px; }
+    .servico h3 { font-size: 1.1rem; }
+    .servico p { color: #6b7280; }
+    .servico strong { color: #1e6fd9; white-space: nowrap; }
+    .sobre { background: #f4f8fb; }
+    .sobre p { max-width: 720px; margin: 0 auto; text-align: center; color: #4b5563; }
+    .sobre .depoimento { margin-top: 24px; font-style: italic; color: #1f2a37; }
+    details { border-bottom: 1px solid #e5e7eb; padding: 16px 0; max-width: 720px; margin: 0 auto; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { color: #4b5563; margin-top: 8px; }
+    footer { background: #1f2a37; color: #cbd5e1; padding: 48px 0; }
+    footer .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    footer h4 { color: #fff; margin-bottom: 8px; }
+    @media (max-width: 800px) { .hero .container, .servicos, footer .container { grid-template-columns: 1fr; } nav a:not(.botao) { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="topo">
+    <div class="container">
+      <span>Seg a Sex, 8h às 19h</span>
+      <span>(85) 3005-0001</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <span class="logo">🦷 Sorriso Pleno</span>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="botao" href="#agendar">Agendar avaliação</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="agendar">
+    <div class="container">
+      <div>
+        <span class="etiqueta">Odontologia completa</span>
+        <h1>Cuidado completo para o seu sorriso</h1>
+        <p>Da limpeza ao implante, com dentistas especialistas e tecnologia digital.</p>
+        <a class="botao" href="#servicos">Conheça os serviços</a>
+      </div>
+      <form class="formulario">
+        <h3>Agendar avaliação</h3>
+        <input placeholder="Seu nome">
+        <input placeholder="Telefone">
+        <select>
+          <option>Limpeza</option>
+          <option>Clareamento</option>
+          <option>Ortodontia</option>
+          <option>Implantes</option>
+        </select>
+        <button class="botao" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container numeros">
+    <div class="numero"><strong>8</strong><span>especialistas</span></div>
+    <div class="numero"><strong>12.000</strong><span>pacientes</span></div>
+    <div class="numero"><strong>15</strong><span>anos</span></div>
+  </div>
+
+  <section id="servicos">
+    <div class="container">
+      <h2>Serviços</h2>
+      <p class="subtitulo">Tudo o que você precisa em um só lugar</p>
+      <div class="servicos">
+        <div class="servico">
+          <div>
+            <h3>Limpeza</h3>
+            <p>Profilaxia e aplicação de flúor.</p>
+          </div>
+          <strong>R$ 150</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Clareamento</h3>
+            <p>Consultório ou caseiro, com acompanhamento.</p>
+          </div>
+          <strong>R$ 800</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Ortodontia</h3>
+            <p>Aparelho fixo ou alinhadores invisíveis.</p>
+          </div>
+          <strong>a partir de R$ 250/mês</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Implantes</h3>
+            <p>Planejamento digital e cirurgia guiada.</p>
+          </div>
+          <strong>sob avaliação</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>Sobre nós</h2>
+      <p class="subtitulo">Sorriso Pleno</p>
+      <p>Somos uma clínica com 8 especialistas, raio-x digital e atendimento pontual. Explicamos cada etapa antes de começar o tratamento.</p>
+      <p class="depoimento">“Perdi o medo de dentista. Atendimento calmo e sem dor.” — Aline, paciente</p>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="container">
+      <h2>Dúvidas frequentes</h2>
+      <p class="subtitulo">Não encontrou? Ligue para (85) 3005-0001</p>
+      <details><summary>Qual o horário de atendimento?</summary><p>Seg a Sex, 8h às 19h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Av. Dom Luís, 500, sala 1201 - Aldeota.</p></details>
+      <details><summary>Como faço para agendar?</summary><p>Pelo formulário no topo da página ou pelo telefone (85) 3005-0001.</p></details>
+    </div>
+  </section>
+
+  <footer id="contato">
+    <div class="container">
+      <div><h4>Sorriso Pleno</h4><p>Odontologia completa</p></div>
+      <div><h4>Endereço</h4><p>Av. Dom Luís, 500, sala 1201 - Aldeota</p></div>
+      <div><h4>Contato</h4><p>(85) 3005-0001<br>Seg a Sex, 8h às 19h</p></div>
+    </div>
+  </footer>
+</body>
+</html>

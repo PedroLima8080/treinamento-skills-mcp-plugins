@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tinta Negra</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #0a0a12; color: #d9d9e8; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; border-bottom: 1px solid #1f1f33; }
+    .logo { font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #00f0ff; text-shadow: 0 0 12px #00f0ff; }
+    header a { color: #d9d9e8; text-decoration: none; text-transform: uppercase; font-size: .8rem; letter-spacing: 3px; margin-left: 24px; }
+    .hero { min-height: min(80vh, 720px); display: flex; flex-direction: column; justify-content: center; padding: 0 6%; background: radial-gradient(circle at 80% 30%, #ff2bd633, transparent 40%), radial-gradient(circle at 10% 90%, #00f0ff22, transparent 40%); }
+    .hero small { color: #ff2bd6; letter-spacing: 6px; text-transform: uppercase; }
+    h1 { font-size: 4rem; text-transform: uppercase; line-height: 1; max-width: 850px; margin: 16px 0; color: #fff; text-shadow: 0 0 24px #00f0ff88; }
+    .hero p { max-width: 520px; color: #9a9ab5; font-size: 1.1rem; }
+    .botao { margin-top: 32px; align-self: flex-start; border: 2px solid #00f0ff; color: #00f0ff; padding: 14px 36px; text-transform: uppercase; letter-spacing: 3px; text-decoration: none; box-shadow: 0 0 16px #00f0ff66, inset 0 0 16px #00f0ff33; }
+    section { padding: 80px 6%; }
+    h2 { text-transform: uppercase; letter-spacing: 6px; font-size: .9rem; color: #ff2bd6; margin-bottom: 40px; }
+    .linha { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 0; border-bottom: 1px solid #1f1f33; }
+    .linha h3 { font-size: 1.6rem; text-transform: uppercase; color: #fff; }
+    .linha p { color: #9a9ab5; }
+    .linha strong { color: #00f0ff; font-size: 1.4rem; white-space: nowrap; text-shadow: 0 0 10px #00f0ff; }
+    .sobre { font-size: 1.3rem; max-width: 800px; margin-bottom: 40px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #1f1f33; }
+    .numero { background: #0a0a12; padding: 40px; text-align: center; }
+    .numero strong { display: block; font-size: 3rem; color: #ff2bd6; text-shadow: 0 0 16px #ff2bd6; }
+    .numero span { text-transform: uppercase; letter-spacing: 3px; font-size: .8rem; color: #9a9ab5; }
+    blockquote { font-size: 2rem; font-style: italic; border-left: 4px solid #ff2bd6; padding-left: 30px; max-width: 800px; color: #fff; }
+    cite { display: block; margin-top: 16px; font-size: .9rem; color: #00f0ff; letter-spacing: 3px; text-transform: uppercase; font-style: normal; }
+    footer { padding: 40px 6%; border-top: 1px solid #1f1f33; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #6b6b88; font-size: .85rem; }
+    @media (max-width: 700px) { h1 { font-size: 2.4rem; } .numeros { grid-template-columns: 1fr; } .linha { flex-direction: column; align-items: flex-start; } header nav { display: none; } }
+
+    :root {
+      --fundo: #0a0a12;
+      --texto: #fff;
+      --texto-suave: #9a9ab5;
+      --cor: #00f0ff;
+      --cor-texto: #0a0a12;
+      --destaque: #ff2bd6;
+      --superficie: #11111d;
+      --escuro: #11111d;
+      --escuro-texto: #fff;
+      --borda: 1px solid #00f0ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 18px #00f0ff44;
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Menu hambúrguer */
+    header nav { display: none; }
+    .menu-botao { position: fixed; top: 16px; right: 16px; z-index: 60; width: 52px; height: 52px; font-size: 1.4rem; cursor: pointer; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .menu-overlay { position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; background: var(--escuro); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .menu-overlay.aberto { opacity: 1; pointer-events: auto; }
+    .menu-overlay a { color: var(--escuro-texto); font-family: var(--fonte-titulo); font-size: 2.2rem; text-decoration: none; }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 6%; }
+    button.botao { background: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Tinta Negra</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <small>Tattoo e piercing</small>
+    <h1>Sua história na pele</h1>
+    <p>Tatuadores especialistas em fineline, blackwork e realismo. Material descartável e ambiente esterilizado.</p>
+    <a class="botao" href="#contato">Agendar sessão</a>
+  </section>
+
+  <section id="servicos">
+    <h2>// Serviços</h2>
+    <div class="linha">
+      <div>
+        <h3>Fineline</h3>
+        <p>Traços finos e delicados.</p>
+      </div>
+      <strong>a partir de R$ 250</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Blackwork</h3>
+        <p>Preto sólido, geométrico e tribal.</p>
+      </div>
+      <strong>a partir de R$ 400</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Realismo</h3>
+        <p>Retratos e sombreamento detalhado.</p>
+      </div>
+      <strong>a partir de R$ 800</strong>
+    </div>
+    <div class="linha">
+      <div>
+        <h3>Piercing</h3>
+        <p>Joias de titânio e aplicação segura.</p>
+      </div>
+      <strong>a partir de R$ 90</strong>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="galeria">
+    <h2>// Galeria</h2>
+    <div class="galeria">
+      <figure>🖋️<figcaption>Tinta Negra</figcaption></figure>
+      <figure>🖋️<figcaption>Fineline</figcaption></figure>
+      <figure>🖋️<figcaption>Blackwork</figcaption></figure>
+      <figure>🖋️<figcaption>Realismo</figcaption></figure>
+      <figure>🖋️<figcaption>Piercing</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>// Sobre</h2>
+    <p class="sobre">Quatro artistas, um estúdio e muita conversa antes de cada desenho. Aqui nenhuma tatuagem sai sem ser única.</p>
+    <div class="numeros">
+      <div class="numero"><strong>4</strong><span>tatuadores</span></div>
+      <div class="numero"><strong>3.000+</strong><span>tatuagens</span></div>
+      <div class="numero"><strong>10</strong><span>anos de estúdio</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>// Quem já veio</h2>
+    <blockquote>
+      “Entendeu exatamente o que eu queria e ainda melhorou a ideia.”
+      <cite>Bianca, 3 tattoos no estúdio</cite>
+    </blockquote>
+  </section>
+
+  <footer id="contato">
+    <span>Rua Dragão do Mar, 81 - Praia de Iracema</span>
+    <span>(85) 3002-0101</span>
+    <span>Ter a Sáb, 13h às 21h</span>
+  </footer>
+
+  <button class="menu-botao" type="button" aria-label="Abrir menu">☰</button>
+  <div class="menu-overlay">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <a class="whatsapp" href="https://wa.me/558530020101" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Menu hambúrguer: abre e fecha o menu em tela cheia
+      const botaoMenu = document.querySelector('.menu-botao');
+      const menu = document.querySelector('.menu-overlay');
+      const alternar = () => {
+        menu.classList.toggle('aberto');
+        botaoMenu.textContent = menu.classList.contains('aberto') ? '✕' : '☰';
+      };
+      botaoMenu.addEventListener('click', alternar);
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', alternar));
+    }
+  </script>
+</body>
+</html>

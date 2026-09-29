@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "moni-procedimentos",
+  "displayName": "Moni Procedimentos",
+  "version": "1.0.0",
+  "description": "Procedimentos de segurança da Moni para abrir e fechar a empresa.",
+  "author": { "name": "Moni Software" },
+  "keywords": ["moni", "procedimentos", "seguranca"]
+}

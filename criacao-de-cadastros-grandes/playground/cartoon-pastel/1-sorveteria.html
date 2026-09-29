@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gelato Nuvem</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Trebuchet MS", Verdana, sans-serif; background: #fff7ec; color: #3b2f4a; line-height: 1.6; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    nav { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 3px solid #3b2f4a; border-radius: 999px; padding: 10px 24px; margin: 20px auto; max-width: 1000px; }
+    .logo { font-weight: bold; font-size: 1.3rem; }
+    nav a { color: #3b2f4a; text-decoration: none; margin-left: 16px; font-weight: bold; }
+    .hero { text-align: center; padding: 50px 20px; }
+    .bolha { width: 160px; height: 160px; border-radius: 50%; background: #ffd6e0; border: 3px solid #3b2f4a; display: grid; place-items: center; font-size: 80px; margin: 0 auto 24px; }
+    h1 { font-size: 2.8rem; line-height: 1.1; }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 16px auto 28px; }
+    .botao { display: inline-block; background: #ff8fab; color: #3b2f4a; border: 3px solid #3b2f4a; border-radius: 999px; padding: 14px 32px; font-weight: bold; text-decoration: none; box-shadow: 0 6px 0 #3b2f4a; }
+    section.container { padding: 50px 20px; }
+    h2 { text-align: center; font-size: 2rem; margin-bottom: 30px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; }
+    .card { border: 3px solid #3b2f4a; border-radius: 32px; padding: 28px; text-align: center; }
+    .card:nth-child(1) { background: #ffd6e0; }
+    .card:nth-child(2) { background: #c8f2e0; }
+    .card:nth-child(3) { background: #e2d6ff; }
+    .card:nth-child(4) { background: #fff1b8; }
+    .preco { display: inline-block; background: #fff; border: 2px solid #3b2f4a; border-radius: 999px; padding: 4px 14px; margin-top: 12px; font-weight: bold; }
+    .sobre { text-align: center; max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem; }
+    .numeros { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .numero { background: #fff; border: 3px solid #3b2f4a; border-radius: 24px; padding: 20px 30px; text-align: center; }
+    .numero strong { display: block; font-size: 2rem; }
+    .balao { background: #fff; border: 3px solid #3b2f4a; border-radius: 32px; padding: 30px; max-width: 640px; margin: 0 auto; position: relative; font-size: 1.15rem; text-align: center; }
+    .balao::after { content: ""; position: absolute; bottom: -18px; left: 60px; width: 30px; height: 30px; background: #fff; border-right: 3px solid #3b2f4a; border-bottom: 3px solid #3b2f4a; transform: rotate(45deg); }
+    .autor { text-align: center; margin-top: 30px; font-weight: bold; }
+    footer { background: #3b2f4a; color: #fff7ec; text-align: center; padding: 40px 20px; border-radius: 40px 40px 0 0; margin-top: 40px; }
+    footer strong { font-size: 1.4rem; }
+    @media (max-width: 600px) { nav a { display: none; } h1 { font-size: 2rem; } }
+
+    :root {
+      --fundo: #fff7ec;
+      --texto: #3b2f4a;
+      --texto-suave: #6b5f7a;
+      --cor: #ff8fab;
+      --cor-texto: #3b2f4a;
+      --destaque: #d6336c;
+      --superficie: #fff;
+      --escuro: #3b2f4a;
+      --escuro-texto: #fff7ec;
+      --borda: 3px solid #3b2f4a;
+      --raio: 28px;
+      --raio-redondo: 999px;
+      --sombra: 0 6px 0 #3b2f4a;
+      --desfoque: none;
+      --fonte-titulo: "Trebuchet MS", Verdana, sans-serif;
+      --largura: 1000px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Efeitos ao passar o mouse */
+    .card, .numero { transition: all .25s ease; }
+    .card:hover, .numero:hover { transform: translateY(-6px) rotate(-1deg); }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="logo">🍦 Gelato Nuvem</span>
+    <div>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="bolha">🍦</div>
+    <h1>Uma nuvem de sabor em cada bola!</h1>
+    <p>Sorvetes artesanais feitos com frutas de verdade, sem conservantes.</p>
+    <a class="botao" href="#contato">Ver sabores</a>
+  </header>
+
+  <section id="servicos" class="container">
+    <h2>O que fazemos</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Casquinha</h3>
+        <p>Uma bola do sabor que você quiser.</p>
+        <span class="preco">R$ 9</span>
+      </div>
+      <div class="card">
+        <h3>Taça Nuvem</h3>
+        <p>Três bolas, calda e chantilly.</p>
+        <span class="preco">R$ 24</span>
+      </div>
+      <div class="card">
+        <h3>Picolé de fruta</h3>
+        <p>Morango, manga ou maracujá.</p>
+        <span class="preco">R$ 7</span>
+      </div>
+      <div class="card">
+        <h3>Pote 1 litro</h3>
+        <p>Para levar e dividir (ou não).</p>
+        <span class="preco">R$ 38</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="galeria">
+    <h2>Galeria</h2>
+    <div class="galeria">
+      <figure>🍦<figcaption>Gelato Nuvem</figcaption></figure>
+      <figure>🍦<figcaption>Casquinha</figcaption></figure>
+      <figure>🍦<figcaption>Taça Nuvem</figcaption></figure>
+      <figure>🍦<figcaption>Picolé de fruta</figcaption></figure>
+      <figure>🍦<figcaption>Pote 1 litro</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="sobre" class="container">
+    <h2>Sobre a Gelato Nuvem</h2>
+    <p class="sobre">Começamos numa garagem, testando receitas da vovó. Hoje produzimos 30 sabores por semana, sempre com leite fresco e frutas da estação.</p>
+    <div class="numeros">
+      <div class="numero"><strong>30</strong>sabores</div>
+      <div class="numero"><strong>8</strong>anos de casquinha</div>
+      <div class="numero"><strong>100%</strong>artesanal</div>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Quem conhece, ama</h2>
+    <div class="balao">“O de pistache é o melhor da cidade, sem exagero.”</div>
+    <p class="autor">Rafael, cliente desde 2018</p>
+  </section>
+
+  <footer id="contato">
+    <strong>🍦 Gelato Nuvem</strong>
+    <p>Sorvete artesanal todo dia</p>
+    <p>Av. Beira Mar, 900 - Meireles · (85) 3001-0101 · Todos os dias, 12h às 22h</p>
+  </footer>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Ver sabores</a>
+  </div>
+
+  <script>
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+  </script>
+</body>
+</html>

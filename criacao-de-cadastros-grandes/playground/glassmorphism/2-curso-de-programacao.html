@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Código Futuro</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #fff; min-height: 100vh; padding: 0 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6ec4 100%) fixed; }
+    .vidro { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, .15); }
+    header { max-width: 1100px; margin: 20px auto; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 22px; opacity: .9; }
+    main { max-width: 1100px; margin: 0 auto; }
+    .hero { text-align: center; padding: 70px 40px; margin: 40px 0; }
+    .hero .emoji { font-size: 64px; }
+    .etiqueta { display: inline-block; margin-top: 12px; padding: 4px 16px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-size: .85rem; }
+    h1 { font-size: 3rem; line-height: 1.15; margin: 16px 0; }
+    .hero p { font-size: 1.15rem; opacity: .9; max-width: 620px; margin: 0 auto 32px; }
+    .botao { display: inline-block; background: #fff; color: #6a11cb; padding: 14px 34px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    h2 { text-align: center; font-size: 2rem; margin: 60px 0 24px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .grade .vidro { padding: 28px; }
+    .grade h3 { margin-bottom: 8px; }
+    .grade p { opacity: .9; }
+    .preco { display: inline-block; margin-top: 14px; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .25); font-weight: 700; }
+    .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .duas .vidro { padding: 32px; }
+    .duas h3 { margin-bottom: 12px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; text-align: center; }
+    .numeros strong { display: block; font-size: 1.8rem; }
+    .depoimento { font-size: 1.3rem; font-style: italic; }
+    .depoimento small { display: block; margin-top: 16px; font-style: normal; opacity: .8; font-size: .9rem; }
+    footer { text-align: center; padding: 30px; margin: 60px auto 20px; max-width: 1100px; }
+    @media (max-width: 700px) { .duas { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } nav { display: none; } }
+
+    :root {
+      --fundo: #5a3fd6;
+      --texto: #fff;
+      --texto-suave: rgba(255, 255, 255, .8);
+      --cor: #fff;
+      --cor-texto: #6a11cb;
+      --destaque: #fff;
+      --superficie: rgba(255, 255, 255, .14);
+      --escuro: rgba(0, 0, 0, .25);
+      --escuro-texto: #fff;
+      --borda: 1px solid rgba(255, 255, 255, .35);
+      --raio: 20px;
+      --raio-redondo: 999px;
+      --sombra: 0 8px 32px rgba(0, 0, 0, .15);
+      --desfoque: blur(14px);
+      --fonte-titulo: "Segoe UI", Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Planos */
+    .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; align-items: center; }
+    .plano { padding: 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .plano.destaque { transform: scale(1.06); box-shadow: var(--sombra); border-color: var(--destaque); }
+    .plano small { display: inline-block; margin-bottom: 12px; padding: 2px 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .plano .valor { display: block; margin: 16px 0 20px; font-family: var(--fonte-titulo); font-size: 1.8rem; color: var(--destaque); }
+
+    /* Perguntas frequentes */
+    .faq { max-width: 760px; }
+    .faq details { border-bottom: var(--borda); padding: 18px 0; }
+    .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font-family: var(--fonte-titulo); font-size: 1.15rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--destaque); }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin-top: 10px; color: var(--texto-suave); }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 0; }
+    button.botao { border: 0; }
+  </style>
+</head>
+<body>
+  <header class="vidro">
+    <span class="logo">💻 Código Futuro</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero vidro">
+      <div class="emoji">💻</div>
+      <span class="etiqueta">Escola de programação</span>
+      <h1>Aprenda a programar do zero ao primeiro emprego</h1>
+      <p>Cursos práticos com projetos reais, mentoria e comunidade ativa.</p>
+      <a class="botao" href="#contato">Começar grátis</a>
+    </section>
+
+    <h2 id="servicos">Serviços</h2>
+    <div class="grade">
+      <div class="vidro">
+        <h3>Front-end</h3>
+        <p>HTML, CSS, JavaScript e React.</p>
+        <span class="preco">R$ 199/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Back-end</h3>
+        <p>Node.js, bancos de dados e APIs.</p>
+        <span class="preco">R$ 199/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Mobile</h3>
+        <p>Apps com React Native.</p>
+        <span class="preco">R$ 219/mês</span>
+      </div>
+      <div class="vidro">
+        <h3>Mentoria</h3>
+        <p>Revisão de código e plano de carreira.</p>
+        <span class="preco">R$ 150/sessão</span>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="planos">
+      <h2>Planos</h2>
+      <div class="planos">
+        <div class="plano">
+          <h3>Front-end</h3>
+          <p>HTML, CSS, JavaScript e React.</p>
+          <span class="valor">R$ 199/mês</span>
+          <a class="botao" href="#contato">Escolher</a>
+        </div>
+        <div class="plano destaque">
+          <small>Mais pedido</small>
+          <h3>Back-end</h3>
+          <p>Node.js, bancos de dados e APIs.</p>
+          <span class="valor">R$ 199/mês</span>
+          <a class="botao" href="#contato">Escolher</a>
+        </div>
+        <div class="plano">
+          <h3>Mobile</h3>
+          <p>Apps com React Native.</p>
+          <span class="valor">R$ 219/mês</span>
+          <a class="botao" href="#contato">Escolher</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="sobre">Sobre</h2>
+    <div class="duas">
+      <div class="vidro">
+        <h3>Código Futuro</h3>
+        <p>Criada por desenvolvedores que queriam ensinar o que realmente se usa no mercado, com projetos no portfólio desde a primeira semana.</p>
+        <div class="numeros">
+          <div><strong>8.000</strong>alunos</div>
+          <div><strong>40</strong>projetos</div>
+          <div><strong>70%</strong>empregados em 1 ano</div>
+        </div>
+      </div>
+      <div class="vidro depoimento">
+        “Saí do comércio e hoje trabalho como dev front-end.”
+        <small>Wesley, ex-aluno</small>
+      </div>
+    </div>
+
+    <div class="secao-extra" id="faq">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq">
+        <details><summary>Quanto custa front-end?</summary><p>R$ 199/mês. HTML, CSS, JavaScript e React.</p></details>
+        <details><summary>Qual o horário de funcionamento?</summary><p>Online, 24 horas.</p></details>
+        <details><summary>Onde vocês ficam?</summary><p>Rua Tomás Acioli, 800 - Joaquim Távora.</p></details>
+        <details><summary>Como falo com vocês?</summary><p>Pelo telefone (85) 3007-0102, também no WhatsApp.</p></details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="vidro" id="contato">
+    <p>Rua Tomás Acioli, 800 - Joaquim Távora · (85) 3007-0102 · Online, 24 horas</p>
+  </footer>
+
+  <div class="progresso"></div>
+
+  <script>
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visão Clara</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1f2a37; background: #fff; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .topo { background: #1e6fd9; color: #fff; font-size: .85rem; padding: 6px 0; }
+    .topo .container { display: flex; justify-content: space-between; }
+    header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-weight: 700; font-size: 1.3rem; color: #1e6fd9; }
+    nav a { color: #4b5563; text-decoration: none; margin-left: 28px; font-size: .95rem; }
+    .botao { display: inline-block; background: #1e6fd9; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 0; font: inherit; cursor: pointer; }
+    nav .botao { color: #fff; padding: 8px 18px; }
+    .hero { background: #f4f8fb; padding: 80px 0; }
+    .hero .container { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .etiqueta { display: inline-block; background: #e0ecfc; color: #1e6fd9; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    h1 { font-size: 2.8rem; line-height: 1.2; margin: 16px 0; }
+    .hero p { color: #4b5563; font-size: 1.1rem; margin-bottom: 28px; }
+    .formulario { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(30, 111, 217, .12); }
+    .formulario h3 { margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d9e2; border-radius: 8px; margin-bottom: 12px; font: inherit; }
+    .formulario .botao { width: 100%; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 48px 24px; border-bottom: 1px solid #e5e7eb; text-align: center; }
+    .numero strong { display: block; font-size: 2.2rem; color: #1e6fd9; }
+    .numero span { color: #6b7280; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; text-align: center; }
+    .subtitulo { text-align: center; color: #6b7280; margin-bottom: 40px; }
+    .servicos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .servico { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; gap: 16px; }
+    .servico h3 { font-size: 1.1rem; }
+    .servico p { color: #6b7280; }
+    .servico strong { color: #1e6fd9; white-space: nowrap; }
+    .sobre { background: #f4f8fb; }
+    .sobre p { max-width: 720px; margin: 0 auto; text-align: center; color: #4b5563; }
+    .sobre .depoimento { margin-top: 24px; font-style: italic; color: #1f2a37; }
+    details { border-bottom: 1px solid #e5e7eb; padding: 16px 0; max-width: 720px; margin: 0 auto; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { color: #4b5563; margin-top: 8px; }
+    footer { background: #1f2a37; color: #cbd5e1; padding: 48px 0; }
+    footer .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    footer h4 { color: #fff; margin-bottom: 8px; }
+    @media (max-width: 800px) { .hero .container, .servicos, footer .container { grid-template-columns: 1fr; } nav a:not(.botao) { display: none; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #1f2a37;
+      --texto-suave: #6b7280;
+      --cor: #1e6fd9;
+      --cor-texto: #fff;
+      --destaque: #1e6fd9;
+      --superficie: #f4f8fb;
+      --escuro: #1f2a37;
+      --escuro-texto: #fff;
+      --borda: 1px solid #e5e7eb;
+      --raio: 12px;
+      --raio-redondo: 999px;
+      --sombra: 0 10px 30px rgba(30, 111, 217, .12);
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Roboto, Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.4rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+  </style>
+</head>
+<body>
+  <div class="topo">
+    <div class="container">
+      <span>Seg a Sex, 7h às 18h</span>
+      <span>(85) 3005-0103</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <span class="logo">👁️ Visão Clara</span>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="botao" href="#agendar">Marcar consulta</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="agendar">
+    <div class="container">
+      <div>
+        <span class="etiqueta">Oftalmologia</span>
+        <h1>Enxergue a vida com mais nitidez</h1>
+        <p>Consultas, exames e cirurgias oftalmológicas com tecnologia de ponta.</p>
+        <a class="botao" href="#servicos">Conheça os serviços</a>
+      </div>
+      <form class="formulario">
+        <h3>Marcar consulta</h3>
+        <input placeholder="Seu nome">
+        <input placeholder="Telefone">
+        <select>
+          <option>Consulta</option>
+          <option>Mapeamento de retina</option>
+          <option>Cirurgia refrativa</option>
+          <option>Catarata</option>
+        </select>
+        <button class="botao" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container numeros">
+    <div class="numero"><strong>10</strong><span>médicos</span></div>
+    <div class="numero"><strong>30.000</strong><span>cirurgias</span></div>
+    <div class="numero"><strong>25</strong><span>anos</span></div>
+  </div>
+
+  <section id="servicos">
+    <div class="container">
+      <h2>Serviços</h2>
+      <p class="subtitulo">Tudo o que você precisa em um só lugar</p>
+      <div class="servicos">
+        <div class="servico">
+          <div>
+            <h3>Consulta</h3>
+            <p>Exame completo de vista.</p>
+          </div>
+          <strong>R$ 220</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Mapeamento de retina</h3>
+            <p>Diagnóstico precoce.</p>
+          </div>
+          <strong>R$ 180</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Cirurgia refrativa</h3>
+            <p>Correção de miopia e astigmatismo.</p>
+          </div>
+          <strong>sob avaliação</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Catarata</h3>
+            <p>Cirurgia com lente importada.</p>
+          </div>
+          <strong>sob avaliação</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="detalhes">
+    <h2>Conheça cada serviço</h2>
+    <div class="abas-botoes">
+      <button type="button" class="ativa">Consulta</button>
+      <button type="button">Mapeamento de retina</button>
+      <button type="button">Cirurgia refrativa</button>
+      <button type="button">Catarata</button>
+    </div>
+    <div class="aba ativa">
+      <h3>Consulta</h3>
+      <p>Exame completo de vista.</p>
+      <strong>R$ 220</strong>
+      <a class="botao" href="#contato">Marcar consulta</a>
+    </div>
+    <div class="aba">
+      <h3>Mapeamento de retina</h3>
+      <p>Diagnóstico precoce.</p>
+      <strong>R$ 180</strong>
+      <a class="botao" href="#contato">Marcar consulta</a>
+    </div>
+    <div class="aba">
+      <h3>Cirurgia refrativa</h3>
+      <p>Correção de miopia e astigmatismo.</p>
+      <strong>sob avaliação</strong>
+      <a class="botao" href="#contato">Marcar consulta</a>
+    </div>
+    <div class="aba">
+      <h3>Catarata</h3>
+      <p>Cirurgia com lente importada.</p>
+      <strong>sob avaliação</strong>
+      <a class="botao" href="#contato">Marcar consulta</a>
+    </div>
+  </div>
+
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>Sobre nós</h2>
+      <p class="subtitulo">Visão Clara</p>
+      <p>Clínica com centro cirúrgico próprio e médicos com formação nas melhores universidades do país.</p>
+      <p class="depoimento">“Operei a miopia e no dia seguinte já estava enxergando tudo.” — Luana, paciente</p>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="container">
+      <h2>Dúvidas frequentes</h2>
+      <p class="subtitulo">Não encontrou? Ligue para (85) 3005-0103</p>
+      <details><summary>Qual o horário de atendimento?</summary><p>Seg a Sex, 7h às 18h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Av. Desembargador Moreira, 2200 - Dionísio Torres.</p></details>
+      <details><summary>Como faço para agendar?</summary><p>Pelo formulário no topo da página ou pelo telefone (85) 3005-0103.</p></details>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="depoimentos">
+    <h2>O que dizem</h2>
+    <div class="carrossel">
+      <blockquote class="slide ativo">“Operei a miopia e no dia seguinte já estava enxergando tudo.”<cite>Luana, paciente</cite></blockquote>
+      <blockquote class="slide">“Minha mãe operou a catarata e voltou a ler sem óculos.”<cite>Rogério, filho de paciente</cite></blockquote>
+      <blockquote class="slide">“Exame rápido e explicação clara do resultado.”<cite>Tânia, paciente</cite></blockquote>
+      <div class="pontos-carrossel">
+        <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+        <button type="button" aria-label="Depoimento 2"></button>
+        <button type="button" aria-label="Depoimento 3"></button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <div class="container">
+      <div><h4>Visão Clara</h4><p>Oftalmologia</p></div>
+      <div><h4>Endereço</h4><p>Av. Desembargador Moreira, 2200 - Dionísio Torres</p></div>
+      <div><h4>Contato</h4><p>(85) 3005-0103<br>Seg a Sex, 7h às 18h</p></div>
+    </div>
+  </footer>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => mostrar(i)));
+      setInterval(() => mostrar((atual + 1) % slides.length), 5000);
+    }
+
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

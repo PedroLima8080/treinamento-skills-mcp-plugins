@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ouro Fino</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #faf7f2; color: #222; line-height: 1.7; }
+    .sans { font-family: Helvetica, Arial, sans-serif; }
+    header { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 8%; }
+    .logo { font-size: 1.2rem; letter-spacing: .3em; text-transform: uppercase; }
+    nav a { font-family: Helvetica, Arial, sans-serif; font-size: .8rem; color: #222; text-decoration: none; margin-left: 28px; letter-spacing: .1em; }
+    .hero { padding: 80px 8% 100px; border-bottom: 1px solid #222; }
+    .hero small { font-family: Helvetica, Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; font-size: .75rem; color: #7a8b69; }
+    h1 { font-size: clamp(2.8rem, 7vw, 6rem); font-weight: normal; line-height: 1.05; font-style: italic; max-width: 14ch; margin: 24px 0 48px; }
+    .hero .linha { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+    .hero p { max-width: 420px; font-size: 1.1rem; }
+    .botao { font-family: Helvetica, Arial, sans-serif; color: #222; text-decoration: none; border-bottom: 1px solid #222; padding-bottom: 4px; letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; }
+    section { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .rotulo { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #7a8b69; }
+    .rotulo b { display: block; font-family: Georgia, serif; font-size: 2.5rem; font-weight: normal; color: #222; letter-spacing: 0; }
+    .lista article { display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 24px 0; border-top: 1px solid #d8d2c8; }
+    .lista article:first-child { border-top: 0; padding-top: 0; }
+    .lista h3 { font-weight: normal; font-size: 1.6rem; }
+    .lista p { color: #555; }
+    .lista span { grid-row: 1; grid-column: 2; font-style: italic; color: #7a8b69; }
+    .texto { font-size: 1.4rem; max-width: 32em; }
+    .numeros { display: flex; gap: 60px; margin-top: 40px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 3rem; font-weight: normal; font-style: italic; }
+    .numeros span { font-family: Helvetica, Arial, sans-serif; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+    blockquote { font-size: 2rem; font-style: italic; line-height: 1.4; }
+    cite { display: block; margin-top: 20px; font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: #7a8b69; }
+    .contato p { font-size: 1.3rem; }
+    footer { padding: 60px 8% 30px; }
+    .marca { font-size: clamp(3rem, 12vw, 10rem); line-height: 1; letter-spacing: -.02em; }
+    .rodape { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: Helvetica, Arial, sans-serif; font-size: .8rem; border-top: 1px solid #222; padding-top: 20px; margin-top: 20px; }
+    @media (max-width: 700px) { section { grid-template-columns: 1fr; } nav { display: none; } }
+
+    :root {
+      --fundo: #faf7f2;
+      --texto: #222;
+      --texto-suave: #555;
+      --cor: #7a8b69;
+      --cor-texto: #fff;
+      --destaque: #7a8b69;
+      --superficie: #f1ece3;
+      --escuro: #222;
+      --escuro-texto: #faf7f2;
+      --borda: 1px solid #d8d2c8;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Modal de agendamento */
+    .modal { width: 90%; max-width: 420px; padding: 32px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .modal::backdrop { background: rgba(0, 0, 0, .6); }
+    .modal input { display: block; width: 100%; margin: 10px 0; padding: 12px; font: inherit; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio); }
+    .modal .fechar { position: absolute; top: 12px; right: 12px; font-size: 1.2rem; cursor: pointer; background: none; border: 0; color: inherit; }
+    .modal .botao { margin-top: 12px; }
+
+    /* Efeitos ao passar o mouse */
+    .lista article { transition: all .25s ease; }
+    .lista article:hover { padding-left: 16px; }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Aviso de cookies */
+    .cookies { position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 50; max-width: 560px; display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+    .cookies p { flex: 1; margin: 0; font-size: .9rem; }
+    .cookies .botao { margin: 0; align-self: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 80px 8%; border-bottom: 1px solid #d8d2c8; }
+    .secao-extra > h2 { font-weight: normal; font-style: italic; font-size: 2.4rem; }
+    button.botao { background: none; border: 0; border-bottom: 1px solid #222; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Ouro Fino</span>
+    <nav>
+      <a href="#servicos">serviços</a>
+      <a href="#sobre">sobre</a>
+      <a href="#contato">contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <small>Joalheria artesanal</small>
+    <h1>Joias feitas para atravessar gerações</h1>
+    <div class="linha">
+      <p>Peças em ouro 18k e pedras naturais, criadas uma a uma na nossa oficina.</p>
+      <a class="botao" href="#contato">Conhecer a coleção</a>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="rotulo"><b>01</b>Serviços</div>
+    <div class="lista">
+      <article>
+        <h3>Alianças</h3>
+        <span>a partir de R$ 3.200</span>
+        <p>Ouro 18k, gravação inclusa.</p>
+      </article>
+      <article>
+        <h3>Anéis de noivado</h3>
+        <span>a partir de R$ 5.500</span>
+        <p>Diamantes certificados.</p>
+      </article>
+      <article>
+        <h3>Peças sob encomenda</h3>
+        <span>sob consulta</span>
+        <p>Desenhadas com você.</p>
+      </article>
+      <article>
+        <h3>Restauração</h3>
+        <span>a partir de R$ 250</span>
+        <p>Devolvemos o brilho às joias de família.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="historia">
+    <h2>Nossa história</h2>
+    <div class="linha-do-tempo">
+      <div class="marco"><strong>1968</strong><p>Vô Antônio abre a primeira oficina.</p></div>
+      <div class="marco"><strong>1990</strong><p>A segunda geração assume a bancada.</p></div>
+      <div class="marco"><strong>2010</strong><p>Primeira coleção autoral.</p></div>
+      <div class="marco"><strong>2023</strong><p>Joias com ouro de origem rastreada.</p></div>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="rotulo"><b>02</b>Sobre</div>
+    <div>
+      <p class="texto">Ourives de terceira geração, trabalhamos com metais nobres e pedras de origem rastreada.</p>
+      <div class="numeros">
+        <div><strong>18k</strong><span>ouro</span></div>
+        <div><strong>3</strong><span>gerações</span></div>
+        <div><strong>1968</strong><span>desde</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rotulo"><b>03</b>Depoimento</div>
+    <blockquote>
+      “A aliança ficou perfeita, e a gravação me emocionou.”
+      <cite>Henrique, cliente</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato" class="contato">
+    <div class="rotulo"><b>04</b>Contato</div>
+    <div>
+      <p>Av. Abolição, 2500 - Meireles</p>
+      <p>(85) 3006-0102</p>
+      <p><em>Seg a Sáb, 10h às 19h</em></p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="agendar">
+    <h2>Agende agora</h2>
+    <p>Leva menos de um minuto: deixe seu contato e a gente retorna.</p>
+    <button class="botao" type="button" data-abrir-modal>Conhecer a coleção</button>
+  </div>
+
+  <footer>
+    <div class="marca">Ouro Fino</div>
+    <div class="rodape">
+      <span>Joalheria artesanal</span>
+      <span>© Ouro Fino</span>
+    </div>
+  </footer>
+
+  <dialog class="modal">
+    <form method="dialog">
+      <button class="fechar" aria-label="Fechar">✕</button>
+      <h3>Conhecer a coleção</h3>
+      <input placeholder="Seu nome">
+      <input placeholder="Telefone ou WhatsApp">
+      <button class="botao">Enviar</button>
+    </form>
+  </dialog>
+
+  <div class="cookies">
+    <p>🍪 Usamos cookies para melhorar sua experiência no site.</p>
+    <button class="botao" type="button">Entendi</button>
+  </div>
+
+  <script>
+    {
+      // Modal: abre o formulário de agendamento por cima da página
+      const modal = document.querySelector('.modal');
+      document.querySelector('[data-abrir-modal]').addEventListener('click', () => modal.showModal());
+    }
+
+    {
+      // Cookies: o aviso some ao clicar em "Entendi"
+      const cookies = document.querySelector('.cookies');
+      cookies.querySelector('button').addEventListener('click', () => cookies.remove());
+    }
+  </script>
+</body>
+</html>

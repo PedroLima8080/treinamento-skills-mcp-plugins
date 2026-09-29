@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FixCel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "fixcel@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+  </style>
+</head>
+<body>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>fixcel@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Conserto de celular em até 1 hora</h1>
+      <p class="comentario"># troca de tela, bateria e conector com peças de qualidade e garantia de 90 dias</p>
+      <a class="botao" href="#contato">[ Pedir orçamento ]</a>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>troca_de_tela</td><td>Tela original ou premium, instalada na hora.</td><td>R$ 250</td></tr>
+          <tr><td>bateria</td><td>Bateria nova com teste de saúde.</td><td>R$ 150</td></tr>
+          <tr><td>conector</td><td>Carregamento voltando a funcionar.</td><td>R$ 120</td></tr>
+          <tr><td>backup</td><td>Seus dados salvos antes do conserto.</td><td>R$ 50</td></tr>
+        </table>
+      </section>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Técnicos certificados, bancada à vista do cliente e nenhuma peça trocada sem a sua autorização.</p>
+        <p><span class="ok">OK</span> 1h tempo médio de conserto</p>
+        <p><span class="ok">OK</span> 90 dias de garantia</p>
+        <p><span class="ok">OK</span> 20.000 aparelhos consertados</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "Troquei a tela no horário do almoço e voltei pro trabalho com o celular novo." <span class="comentario">-- Caio, cliente</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Rua Guilherme Rocha, 300 - Centro</p>
+        <p>telefone : (85) 3009-0001</p>
+        <p>horario  : Seg a Sáb, 9h às 19h</p>
+      </section>
+
+    </main>
+    <footer># FixCel :: assistência técnica de celulares</footer>
+  </div>
+</body>
+</html>

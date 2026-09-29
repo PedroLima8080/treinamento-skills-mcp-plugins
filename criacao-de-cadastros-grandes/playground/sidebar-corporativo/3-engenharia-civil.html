@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Base Forte Engenharia</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; color: #2b2d42; background: #f7f7f5; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; line-height: 1.6; }
+    aside { background: #14213d; color: #e5e5e5; padding: 40px 30px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
+    .logo { font-family: Georgia, serif; font-size: 1.5rem; color: #fff; line-height: 1.2; }
+    .logo small { display: block; font-family: "Segoe UI", Arial, sans-serif; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: #c9a227; margin-top: 8px; }
+    aside nav { margin-top: 50px; display: flex; flex-direction: column; }
+    aside nav a { color: #e5e5e5; text-decoration: none; padding: 10px 0; border-bottom: 1px solid #2a3a5e; }
+    aside nav a::before { content: "— "; color: #c9a227; }
+    .lateral { margin-top: auto; font-size: .85rem; color: #a8b0c4; }
+    .hero { padding: 100px 8%; background: #fff; border-bottom: 4px solid #c9a227; }
+    h1 { font-family: Georgia, serif; font-weight: normal; font-size: 2.8rem; line-height: 1.2; color: #14213d; max-width: 18ch; }
+    .hero p { font-size: 1.15rem; color: #555; max-width: 560px; margin: 20px 0 32px; }
+    .botao { display: inline-block; background: #14213d; color: #fff; padding: 14px 30px; text-decoration: none; border: 0; border-left: 6px solid #c9a227; font: inherit; cursor: pointer; }
+    section { padding: 70px 8%; }
+    h2 { font-family: Georgia, serif; font-weight: normal; font-size: 2rem; color: #14213d; padding-left: 18px; border-left: 4px solid #c9a227; margin-bottom: 30px; }
+    .areas { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid #ddd; }
+    .area { padding: 24px; border-bottom: 1px solid #ddd; }
+    .area:nth-child(odd) { border-right: 1px solid #ddd; }
+    .area h3 { color: #14213d; }
+    .area p { color: #666; font-size: .95rem; }
+    .area small { color: #c9a227; font-weight: 600; }
+    .sobre { max-width: 720px; color: #444; font-size: 1.05rem; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); background: #14213d; color: #fff; }
+    .numero { padding: 36px; text-align: center; border-right: 1px solid #2a3a5e; }
+    .numero strong { display: block; font-family: Georgia, serif; font-size: 2.6rem; color: #c9a227; }
+    blockquote { background: #fff; padding: 36px; border-left: 4px solid #c9a227; font-family: Georgia, serif; font-size: 1.3rem; font-style: italic; }
+    cite { display: block; margin-top: 12px; font-size: .9rem; font-style: normal; color: #888; }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 640px; }
+    input, textarea { padding: 12px; border: 1px solid #ccc; font: inherit; background: #fff; }
+    textarea { grid-column: 1 / -1; min-height: 110px; }
+    form .botao { grid-column: 1 / -1; justify-self: start; }
+    footer { padding: 24px 8%; font-size: .85rem; color: #888; border-top: 1px solid #ddd; }
+    @media (max-width: 800px) { body { display: block; } aside { position: static; height: auto; } .areas, .numeros, form { grid-template-columns: 1fr; } }
+
+    :root {
+      --fundo: #f7f7f5;
+      --texto: #2b2d42;
+      --texto-suave: #666;
+      --cor: #c9a227;
+      --cor-texto: #14213d;
+      --destaque: #a8841a;
+      --superficie: #fff;
+      --escuro: #14213d;
+      --escuro-texto: #fff;
+      --borda: 1px solid #ddd;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 10px 30px rgba(20, 33, 61, .08);
+      --desfoque: none;
+      --fonte-titulo: Georgia, serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Como funciona */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: passo; }
+    .passo { padding: 28px; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .passo::before { counter-increment: passo; content: counter(passo); display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 14px; font-family: var(--fonte-titulo); font-size: 1.4rem; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio-redondo); }
+    .passo p { color: var(--texto-suave); }
+    @media (max-width: 700px) { .passos { grid-template-columns: 1fr; } }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Ajustes do padrão */
+    body { grid-template-columns: 280px minmax(0, 1fr); }
+    .secao-extra { padding: 70px 8%; }
+    .modal form { display: block; }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="logo">Base Forte Engenharia<small>Projetos e construção</small></div>
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#atuacao">Atuação</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="lateral">
+      <p>Av. Washington Soares, 800 - Guararapes</p>
+      <p>(85) 3010-0103</p>
+      <p>Seg a Sex, 7h às 17h</p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="hero" id="inicio">
+      <h1>Construímos com precisão, do projeto à entrega</h1>
+      <p>Projetos estruturais, reformas e construção de residências e galpões.</p>
+      <a class="botao" href="#contato">Solicitar orçamento</a>
+    </div>
+
+    <div class="secao-extra" id="como-funciona">
+      <h2>Como funciona</h2>
+      <div class="passos">
+        <div class="passo"><h3>Escolha</h3><p>Veja os serviços e escolha o ideal para você.</p></div>
+        <div class="passo"><h3>Agende</h3><p>Ligue para (85) 3010-0103 ou chame no WhatsApp.</p></div>
+        <div class="passo"><h3>Aproveite</h3><p>Venha até Av. Washington Soares, 800 - Guararapes e deixe o resto com a gente.</p></div>
+      </div>
+    </div>
+
+    <section id="atuacao">
+      <h2>Áreas de atuação</h2>
+      <div class="areas">
+        <div class="area">
+          <h3>Projeto estrutural</h3>
+          <p>Cálculo e detalhamento completo.</p>
+          <small>Sob consulta</small>
+        </div>
+        <div class="area">
+          <h3>Construção residencial</h3>
+          <p>Obra com prazo e custo fechados.</p>
+          <small>Sob consulta</small>
+        </div>
+        <div class="area">
+          <h3>Reformas</h3>
+          <p>Residenciais e comerciais.</p>
+          <small>Visita técnica gratuita</small>
+        </div>
+        <div class="area">
+          <h3>Laudos técnicos</h3>
+          <p>Vistorias e perícias.</p>
+          <small>A partir de R$ 1.200</small>
+        </div>
+      </div>
+    </section>
+
+    <div class="numeros">
+      <div class="numero"><strong>350</strong>obras entregues</div>
+      <div class="numero"><strong>100%</strong>no prazo</div>
+      <div class="numero"><strong>20</strong>anos</div>
+    </div>
+
+    <div class="secao-extra" id="historia">
+      <h2>Nossa história</h2>
+      <div class="linha-do-tempo">
+        <div class="marco"><strong>2005</strong><p>Fundação do escritório de projetos.</p></div>
+        <div class="marco"><strong>2010</strong><p>Primeira obra industrial entregue.</p></div>
+        <div class="marco"><strong>2016</strong><p>Equipe própria de execução.</p></div>
+        <div class="marco"><strong>2025</strong><p>350 obras entregues.</p></div>
+      </div>
+    </div>
+
+    <section id="sobre">
+      <h2>Sobre</h2>
+      <p class="sobre">Engenheiros registrados no CREA, equipe própria e acompanhamento semanal da obra com relatório fotográfico.</p>
+    </section>
+
+    <section>
+      <blockquote>
+        “A obra terminou antes do prazo e dentro do orçamento.”
+        <cite>Empresário do setor industrial</cite>
+      </blockquote>
+    </section>
+
+    <section id="contato">
+      <h2>Fale conosco</h2>
+      <form>
+        <input placeholder="Nome">
+        <input placeholder="E-mail">
+        <textarea placeholder="Como podemos ajudar?"></textarea>
+        <button class="botao" type="button">Enviar mensagem</button>
+      </form>
+    </section>
+
+    <footer>© Base Forte Engenharia · Av. Washington Soares, 800 - Guararapes</footer>
+  </main>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cervejaria Lúpulo Velho</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #f5ecd7; color: #3e2723; line-height: 1.7; }
+    .faixa { background: #3e2723; color: #f5ecd7; text-align: center; padding: 8px; font-size: .9rem; letter-spacing: 2px; }
+    header { text-align: center; padding: 30px 20px 14px; border-bottom: 3px double #3e2723; max-width: 1000px; margin: 0 auto; }
+    .logo { font-size: 2.4rem; font-style: italic; }
+    nav a { color: #b23a2b; margin: 0 12px; text-decoration: none; font-variant: small-caps; font-size: 1.1rem; }
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    h1 { font-size: 3rem; line-height: 1.15; font-weight: normal; }
+    .hero p { font-size: 1.15rem; margin: 20px 0 28px; }
+    .botao { display: inline-block; background: #b23a2b; color: #f5ecd7; padding: 12px 28px; text-decoration: none; border: 2px dashed #f5ecd7; outline: 2px solid #b23a2b; }
+    .selo { aspect-ratio: 1; border-radius: 50%; border: 3px dashed #b23a2b; display: grid; place-items: center; font-size: 120px; background: #efe1c1; }
+    section { max-width: 800px; margin: 0 auto; padding: 50px 20px; }
+    h2 { text-align: center; font-weight: normal; font-size: 2rem; }
+    .ornamento { text-align: center; color: #b23a2b; margin-bottom: 30px; letter-spacing: 8px; }
+    .item { margin-bottom: 22px; }
+    .item .topo { display: flex; align-items: baseline; gap: 8px; font-size: 1.2rem; font-weight: bold; }
+    .item .pontos { flex: 1; border-bottom: 2px dotted #3e2723; }
+    .item p { font-style: italic; color: #6d4c41; }
+    .sobre { text-align: center; font-size: 1.15rem; }
+    .numeros { text-align: center; margin-top: 20px; color: #b23a2b; }
+    .numeros strong { font-size: 1.4rem; color: #3e2723; }
+    blockquote { text-align: center; font-size: 1.5rem; font-style: italic; border-top: 1px solid #3e2723; border-bottom: 1px solid #3e2723; padding: 30px 0; }
+    cite { display: block; font-size: 1rem; margin-top: 10px; color: #b23a2b; }
+    table { margin: 0 auto; border-collapse: collapse; font-size: 1.1rem; }
+    td { padding: 8px 20px; border-bottom: 1px dashed #3e2723; }
+    td:first-child { font-variant: small-caps; color: #b23a2b; }
+    footer { background: #3e2723; color: #f5ecd7; text-align: center; padding: 40px 20px; font-style: italic; }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .selo { font-size: 80px; max-width: 240px; margin: 0 auto; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f5ecd7;
+      --texto: #3e2723;
+      --texto-suave: #6d4c41;
+      --cor: #b23a2b;
+      --cor-texto: #f5ecd7;
+      --destaque: #b23a2b;
+      --superficie: #efe1c1;
+      --escuro: #3e2723;
+      --escuro-texto: #f5ecd7;
+      --borda: 2px dashed #3e2723;
+      --raio: 4px;
+      --raio-redondo: 999px;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: 800px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Animações ao rolar */
+    @keyframes entrada { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: none; } }
+    h1 { animation: entrada 1s ease both; }
+    .revelar { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .revelar { opacity: 1; transform: none; transition: none; } }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+
+    /* Ajustes do padrão */
+    .secao-extra > h2 { font-weight: normal; }
+  </style>
+</head>
+<body>
+  <div class="faixa">Cerveja artesanal · brassagem própria</div>
+
+  <header>
+    <div class="logo">Cervejaria Lúpulo Velho</div>
+    <nav>
+      <a href="#cardapio">cardápio</a>
+      <a href="#historia">nossa história</a>
+      <a href="#contato">visite-nos</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Cerveja fresca, direto do tanque para o copo</h1>
+      <p>Estilos clássicos e sazonais produzidos aqui mesmo, a poucos metros da sua mesa.</p>
+      <a class="botao" href="#contato">Conhecer a fábrica</a>
+    </div>
+    <div class="selo">🍺</div>
+  </div>
+
+  <section id="cardapio">
+    <h2>Cardápio</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <div class="item">
+      <div class="topo"><span>Pilsen da casa</span><span class="pontos"></span><span>R$ 16</span></div>
+      <p>Leve, dourada e refrescante.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>IPA</span><span class="pontos"></span><span>R$ 22</span></div>
+      <p>Amarga, aromática e cítrica.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Stout</span><span class="pontos"></span><span>R$ 24</span></div>
+      <p>Escura, com notas de café e chocolate.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Tábua de petiscos</span><span class="pontos"></span><span>R$ 58</span></div>
+      <p>Linguiça, queijos e pão da casa.</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="historia">
+    <h2>Nossa história</h2>
+    <div class="linha-do-tempo">
+      <div class="marco"><strong>2014</strong><p>Primeira brassagem no quintal de casa.</p></div>
+      <div class="marco"><strong>2016</strong><p>Primeira medalha num concurso regional.</p></div>
+      <div class="marco"><strong>2019</strong><p>Inauguração da fábrica com bar.</p></div>
+      <div class="marco"><strong>2024</strong><p>12 torneiras e visitas guiadas.</p></div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="detalhes">
+    <h2>Conheça cada serviço</h2>
+    <div class="abas-botoes">
+      <button type="button" class="ativa">Pilsen da casa</button>
+      <button type="button">IPA</button>
+      <button type="button">Stout</button>
+      <button type="button">Tábua de petiscos</button>
+    </div>
+    <div class="aba ativa">
+      <h3>Pilsen da casa</h3>
+      <p>Leve, dourada e refrescante.</p>
+      <strong>R$ 16</strong>
+      <a class="botao" href="#contato">Conhecer a fábrica</a>
+    </div>
+    <div class="aba">
+      <h3>IPA</h3>
+      <p>Amarga, aromática e cítrica.</p>
+      <strong>R$ 22</strong>
+      <a class="botao" href="#contato">Conhecer a fábrica</a>
+    </div>
+    <div class="aba">
+      <h3>Stout</h3>
+      <p>Escura, com notas de café e chocolate.</p>
+      <strong>R$ 24</strong>
+      <a class="botao" href="#contato">Conhecer a fábrica</a>
+    </div>
+    <div class="aba">
+      <h3>Tábua de petiscos</h3>
+      <p>Linguiça, queijos e pão da casa.</p>
+      <strong>R$ 58</strong>
+      <a class="botao" href="#contato">Conhecer a fábrica</a>
+    </div>
+  </div>
+
+  <section id="historia">
+    <h2>Nossa história</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <p class="sobre">Dois amigos, uma panela no quintal e muita teimosia. Hoje são 12 torneiras e uma fábrica aberta para visitas.</p>
+    <p class="numeros"><strong>12</strong> torneiras &nbsp;✦&nbsp; <strong>20</strong> estilos por ano &nbsp;✦&nbsp; <strong>2014</strong> primeira brassagem</p>
+  </section>
+
+  <section>
+    <blockquote>
+      “A IPA de lá é a mais fresca que já tomei.”
+      <cite>— Gustavo, sommelier de cervejas</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato">
+    <h2>Visite-nos</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <table>
+      <tr><td>endereço</td><td>Rua dos Tabajaras, 510 - Praia de Iracema</td></tr>
+      <tr><td>telefone</td><td>(85) 3003-0102</td></tr>
+      <tr><td>horário</td><td>Qua a Dom, 17h às 24h</td></tr>
+    </table>
+  </section>
+
+  <footer>Cervejaria Lúpulo Velho — feito à mão, com calma.</footer>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#cardapio">Serviços</a>
+    <a href="#contato">Conhecer a fábrica</a>
+  </div>
+
+  <script>
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Animações: cada seção aparece suavemente quando entra na tela
+      const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visivel');
+            observador.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('section, .secao-extra').forEach((el) => {
+        el.classList.add('revelar');
+        observador.observe(el);
+      });
+    }
+  </script>
+</body>
+</html>

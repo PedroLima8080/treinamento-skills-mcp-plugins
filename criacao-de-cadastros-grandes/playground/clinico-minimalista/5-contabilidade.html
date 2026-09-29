@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conta Certa</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1f2a37; background: #fff; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .topo { background: #1e6fd9; color: #fff; font-size: .85rem; padding: 6px 0; }
+    .topo .container { display: flex; justify-content: space-between; }
+    header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+    .logo { font-weight: 700; font-size: 1.3rem; color: #1e6fd9; }
+    nav a { color: #4b5563; text-decoration: none; margin-left: 28px; font-size: .95rem; }
+    .botao { display: inline-block; background: #1e6fd9; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 0; font: inherit; cursor: pointer; }
+    nav .botao { color: #fff; padding: 8px 18px; }
+    .hero { background: #f4f8fb; padding: 80px 0; }
+    .hero .container { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .etiqueta { display: inline-block; background: #e0ecfc; color: #1e6fd9; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+    h1 { font-size: 2.8rem; line-height: 1.2; margin: 16px 0; }
+    .hero p { color: #4b5563; font-size: 1.1rem; margin-bottom: 28px; }
+    .formulario { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 10px 30px rgba(30, 111, 217, .12); }
+    .formulario h3 { margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d9e2; border-radius: 8px; margin-bottom: 12px; font: inherit; }
+    .formulario .botao { width: 100%; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 48px 24px; border-bottom: 1px solid #e5e7eb; text-align: center; }
+    .numero strong { display: block; font-size: 2.2rem; color: #1e6fd9; }
+    .numero span { color: #6b7280; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; text-align: center; }
+    .subtitulo { text-align: center; color: #6b7280; margin-bottom: 40px; }
+    .servicos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .servico { border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; gap: 16px; }
+    .servico h3 { font-size: 1.1rem; }
+    .servico p { color: #6b7280; }
+    .servico strong { color: #1e6fd9; white-space: nowrap; }
+    .sobre { background: #f4f8fb; }
+    .sobre p { max-width: 720px; margin: 0 auto; text-align: center; color: #4b5563; }
+    .sobre .depoimento { margin-top: 24px; font-style: italic; color: #1f2a37; }
+    details { border-bottom: 1px solid #e5e7eb; padding: 16px 0; max-width: 720px; margin: 0 auto; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { color: #4b5563; margin-top: 8px; }
+    footer { background: #1f2a37; color: #cbd5e1; padding: 48px 0; }
+    footer .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    footer h4 { color: #fff; margin-bottom: 8px; }
+    @media (max-width: 800px) { .hero .container, .servicos, footer .container { grid-template-columns: 1fr; } nav a:not(.botao) { display: none; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #1f2a37;
+      --texto-suave: #6b7280;
+      --cor: #1e6fd9;
+      --cor-texto: #fff;
+      --destaque: #1e6fd9;
+      --superficie: #f4f8fb;
+      --escuro: #1f2a37;
+      --escuro-texto: #fff;
+      --borda: 1px solid #e5e7eb;
+      --raio: 12px;
+      --raio-redondo: 999px;
+      --sombra: 0 10px 30px rgba(30, 111, 217, .12);
+      --desfoque: none;
+      --fonte-titulo: "Segoe UI", Roboto, Arial, sans-serif;
+      --largura: 1100px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Oferta com contagem regressiva */
+    .promo { padding: 48px 32px; text-align: center; background: var(--escuro); color: var(--escuro-texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .promo h2 { color: inherit; }
+    .relogio { display: flex; justify-content: center; gap: 12px; margin: 24px 0 32px; flex-wrap: wrap; }
+    .relogio div { min-width: 84px; padding: 12px; background: var(--cor); color: var(--cor-texto); border-radius: var(--raio); }
+    .relogio strong { display: block; font-family: var(--fonte-titulo); font-size: 2rem; }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+  </style>
+</head>
+<body>
+  <div class="aviso-topo">
+    🎉 Novidade: Imposto de Renda por R$ 250! <a href="#contato">Saiba mais</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <div class="topo">
+    <div class="container">
+      <span>Seg a Sex, 8h às 18h</span>
+      <span>(85) 3005-0105</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <span class="logo">📊 Conta Certa</span>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="botao" href="#agendar">Falar com um contador</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="agendar">
+    <div class="container">
+      <div>
+        <span class="etiqueta">Contabilidade para empresas</span>
+        <h1>Sua contabilidade em dia, sem dor de cabeça</h1>
+        <p>Abertura de empresa, impostos e folha de pagamento com atendimento próximo.</p>
+        <a class="botao" href="#servicos">Conheça os serviços</a>
+      </div>
+      <form class="formulario">
+        <h3>Falar com um contador</h3>
+        <input placeholder="Seu nome">
+        <input placeholder="Telefone">
+        <select>
+          <option>Abertura de empresa</option>
+          <option>MEI</option>
+          <option>Simples Nacional</option>
+          <option>Imposto de Renda</option>
+        </select>
+        <button class="botao" type="button">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container numeros">
+    <div class="numero"><strong>600</strong><span>empresas</span></div>
+    <div class="numero"><strong>10 dias</strong><span>para abrir CNPJ</span></div>
+    <div class="numero"><strong>18</strong><span>anos</span></div>
+  </div>
+
+  <section id="servicos">
+    <div class="container">
+      <h2>Serviços</h2>
+      <p class="subtitulo">Tudo o que você precisa em um só lugar</p>
+      <div class="servicos">
+        <div class="servico">
+          <div>
+            <h3>Abertura de empresa</h3>
+            <p>CNPJ pronto em até 10 dias.</p>
+          </div>
+          <strong>R$ 600</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>MEI</h3>
+            <p>Declaração anual e guias mensais.</p>
+          </div>
+          <strong>R$ 79/mês</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Simples Nacional</h3>
+            <p>Impostos, folha e obrigações.</p>
+          </div>
+          <strong>a partir de R$ 390/mês</strong>
+        </div>
+        <div class="servico">
+          <div>
+            <h3>Imposto de Renda</h3>
+            <p>Declaração de pessoa física.</p>
+          </div>
+          <strong>R$ 250</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="historia">
+    <h2>Nossa história</h2>
+    <div class="linha-do-tempo">
+      <div class="marco"><strong>2007</strong><p>Abertura do escritório com 3 clientes.</p></div>
+      <div class="marco"><strong>2012</strong><p>Início do atendimento a empresas do Simples.</p></div>
+      <div class="marco"><strong>2018</strong><p>Lançamento do portal online do cliente.</p></div>
+      <div class="marco"><strong>2025</strong><p>600 empresas atendidas.</p></div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="promo">
+    <div class="promo">
+      <h2>Oferta da semana</h2>
+      <p>Abertura de empresa com 20% de desconto até domingo.</p>
+      <div class="relogio">
+        <div><strong>00</strong>dias</div>
+        <div><strong>00</strong>horas</div>
+        <div><strong>00</strong>min</div>
+        <div><strong>00</strong>seg</div>
+      </div>
+      <a class="botao" href="#contato">Quero a oferta</a>
+    </div>
+  </div>
+
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>Sobre nós</h2>
+      <p class="subtitulo">Conta Certa</p>
+      <p>Escritório com contadores dedicados a cada cliente e um portal para você acompanhar tudo online.</p>
+      <p class="depoimento">“Nunca mais atrasei um imposto desde que mudei para eles.” — Rodrigo, empresário</p>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="container">
+      <h2>Dúvidas frequentes</h2>
+      <p class="subtitulo">Não encontrou? Ligue para (85) 3005-0105</p>
+      <details><summary>Qual o horário de atendimento?</summary><p>Seg a Sex, 8h às 18h.</p></details>
+      <details><summary>Onde vocês ficam?</summary><p>Av. Santos Dumont, 3000, sala 505 - Aldeota.</p></details>
+      <details><summary>Como faço para agendar?</summary><p>Pelo formulário no topo da página ou pelo telefone (85) 3005-0105.</p></details>
+    </div>
+  </section>
+
+  <footer id="contato">
+    <div class="container">
+      <div><h4>Conta Certa</h4><p>Contabilidade para empresas</p></div>
+      <div><h4>Endereço</h4><p>Av. Santos Dumont, 3000, sala 505 - Aldeota</p></div>
+      <div><h4>Contato</h4><p>(85) 3005-0105<br>Seg a Sex, 8h às 18h</p></div>
+    </div>
+  </footer>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Falar com um contador</a>
+  </div>
+
+  <script>
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+
+    {
+      // Oferta: contagem regressiva até domingo às 23:59
+      const fim = new Date();
+      fim.setDate(fim.getDate() + ((7 - fim.getDay()) % 7));
+      fim.setHours(23, 59, 59, 0);
+      const relogio = document.querySelectorAll('.relogio strong');
+      const atualizar = () => {
+        const s = Math.max(0, Math.floor((fim - new Date()) / 1000));
+        const partes = [Math.floor(s / 86400), Math.floor((s % 86400) / 3600), Math.floor((s % 3600) / 60), s % 60];
+        partes.forEach((v, i) => { relogio[i].textContent = String(v).padStart(2, '0'); });
+      };
+      atualizar();
+      setInterval(atualizar, 1000);
+    }
+  </script>
+</body>
+</html>

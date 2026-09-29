@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patins Disco</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Cooper Black", Georgia, serif; background: #f6e7c1; color: #6b3e26; }
+    p { font-family: Verdana, sans-serif; line-height: 1.6; }
+    .listras { height: 36px; background: linear-gradient(#e3a72f 0 33%, #e07a2f 33% 66%, #b5452b 66%); }
+    header { text-align: center; padding: 30px 20px; }
+    .logo { font-size: 3rem; color: #b5452b; text-shadow: 3px 3px 0 #e3a72f; }
+    header p { margin: 4px 0 16px; }
+    nav a { color: #6b3e26; margin: 0 14px; text-decoration: none; font-size: 1.1rem; }
+    .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 30px 20px 60px; }
+    .sol { width: 260px; height: 260px; border-radius: 50%; background: repeating-conic-gradient(#e3a72f 0 10deg, #e07a2f 10deg 20deg); display: grid; place-items: center; border: 8px solid #6b3e26; }
+    .sol span { width: 150px; height: 150px; border-radius: 50%; background: #f6e7c1; display: grid; place-items: center; font-size: 72px; border: 6px solid #6b3e26; }
+    h1 { font-size: 3rem; margin: 30px 0 10px; max-width: 700px; line-height: 1.1; }
+    .hero p { max-width: 560px; margin-bottom: 28px; }
+    .botao { background: #b5452b; color: #f6e7c1; padding: 14px 36px; border-radius: 40px; text-decoration: none; font-size: 1.2rem; border: 4px solid #6b3e26; }
+    .faixa { background: #6b3e26; color: #f6e7c1; padding: 60px 20px; }
+    h2 { text-align: center; font-size: 2.4rem; margin-bottom: 36px; }
+    .selos { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .selo { width: 230px; height: 230px; border-radius: 50%; background: #e3a72f; color: #6b3e26; border: 6px dashed #f6e7c1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 28px; }
+    .selo:nth-child(even) { background: #e07a2f; }
+    .selo h3 { font-size: 1.2rem; }
+    .selo p { font-size: .75rem; margin: 4px 0; }
+    .selo strong { font-size: 1.4rem; }
+    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+    .numeros { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+    .numeros strong { display: block; font-size: 2.6rem; color: #b5452b; }
+    .cartao { background: #fff8e6; border: 4px solid #6b3e26; border-radius: 24px; padding: 30px; box-shadow: 10px 10px 0 #e07a2f; font-size: 1.3rem; }
+    .cartao p { font-size: 1.1rem; }
+    footer { background: #6b3e26; color: #f6e7c1; text-align: center; padding: 30px 20px; }
+    @media (max-width: 600px) { .logo { font-size: 2.2rem; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f6e7c1;
+      --texto: #6b3e26;
+      --texto-suave: #8a5a3c;
+      --cor: #e07a2f;
+      --cor-texto: #fff8e6;
+      --destaque: #b5452b;
+      --superficie: #fff8e6;
+      --escuro: #6b3e26;
+      --escuro-texto: #f6e7c1;
+      --borda: 4px solid #6b3e26;
+      --raio: 24px;
+      --raio-redondo: 999px;
+      --sombra: 8px 8px 0 #e07a2f;
+      --desfoque: none;
+      --fonte-titulo: "Cooper Black", Georgia, serif;
+      --largura: 900px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Linha do tempo */
+    .linha-do-tempo { position: relative; max-width: 700px; padding-left: 44px; }
+    .linha-do-tempo::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; border-left: var(--borda); }
+    .marco { position: relative; margin-bottom: 32px; }
+    .marco::before { content: ""; position: absolute; left: -41px; top: 6px; width: 18px; height: 18px; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); }
+    .marco strong { font-family: var(--fonte-titulo); font-size: 1.4rem; color: var(--destaque); }
+    .marco p { color: var(--texto-suave); }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Barra de progresso da leitura */
+    .progresso { position: fixed; top: 0; left: 0; z-index: 70; width: 0; height: 5px; background: var(--destaque); }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+  </style>
+</head>
+<body>
+  <div class="listras"></div>
+
+  <header>
+    <div class="logo">Patins Disco</div>
+    <p>~ Patinação e música ~</p>
+    <nav>
+      <a href="#servicos">Delícias</a>
+      <a href="#sobre">A casa</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="sol"><span>🛼</span></div>
+    <h1>Patins, luzes e muita discoteca</h1>
+    <p>Pista de patinação com música dos anos 70 e 80, aluguel de patins e aulas.</p>
+    <a class="botao" href="#contato">Comprar entrada</a>
+  </div>
+
+  <div class="faixa" id="servicos">
+    <h2>Os favoritos da casa</h2>
+    <div class="selos">
+      <div class="selo">
+        <h3>Entrada</h3>
+        <p>2 horas de pista.</p>
+        <strong>R$ 35</strong>
+      </div>
+      <div class="selo">
+        <h3>Aluguel de patins</h3>
+        <p>Todos os tamanhos.</p>
+        <strong>R$ 15</strong>
+      </div>
+      <div class="selo">
+        <h3>Aulas</h3>
+        <p>Para iniciantes de todas as idades.</p>
+        <strong>R$ 50</strong>
+      </div>
+      <div class="selo">
+        <h3>Festas</h3>
+        <p>Pista exclusiva para aniversários.</p>
+        <strong>R$ 1.500</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="historia">
+    <h2>Nossa história</h2>
+    <div class="linha-do-tempo">
+      <div class="marco"><strong>1978</strong><p>Abertura do rinque na época da discoteca.</p></div>
+      <div class="marco"><strong>1985</strong><p>Primeira noite de patinação com DJ ao vivo.</p></div>
+      <div class="marco"><strong>2002</strong><p>Reforma da pista e novo globo de espelhos.</p></div>
+      <div class="marco"><strong>2020</strong><p>Volta do sucesso com a moda retrô.</p></div>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>A casa</h2>
+    <p>Um rinque com globo espelhado, DJ ao vivo aos sábados e muita gente caindo e rindo junto.</p>
+    <div class="numeros">
+      <div><strong>600m²</strong>de pista</div>
+      <div><strong>400</strong>pares de patins</div>
+      <div><strong>1</strong>globo de espelho</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cartao">
+      “Parecia um filme dos anos 70. Voltaremos todo mês!”
+      <p>— Marcela, patinadora</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="mapa">
+    <h2>Como chegar</h2>
+    <div class="mapa">
+      <span class="pino">📍</span>
+      <div class="endereco">
+        <strong>Patins Disco</strong><br>
+        Av. Bezerra de Menezes, 2000 - São Gerardo<br>
+        Qui a Dom, 16h às 23h
+      </div>
+    </div>
+  </div>
+
+  <div class="listras"></div>
+  <footer id="contato">
+    <p>Av. Bezerra de Menezes, 2000 - São Gerardo · (85) 3008-0105 · Qui a Dom, 16h às 23h</p>
+  </footer>
+
+  <div class="progresso"></div>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Comprar entrada</a>
+  </div>
+
+  <script>
+    {
+      // Contador: os números sobem de 0 até o valor quando aparecem na tela
+      const animar = (el) => {
+        const [, antes, numero, depois] = el.textContent.match(/^(\D*)([\d.]+(?:,\d+)?)(.*)$/) || [];
+        if (!numero) return;
+        const casas = (numero.split(',')[1] || '').length;
+        const agrupar = numero.includes('.');
+        const alvo = parseFloat(numero.replace(/\./g, '').replace(',', '.'));
+        const inicio = performance.now();
+        const passo = (agora) => {
+          const t = Math.min((agora - inicio) / 1500, 1);
+          const valor = (alvo * t).toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas, useGrouping: agrupar });
+          el.textContent = antes + valor + depois;
+          if (t < 1) requestAnimationFrame(passo);
+        };
+        requestAnimationFrame(passo);
+      };
+      const observadorNumeros = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            animar(e.target);
+            observadorNumeros.unobserve(e.target);
+          }
+        });
+      });
+      document.querySelectorAll('.numero strong, .numeros strong').forEach((el) => observadorNumeros.observe(el));
+    }
+
+    {
+      // Progresso: a barra no topo cresce conforme a página é rolada
+      const barra = document.querySelector('.progresso');
+      addEventListener('scroll', () => {
+        const pagina = document.documentElement;
+        barra.style.width = (pagina.scrollTop / (pagina.scrollHeight - pagina.clientHeight)) * 100 + '%';
+      });
+    }
+  </script>
+</body>
+</html>

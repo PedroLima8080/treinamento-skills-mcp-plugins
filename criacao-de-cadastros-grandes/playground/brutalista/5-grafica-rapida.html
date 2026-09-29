@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tinta Já</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Arial Black", Impact, sans-serif; background: #fff; color: #000; }
+    p { font-family: "Courier New", monospace; font-weight: bold; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #000; padding: 16px 24px; background: #ffe600; }
+    .logo { font-size: 1.6rem; text-transform: uppercase; }
+    nav a { color: #000; text-transform: uppercase; border: 3px solid #000; padding: 6px 12px; margin-left: 8px; text-decoration: none; background: #fff; box-shadow: 4px 4px 0 #000; }
+    .hero { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h1 { font-size: clamp(3rem, 9vw, 7rem); text-transform: uppercase; line-height: .9; letter-spacing: -2px; }
+    .hero p { font-size: 1.2rem; max-width: 640px; margin: 24px 0 32px; background: #000; color: #ffe600; padding: 8px 12px; }
+    .botao { display: inline-block; background: #ff3b00; color: #fff; border: 4px solid #000; padding: 16px 32px; font-size: 1.3rem; text-transform: uppercase; text-decoration: none; box-shadow: 8px 8px 0 #000; }
+    .faixa { background: #000; color: #ffe600; white-space: nowrap; overflow: hidden; padding: 12px 0; font-size: 1.4rem; text-transform: uppercase; }
+    section { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 30px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .bloco { border: 4px solid #000; padding: 24px; box-shadow: 8px 8px 0 #000; background: #fff; }
+    .bloco:nth-child(even) { background: #ffe600; }
+    .bloco small { font-size: 1rem; }
+    .bloco h3 { text-transform: uppercase; font-size: 1.4rem; margin: 8px 0; }
+    .bloco .preco { font-size: 2rem; margin-top: 16px; }
+    .sobre { font-size: 1.2rem; max-width: 800px; margin-bottom: 30px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid #000; }
+    .numero { padding: 30px; border-right: 4px solid #000; text-transform: uppercase; }
+    .numero:last-child { border-right: 0; }
+    .numero strong { font-size: 3.5rem; display: block; }
+    .depoimento { background: #ff3b00; color: #fff; }
+    .depoimento p { font-size: 1.6rem; }
+    footer { padding: 30px 24px; background: #000; color: #fff; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-transform: uppercase; }
+    @media (max-width: 700px) { nav { display: none; } .numeros, footer { grid-template-columns: 1fr; } .numero { border-right: 0; border-bottom: 4px solid #000; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #000;
+      --texto-suave: #000;
+      --cor: #ffe600;
+      --cor-texto: #000;
+      --destaque: #ff3b00;
+      --superficie: #fff;
+      --escuro: #000;
+      --escuro-texto: #ffe600;
+      --borda: 4px solid #000;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 8px 8px 0 #000;
+      --desfoque: none;
+      --fonte-titulo: "Arial Black", Impact, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Abas de serviços */
+    .abas-botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .abas-botoes button { padding: 10px 20px; font: inherit; font-family: var(--fonte-titulo); cursor: pointer; background: var(--superficie); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .abas-botoes button.ativa { background: var(--cor); color: var(--cor-texto); }
+    .aba { display: none; padding: 40px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .aba.ativa { display: block; animation: aparecer .4s ease; }
+    .aba strong { display: block; margin: 12px 0 20px; font-family: var(--fonte-titulo); font-size: 2rem; color: var(--destaque); }
+    @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Mapa */
+    .mapa { position: relative; height: 320px; overflow: hidden; background-color: var(--superficie); background-image: linear-gradient(color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--texto) 12%, transparent) 2px, transparent 2px); background-size: 48px 48px; border: var(--borda); border-radius: var(--raio); }
+    .mapa .pino { position: absolute; left: 60%; top: 45%; font-size: 3rem; transform: translate(-50%, -100%); animation: quicar 1.5s ease-in-out infinite; }
+    @keyframes quicar { 50% { transform: translate(-50%, -125%); } }
+    .mapa .endereco { position: absolute; left: 24px; bottom: 24px; max-width: 320px; padding: 16px 20px; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+
+    /* Newsletter */
+    .newsletter { padding: 48px 32px; text-align: center; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .newsletter form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; margin: 24px auto 0; }
+    .newsletter input { flex: 1; min-width: 200px; width: auto; margin: 0; padding: 12px 16px; font: inherit; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio-redondo); }
+    .newsletter .botao { margin: 0; align-self: auto; }
+
+    /* Botão voltar ao topo */
+    .voltar-topo { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.4rem; text-decoration: none; background: var(--cor); color: var(--cor-texto); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+
+    /* Ajustes do padrão */
+    .secao-extra { border-bottom: 4px solid #000; }
+  </style>
+</head>
+<body>
+  <div class="aviso-topo">
+    🎉 Novidade: Impressão A4 por R$ 1,50! <a href="#contato">Saiba mais</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <header>
+    <span class="logo">Tinta Já</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Precisa pra hoje? Fica pronto hoje.</h1>
+    <p>Cartões, banners, adesivos e impressão digital em até 2 horas.</p>
+    <a class="botao" href="#contato">Enviar arquivo →</a>
+  </section>
+
+  <div class="faixa">★ Imprimiu, levou ★ Imprimiu, levou ★ Imprimiu, levou ★ Imprimiu, levou ★ Imprimiu, levou ★ Imprimiu, levou</div>
+
+  <section id="servicos">
+    <h2>Serviços</h2>
+    <div class="grade">
+      <div class="bloco">
+        <small>01</small>
+        <h3>Cartão de visita</h3>
+        <p>1.000 unidades, 4x4 cores.</p>
+        <div class="preco">R$ 120</div>
+      </div>
+      <div class="bloco">
+        <small>02</small>
+        <h3>Banner</h3>
+        <p>Lona com acabamento e ilhós.</p>
+        <div class="preco">R$ 60/m²</div>
+      </div>
+      <div class="bloco">
+        <small>03</small>
+        <h3>Adesivos</h3>
+        <p>Recorte eletrônico em vinil.</p>
+        <div class="preco">R$ 45/m²</div>
+      </div>
+      <div class="bloco">
+        <small>04</small>
+        <h3>Impressão A4</h3>
+        <p>Colorida ou preto e branco.</p>
+        <div class="preco">R$ 1,50</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="detalhes">
+    <h2>Conheça cada serviço</h2>
+    <div class="abas-botoes">
+      <button type="button" class="ativa">Cartão de visita</button>
+      <button type="button">Banner</button>
+      <button type="button">Adesivos</button>
+      <button type="button">Impressão A4</button>
+    </div>
+    <div class="aba ativa">
+      <h3>Cartão de visita</h3>
+      <p>1.000 unidades, 4x4 cores.</p>
+      <strong>R$ 120</strong>
+      <a class="botao" href="#contato">Enviar arquivo</a>
+    </div>
+    <div class="aba">
+      <h3>Banner</h3>
+      <p>Lona com acabamento e ilhós.</p>
+      <strong>R$ 60/m²</strong>
+      <a class="botao" href="#contato">Enviar arquivo</a>
+    </div>
+    <div class="aba">
+      <h3>Adesivos</h3>
+      <p>Recorte eletrônico em vinil.</p>
+      <strong>R$ 45/m²</strong>
+      <a class="botao" href="#contato">Enviar arquivo</a>
+    </div>
+    <div class="aba">
+      <h3>Impressão A4</h3>
+      <p>Colorida ou preto e branco.</p>
+      <strong>R$ 1,50</strong>
+      <a class="botao" href="#contato">Enviar arquivo</a>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>Sobre</h2>
+    <p class="sobre">Máquinas digitais de alta velocidade e uma equipe que não enrola. Mandou o arquivo, a gente já começa.</p>
+    <div class="numeros">
+      <div class="numero"><strong>2h</strong>prazo médio</div>
+      <div class="numero"><strong>50.000</strong>cartões por mês</div>
+      <div class="numero"><strong>10</strong>anos</div>
+    </div>
+  </section>
+
+  <section class="depoimento">
+    <h2>Papo reto</h2>
+    <p>“Precisei de banner às 15h para um evento às 18h. Deu certo.” — Leandro, organizador de eventos</p>
+  </section>
+
+  <div class="secao-extra" id="mapa">
+    <h2>Como chegar</h2>
+    <div class="mapa">
+      <span class="pino">📍</span>
+      <div class="endereco">
+        <strong>Tinta Já</strong><br>
+        Rua General Sampaio, 250 - Centro<br>
+        Seg a Sáb, 8h às 19h
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-extra" id="newsletter">
+    <div class="newsletter">
+      <h2>Receba novidades</h2>
+      <p>Promoções e novidades da Tinta Já direto no seu e-mail.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="seu@email.com">
+        <button class="botao" type="submit">Assinar</button>
+      </form>
+    </div>
+  </div>
+
+  <footer id="contato">
+    <span>Rua General Sampaio, 250 - Centro</span>
+    <span>(85) 3004-0105</span>
+    <span>Seg a Sáb, 8h às 19h</span>
+  </footer>
+
+  <a class="voltar-topo" href="#" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+
+    {
+      // Abas: mostra o serviço do botão clicado
+      const botoesAba = document.querySelectorAll('.abas-botoes button');
+      const abas = document.querySelectorAll('.aba');
+      botoesAba.forEach((botao, i) => botao.addEventListener('click', () => {
+        botoesAba.forEach((b) => b.classList.remove('ativa'));
+        abas.forEach((a) => a.classList.remove('ativa'));
+        botao.classList.add('ativa');
+        abas[i].classList.add('ativa');
+      }));
+    }
+
+    {
+      // Voltar ao topo: o botão só aparece depois de rolar um pouco
+      const voltar = document.querySelector('.voltar-topo');
+      addEventListener('scroll', () => voltar.classList.toggle('visivel', scrollY > 400));
+    }
+  </script>
+</body>
+</html>

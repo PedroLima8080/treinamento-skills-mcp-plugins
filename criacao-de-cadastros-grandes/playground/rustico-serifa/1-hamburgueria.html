@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brasa Burger</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Georgia, "Times New Roman", serif; background: #f5ecd7; color: #3e2723; line-height: 1.7; }
+    .faixa { background: #3e2723; color: #f5ecd7; text-align: center; padding: 8px; font-size: .9rem; letter-spacing: 2px; }
+    header { text-align: center; padding: 30px 20px 14px; border-bottom: 3px double #3e2723; max-width: 1000px; margin: 0 auto; }
+    .logo { font-size: 2.4rem; font-style: italic; }
+    nav a { color: #b23a2b; margin: 0 12px; text-decoration: none; font-variant: small-caps; font-size: 1.1rem; }
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+    h1 { font-size: 3rem; line-height: 1.15; font-weight: normal; }
+    .hero p { font-size: 1.15rem; margin: 20px 0 28px; }
+    .botao { display: inline-block; background: #b23a2b; color: #f5ecd7; padding: 12px 28px; text-decoration: none; border: 2px dashed #f5ecd7; outline: 2px solid #b23a2b; }
+    .selo { aspect-ratio: 1; border-radius: 50%; border: 3px dashed #b23a2b; display: grid; place-items: center; font-size: 120px; background: #efe1c1; }
+    section { max-width: 800px; margin: 0 auto; padding: 50px 20px; }
+    h2 { text-align: center; font-weight: normal; font-size: 2rem; }
+    .ornamento { text-align: center; color: #b23a2b; margin-bottom: 30px; letter-spacing: 8px; }
+    .item { margin-bottom: 22px; }
+    .item .topo { display: flex; align-items: baseline; gap: 8px; font-size: 1.2rem; font-weight: bold; }
+    .item .pontos { flex: 1; border-bottom: 2px dotted #3e2723; }
+    .item p { font-style: italic; color: #6d4c41; }
+    .sobre { text-align: center; font-size: 1.15rem; }
+    .numeros { text-align: center; margin-top: 20px; color: #b23a2b; }
+    .numeros strong { font-size: 1.4rem; color: #3e2723; }
+    blockquote { text-align: center; font-size: 1.5rem; font-style: italic; border-top: 1px solid #3e2723; border-bottom: 1px solid #3e2723; padding: 30px 0; }
+    cite { display: block; font-size: 1rem; margin-top: 10px; color: #b23a2b; }
+    table { margin: 0 auto; border-collapse: collapse; font-size: 1.1rem; }
+    td { padding: 8px 20px; border-bottom: 1px dashed #3e2723; }
+    td:first-child { font-variant: small-caps; color: #b23a2b; }
+    footer { background: #3e2723; color: #f5ecd7; text-align: center; padding: 40px 20px; font-style: italic; }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .selo { font-size: 80px; max-width: 240px; margin: 0 auto; } h1 { font-size: 2.2rem; } }
+
+    :root {
+      --fundo: #f5ecd7;
+      --texto: #3e2723;
+      --texto-suave: #6d4c41;
+      --cor: #b23a2b;
+      --cor-texto: #f5ecd7;
+      --destaque: #b23a2b;
+      --superficie: #efe1c1;
+      --escuro: #3e2723;
+      --escuro-texto: #f5ecd7;
+      --borda: 2px dashed #3e2723;
+      --raio: 4px;
+      --raio-redondo: 999px;
+      --sombra: none;
+      --desfoque: none;
+      --fonte-titulo: Georgia, "Times New Roman", serif;
+      --largura: 800px;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Barra de aviso */
+    .aviso-topo { position: relative; padding: 10px 48px; text-align: center; font-family: var(--fonte-titulo); background: var(--cor); color: var(--cor-texto); }
+    .aviso-topo a { color: inherit; font-weight: bold; }
+    .aviso-topo button { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer; background: none; border: 0; color: inherit; }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Efeitos ao passar o mouse */
+    .item { transition: all .25s ease; }
+    .item:hover { transform: translateX(6px); }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Botão flutuante de WhatsApp */
+    .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 50; width: 60px; height: 60px; display: grid; place-items: center; font-size: 1.8rem; text-decoration: none; background: var(--cor); border: var(--borda); border-radius: var(--raio-redondo); animation: pulsar 2s infinite; }
+    .whatsapp span { position: absolute; right: 74px; padding: 6px 12px; white-space: nowrap; font-size: .85rem; background: var(--fundo); color: var(--texto); border: var(--borda); border-radius: var(--raio); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .whatsapp:hover span { opacity: 1; }
+    @keyframes pulsar { 0% { box-shadow: 0 0 0 0 var(--cor); } 70%, 100% { box-shadow: 0 0 0 18px transparent; } }
+
+    /* Ajustes do padrão */
+    .secao-extra > h2 { font-weight: normal; }
+  </style>
+</head>
+<body>
+  <div class="aviso-topo">
+    🎉 Novidade: Batata rústica por R$ 18! <a href="#contato">Saiba mais</a>
+    <button type="button" aria-label="Fechar aviso">✕</button>
+  </div>
+
+  <div class="faixa">Hambúrguer artesanal · feito na brasa</div>
+
+  <header>
+    <div class="logo">Brasa Burger</div>
+    <nav>
+      <a href="#cardapio">cardápio</a>
+      <a href="#historia">nossa história</a>
+      <a href="#contato">visite-nos</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Hambúrguer de verdade, na brasa e sem pressa</h1>
+      <p>Blend da casa moído todo dia, pão de fermentação natural e batata cortada na hora.</p>
+      <a class="botao" href="#contato">Fazer pedido</a>
+    </div>
+    <div class="selo">🍔</div>
+  </div>
+
+  <section id="cardapio">
+    <h2>Cardápio</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <div class="item">
+      <div class="topo"><span>Clássico</span><span class="pontos"></span><span>R$ 32</span></div>
+      <p>Blend 180g, queijo prato, alface e tomate.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Bacon na brasa</span><span class="pontos"></span><span>R$ 38</span></div>
+      <p>Blend 180g, cheddar, bacon e cebola caramelizada.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Duplo defumado</span><span class="pontos"></span><span>R$ 45</span></div>
+      <p>Dois blends, queijo defumado e barbecue da casa.</p>
+    </div>
+    <div class="item">
+      <div class="topo"><span>Batata rústica</span><span class="pontos"></span><span>R$ 18</span></div>
+      <p>Com alecrim e maionese de alho.</p>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="galeria">
+    <h2>Galeria</h2>
+    <div class="galeria">
+      <figure>🍔<figcaption>Brasa Burger</figcaption></figure>
+      <figure>🍔<figcaption>Clássico</figcaption></figure>
+      <figure>🍔<figcaption>Bacon na brasa</figcaption></figure>
+      <figure>🍔<figcaption>Duplo defumado</figcaption></figure>
+      <figure>🍔<figcaption>Batata rústica</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="historia">
+    <h2>Nossa história</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <p class="sobre">Começamos como um food truck numa praça. O fogo, o blend e a paciência continuam os mesmos.</p>
+    <p class="numeros"><strong>180g</strong> de blend &nbsp;✦&nbsp; <strong>100%</strong> carne fresca &nbsp;✦&nbsp; <strong>9</strong> anos de brasa</p>
+  </section>
+
+  <section>
+    <blockquote>
+      “Melhor hambúrguer que já comi, e olha que eu como muito.”
+      <cite>— Thiago, cliente fiel</cite>
+    </blockquote>
+  </section>
+
+  <section id="contato">
+    <h2>Visite-nos</h2>
+    <div class="ornamento">✦ ✦ ✦</div>
+    <table>
+      <tr><td>endereço</td><td>Rua Frederico Borges, 90 - Varjota</td></tr>
+      <tr><td>telefone</td><td>(85) 3003-0101</td></tr>
+      <tr><td>horário</td><td>Todos os dias, 18h às 23h</td></tr>
+    </table>
+  </section>
+
+  <footer>Brasa Burger — feito à mão, com calma.</footer>
+
+  <a class="whatsapp" href="https://wa.me/558530030101" target="_blank" rel="noopener" aria-label="WhatsApp">
+    💬<span>Fale com a gente</span>
+  </a>
+
+  <script>
+    {
+      // Aviso: o botão ✕ remove a barra do topo
+      const aviso = document.querySelector('.aviso-topo');
+      aviso.querySelector('button').addEventListener('click', () => aviso.remove());
+    }
+  </script>
+</body>
+</html>

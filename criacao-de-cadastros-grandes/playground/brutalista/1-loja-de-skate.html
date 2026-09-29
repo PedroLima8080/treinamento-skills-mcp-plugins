@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roda Dura</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: "Arial Black", Impact, sans-serif; background: #fff; color: #000; }
+    p { font-family: "Courier New", monospace; font-weight: bold; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #000; padding: 16px 24px; background: #ffe600; }
+    .logo { font-size: 1.6rem; text-transform: uppercase; }
+    nav a { color: #000; text-transform: uppercase; border: 3px solid #000; padding: 6px 12px; margin-left: 8px; text-decoration: none; background: #fff; box-shadow: 4px 4px 0 #000; }
+    .hero { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h1 { font-size: clamp(3rem, 9vw, 7rem); text-transform: uppercase; line-height: .9; letter-spacing: -2px; }
+    .hero p { font-size: 1.2rem; max-width: 640px; margin: 24px 0 32px; background: #000; color: #ffe600; padding: 8px 12px; }
+    .botao { display: inline-block; background: #ff3b00; color: #fff; border: 4px solid #000; padding: 16px 32px; font-size: 1.3rem; text-transform: uppercase; text-decoration: none; box-shadow: 8px 8px 0 #000; }
+    .faixa { background: #000; color: #ffe600; white-space: nowrap; overflow: hidden; padding: 12px 0; font-size: 1.4rem; text-transform: uppercase; }
+    section { padding: 60px 24px; border-bottom: 4px solid #000; }
+    h2 { font-size: 3rem; text-transform: uppercase; margin-bottom: 30px; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .bloco { border: 4px solid #000; padding: 24px; box-shadow: 8px 8px 0 #000; background: #fff; }
+    .bloco:nth-child(even) { background: #ffe600; }
+    .bloco small { font-size: 1rem; }
+    .bloco h3 { text-transform: uppercase; font-size: 1.4rem; margin: 8px 0; }
+    .bloco .preco { font-size: 2rem; margin-top: 16px; }
+    .sobre { font-size: 1.2rem; max-width: 800px; margin-bottom: 30px; }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid #000; }
+    .numero { padding: 30px; border-right: 4px solid #000; text-transform: uppercase; }
+    .numero:last-child { border-right: 0; }
+    .numero strong { font-size: 3.5rem; display: block; }
+    .depoimento { background: #ff3b00; color: #fff; }
+    .depoimento p { font-size: 1.6rem; }
+    footer { padding: 30px 24px; background: #000; color: #fff; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-transform: uppercase; }
+    @media (max-width: 700px) { nav { display: none; } .numeros, footer { grid-template-columns: 1fr; } .numero { border-right: 0; border-bottom: 4px solid #000; } }
+
+    :root {
+      --fundo: #fff;
+      --texto: #000;
+      --texto-suave: #000;
+      --cor: #ffe600;
+      --cor-texto: #000;
+      --destaque: #ff3b00;
+      --superficie: #fff;
+      --escuro: #000;
+      --escuro-texto: #ffe600;
+      --borda: 4px solid #000;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 8px 8px 0 #000;
+      --desfoque: none;
+      --fonte-titulo: "Arial Black", Impact, sans-serif;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Letreiro rolando */
+    .letreiro { overflow: hidden; padding: 14px 0; background: var(--cor); color: var(--cor-texto); border-top: var(--borda); border-bottom: var(--borda); }
+    .letreiro div { display: flex; width: max-content; animation: rolar 25s linear infinite; font-family: var(--fonte-titulo); font-size: 1.3rem; text-transform: uppercase; }
+    .letreiro span { padding-right: 48px; }
+    @keyframes rolar { to { transform: translateX(-50%); } }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Efeitos ao passar o mouse */
+    .bloco { transition: all .25s ease; }
+    .bloco:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 #000; }
+    .botao { transition: transform .2s ease, filter .2s ease; }
+    .botao:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+
+    /* Ajustes do padrão */
+    .secao-extra { border-bottom: 4px solid #000; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="logo">Roda Dura</span>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Cai. Levanta. Anda de novo.</h1>
+    <p>Shapes, rodas, trucks e roupas para quem vive o skate de verdade.</p>
+    <a class="botao" href="#contato">Ver a loja →</a>
+  </section>
+
+  <div class="faixa">★ Skate é rua ★ Skate é rua ★ Skate é rua ★ Skate é rua ★ Skate é rua ★ Skate é rua</div>
+
+  <div class="letreiro">
+    <div><span>★ Shapes</span><span>★ Skate montado</span><span>★ Rodas e rolamentos</span><span>★ Aulas</span><span>★ Skate é rua</span><span>★ Shapes</span><span>★ Skate montado</span><span>★ Rodas e rolamentos</span><span>★ Aulas</span><span>★ Skate é rua</span></div>
+  </div>
+
+  <section id="servicos">
+    <h2>Serviços</h2>
+    <div class="grade">
+      <div class="bloco">
+        <small>01</small>
+        <h3>Shapes</h3>
+        <p>Maple canadense, várias medidas.</p>
+        <div class="preco">R$ 250</div>
+      </div>
+      <div class="bloco">
+        <small>02</small>
+        <h3>Skate montado</h3>
+        <p>Pronto para a sessão.</p>
+        <div class="preco">R$ 550</div>
+      </div>
+      <div class="bloco">
+        <small>03</small>
+        <h3>Rodas e rolamentos</h3>
+        <p>Durezas para rua e pista.</p>
+        <div class="preco">R$ 180</div>
+      </div>
+      <div class="bloco">
+        <small>04</small>
+        <h3>Aulas</h3>
+        <p>Para iniciantes, aos sábados.</p>
+        <div class="preco">R$ 60/aula</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="secao-extra" id="galeria">
+    <h2>Galeria</h2>
+    <div class="galeria">
+      <figure>🛹<figcaption>Roda Dura</figcaption></figure>
+      <figure>🛹<figcaption>Shapes</figcaption></figure>
+      <figure>🛹<figcaption>Skate montado</figcaption></figure>
+      <figure>🛹<figcaption>Rodas e rolamentos</figcaption></figure>
+      <figure>🛹<figcaption>Aulas</figcaption></figure>
+      <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <h2>Sobre</h2>
+    <p class="sobre">Loja feita por skatistas, com mini ramp nos fundos e sessão toda sexta à noite.</p>
+    <div class="numeros">
+      <div class="numero"><strong>300+</strong>shapes</div>
+      <div class="numero"><strong>1</strong>mini ramp</div>
+      <div class="numero"><strong>15</strong>anos de rua</div>
+    </div>
+  </section>
+
+  <section class="depoimento">
+    <h2>Papo reto</h2>
+    <p>“Os caras entendem de skate e não empurram produto.” — Pedro, skatista</p>
+  </section>
+
+  <footer id="contato">
+    <span>Rua Pinto Madeira, 44 - Centro</span>
+    <span>(85) 3004-0101</span>
+    <span>Seg a Sáb, 10h às 20h</span>
+  </footer>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Ver a loja</a>
+  </div>
+</body>
+</html>

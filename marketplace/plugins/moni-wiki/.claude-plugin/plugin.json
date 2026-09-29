@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "moni-wiki",
+  "displayName": "Moni Wiki",
+  "version": "1.0.0",
+  "description": "Servidor MCP que busca páginas na Wiki Moni (procedimentos, módulos, versões...).",
+  "author": { "name": "Moni Software" },
+  "keywords": ["moni", "wiki", "mcp"]
+}

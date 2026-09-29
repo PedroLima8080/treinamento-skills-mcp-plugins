@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BitShop</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Consolas, "Courier New", monospace; background: #0c0c0c; color: #33ff66; line-height: 1.6; padding: 0 12px; }
+    .janela { max-width: 900px; margin: 30px auto; border: 1px solid #33ff66; box-shadow: 0 0 24px #33ff6633; }
+    .barra { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #33ff66; align-items: center; }
+    .barra i { width: 12px; height: 12px; border-radius: 50%; background: #33ff66; opacity: .6; }
+    .barra span { margin-left: auto; font-size: .8rem; opacity: .7; }
+    main { padding: 24px; }
+    nav a { color: #0c0c0c; background: #33ff66; padding: 2px 8px; text-decoration: none; margin-right: 10px; }
+    .cmd { color: #fff; margin-top: 28px; }
+    .cmd::before { content: "bitshop@site:~$ "; color: #33ff66; }
+    h1 { font-size: 2rem; margin: 10px 0; color: #fff; }
+    h1::after { content: "█"; color: #33ff66; animation: pisca 1s steps(1) infinite; }
+    @keyframes pisca { 50% { opacity: 0; } }
+    .comentario { color: #888; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    td, th { text-align: left; padding: 6px 10px; border-bottom: 1px dashed #1f7a3a; vertical-align: top; }
+    th { color: #fff; }
+    .ok { color: #0c0c0c; background: #33ff66; padding: 0 6px; }
+    .botao { display: inline-block; border: 1px solid #33ff66; color: #33ff66; padding: 8px 18px; text-decoration: none; margin-top: 16px; }
+    .botao:hover { background: #33ff66; color: #0c0c0c; }
+    footer { border-top: 1px solid #33ff66; padding: 14px 24px; font-size: .85rem; opacity: .8; }
+
+    :root {
+      --fundo: #0c0c0c;
+      --texto: #33ff66;
+      --texto-suave: #888;
+      --cor: #33ff66;
+      --cor-texto: #0c0c0c;
+      --destaque: #fff;
+      --superficie: #0c0c0c;
+      --escuro: #0c0c0c;
+      --escuro-texto: #33ff66;
+      --borda: 1px dashed #33ff66;
+      --raio: 0;
+      --raio-redondo: 0;
+      --sombra: 0 0 24px #33ff6633;
+      --desfoque: none;
+      --fonte-titulo: Consolas, "Courier New", monospace;
+      --largura: none;
+    }
+
+    /* Base dos componentes */
+    html { scroll-behavior: smooth; }
+    .secao-extra { max-width: var(--largura); margin: 0 auto; padding: 60px 24px; }
+    .secao-extra > h2 { margin-bottom: 32px; }
+    button.botao { cursor: pointer; font-family: inherit; }
+
+    /* Letreiro rolando */
+    .letreiro { overflow: hidden; padding: 14px 0; background: var(--cor); color: var(--cor-texto); border-top: var(--borda); border-bottom: var(--borda); }
+    .letreiro div { display: flex; width: max-content; animation: rolar 25s linear infinite; font-family: var(--fonte-titulo); font-size: 1.3rem; text-transform: uppercase; }
+    .letreiro span { padding-right: 48px; }
+    @keyframes rolar { to { transform: translateX(-50%); } }
+
+    /* Galeria */
+    .galeria { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 170px; gap: 16px; }
+    .galeria figure { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; font-size: 3rem; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); transition: transform .3s; }
+    .galeria figure:nth-child(3n + 1) { background: var(--cor); color: var(--cor-texto); }
+    .galeria figure:first-child { grid-column: span 2; grid-row: span 2; font-size: 6rem; }
+    .galeria figure:hover { transform: scale(1.03); }
+    .galeria figcaption { font-family: var(--fonte-titulo); font-size: .95rem; }
+    @media (max-width: 600px) { .galeria { grid-template-columns: 1fr 1fr; } }
+
+    /* Carrossel de depoimentos */
+    .carrossel { max-width: 720px; margin: 0 auto; text-align: center; }
+    .slide { display: none; padding: 40px; font-size: 1.4rem; font-style: italic; background: var(--superficie); border: var(--borda); border-radius: var(--raio); backdrop-filter: var(--desfoque); }
+    .slide.ativo { display: block; animation: surgir .6s ease; }
+    .slide cite { display: block; margin-top: 14px; font-size: .9rem; font-style: normal; color: var(--texto-suave); }
+    .pontos-carrossel { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+    .pontos-carrossel button { width: 14px; height: 14px; padding: 0; cursor: pointer; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); }
+    .pontos-carrossel button.ativo { background: var(--cor); }
+    @keyframes surgir { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+
+    /* Menu flutuante */
+    .menu-flutuante { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; gap: 6px; padding: 8px; background: var(--superficie); border: var(--borda); border-radius: var(--raio-redondo); box-shadow: var(--sombra); backdrop-filter: var(--desfoque); }
+    .menu-flutuante a { padding: 8px 18px; color: var(--texto); text-decoration: none; font-family: var(--fonte-titulo); border-radius: var(--raio-redondo); white-space: nowrap; }
+    .menu-flutuante a:last-child { background: var(--cor); color: var(--cor-texto); }
+
+    /* Ajustes do padrão */
+    .secao-extra { padding: 24px 0; }
+    .secao-extra > h2 { font-size: 1rem; font-weight: normal; color: #fff; margin: 12px 0 16px; }
+    .secao-extra > h2::before { content: "$ "; color: #33ff66; }
+    button.botao { background: none; }
+    .letreiro { margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>bitshop@site: ~</span></div>
+    <main>
+      <nav>
+        <a href="#servicos">./servicos</a>
+        <a href="#sobre">./sobre</a>
+        <a href="#contato">./contato</a>
+      </nav>
+
+      <p class="cmd">whoami</p>
+      <h1>Monte o PC dos seus sonhos</h1>
+      <p class="comentario"># placas de vídeo, processadores e montagem com cable management caprichado</p>
+      <a class="botao" href="#contato">[ Montar meu PC ]</a>
+
+      <div class="letreiro">
+        <div><span>★ pc_gamer</span><span>★ upgrade</span><span>★ formatacao</span><span>★ water_cooler</span><span>★ peças e montagem de PC</span><span>★ pc_gamer</span><span>★ upgrade</span><span>★ formatacao</span><span>★ water_cooler</span><span>★ peças e montagem de PC</span></div>
+      </div>
+
+      <section id="servicos">
+        <p class="cmd">ls servicos/</p>
+        <table>
+          <tr><th>servico</th><th>descricao</th><th>preco</th></tr>
+          <tr><td>pc_gamer</td><td>Montagem completa e testes de estabilidade.</td><td>a partir de R$ 4.500</td></tr>
+          <tr><td>upgrade</td><td>Troca de peças e limpeza.</td><td>a partir de R$ 150</td></tr>
+          <tr><td>formatacao</td><td>Sistema limpo e drivers atualizados.</td><td>R$ 120</td></tr>
+          <tr><td>water_cooler</td><td>Instalação de refrigeração líquida.</td><td>R$ 200</td></tr>
+        </table>
+      </section>
+
+      <div class="secao-extra" id="galeria">
+        <h2>./galeria</h2>
+        <div class="galeria">
+          <figure>🖥️<figcaption>BitShop</figcaption></figure>
+          <figure>🖥️<figcaption>pc_gamer</figcaption></figure>
+          <figure>🖥️<figcaption>upgrade</figcaption></figure>
+          <figure>🖥️<figcaption>formatacao</figcaption></figure>
+          <figure>🖥️<figcaption>water_cooler</figcaption></figure>
+          <figure>✨<figcaption>Nosso espaço</figcaption></figure>
+        </div>
+      </div>
+
+      <section id="sobre">
+        <p class="cmd">cat sobre.txt</p>
+        <p>Loja de gamers para gamers. Testamos cada máquina por 24 horas antes de entregar.</p>
+        <p><span class="ok">OK</span> 24h de teste por máquina</p>
+        <p><span class="ok">OK</span> 3.000 PCs montados</p>
+        <p><span class="ok">OK</span> 1 ano de garantia</p>
+      </section>
+
+      <section>
+        <p class="cmd">tail -n 1 depoimentos.log</p>
+        <p>&gt; "PC chegou silencioso, organizado e rodando tudo no ultra." <span class="comentario">-- Gabriel, gamer</span></p>
+      </section>
+
+      <section id="contato">
+        <p class="cmd">contato --info</p>
+        <p>endereco : Av. Heráclito Graça, 700 - Centro</p>
+        <p>telefone : (85) 3009-0103</p>
+        <p>horario  : Seg a Sáb, 9h às 19h</p>
+      </section>
+
+      <div class="secao-extra" id="depoimentos">
+        <h2>./o-que-dizem</h2>
+        <div class="carrossel">
+          <blockquote class="slide ativo">“PC chegou silencioso, organizado e rodando tudo no ultra.”<cite>Gabriel, gamer</cite></blockquote>
+          <blockquote class="slide">“Upgrade feito no mesmo dia, PC voando.”<cite>Rafael, streamer</cite></blockquote>
+          <blockquote class="slide">“Me ajudaram a escolher peças dentro do orçamento.”<cite>Letícia, estudante</cite></blockquote>
+          <div class="pontos-carrossel">
+            <button type="button" class="ativo" aria-label="Depoimento 1"></button>
+            <button type="button" aria-label="Depoimento 2"></button>
+            <button type="button" aria-label="Depoimento 3"></button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer># BitShop :: peças e montagem de PC</footer>
+  </div>
+
+  <div class="menu-flutuante">
+    <a href="#">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Montar meu PC</a>
+  </div>
+
+  <script>
+    {
+      // Carrossel: troca o depoimento a cada 5 segundos (ou ao clicar nos pontos)
+      const slides = document.querySelectorAll('.slide');
+      const pontos = document.querySelectorAll('.pontos-carrossel button');
+      let atual = 0;
+      const mostrar = (i) => {
+        slides[atual].classList.remove('ativo');
+        pontos[atual].classList.remove('ativo');
+        atual = i;
+        slides[atual].classList.add('ativo');
+        pontos[atual].classList.add('ativo');
+      };
+      pontos.forEach((ponto, i) => ponto.addEventListener('click', () => mostrar(i)));
+      setInterval(() => mostrar((atual + 1) % slides.length), 5000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "palestra-mcp",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.1"
+  },
+  "scripts": {
+    "postinstall": "node --no-warnings criar-banco.js",
+    "preparar": "node --no-warnings criar-banco.js"
+  }
+}
